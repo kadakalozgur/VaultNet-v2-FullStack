@@ -1,0 +1,42 @@
+.login-background {
+    background-image: url('../Media/Images/login-background-image.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.register-link{
+    color: #4965fa;
+    font-weight: bold;
+}
+
+.register-link:hover{
+    text-decoration: none;
+    color: #4965fa;
+}
+
+.email-input-icon{
+    background-image: url('../Media/Icons/mail-icon.png');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: 21px;
+    padding-left: 40px;
+}
+
+.password-input-icon{
+    background-image: url('../Media/Icons/lock-icon.png');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: 21px;
+    padding-left: 40px;
+    padding-right: 45px;
+}
+
+.password-eye-icon{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    cursor: pointer;
+}
