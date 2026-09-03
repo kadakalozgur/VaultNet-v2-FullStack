@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VaultNet - Register</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="CSS/auth.css" />
+  </head>
+
+  <body>
+    <div
+      class="d-flex justify-content-center align-items-center vh-100 login-background"
+    >
+      <div class="card shadow" style="width: 25rem; border-radius: 20px">
+        <div class="card-body">
+          <h2 class="card-title text-center mt-3">
+            VaultNet
+            <span style="color: #4965fa">v2</span>
+          </h2>
+          <p class="text-muted text-center mb-4 mt-3">
+            Developed by Özgür Kadakal
+          </p>
+
+          <form>
+            <div class="form-group">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Email</label
+              >
+              <input
+                type="email"
+                class="form-control email-input-icon"
+                placeholder="you@example.com"
+                style="border-radius: 7px; color: #334155;"
+              />
+            </div>
+            <div class="form-group">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Password</label
+              >
+              <div class="position-relative">
+                <input
+                  type="password"
+                  id="password-input"
+                  class="form-control password-input-icon"
+                  placeholder="Enter your password"
+                  style="border-radius: 7px; color: #334155;"
+                />
+                <img
+                  src="Media/Icons/open-eye-icon.png"
+                  class="password-eye-icon"
+                  id="toggle-password"
+                  alt="Toggle Password"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Confirm Password</label
+              >
+              <div class="position-relative">
+                <input
+                  type="password"
+                  id="confirm-password-input"
+                  class="form-control password-input-icon"
+                  placeholder="Confirm password"
+                  style="border-radius: 7px; color: #334155;"
+                />
+                <img
+                  src="Media/Icons/open-eye-icon.png"
+                  class="password-eye-icon"
+                  id="toggle-password-2"
+                  alt="Toggle Password"
+                />
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary btn-block mt-4"
+              style="border-radius: 15px; height: 40px"
+            >
+              Register
+            </button>
+            <p class="text-center mt-4" style="font-size: 15px">
+              Do you already have an account?
+              <a href="index.html" class="register-link">Login</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+      integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+      crossorigin="anonymous"
+    ></script>
+    <script src="JS/register.js"></script>
+  </body>
+</html>
