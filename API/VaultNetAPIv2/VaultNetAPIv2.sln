@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaultNetAPIv2", "VaultNetAPIv2\VaultNetAPIv2.csproj", "{DD4B9D88-B54E-4114-A9D3-1B671AA18619}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD4B9D88-B54E-4114-A9D3-1B671AA18619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD4B9D88-B54E-4114-A9D3-1B671AA18619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD4B9D88-B54E-4114-A9D3-1B671AA18619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD4B9D88-B54E-4114-A9D3-1B671AA18619}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9452ECE0-47E6-45E5-B794-F235FE89287A}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,28 @@
+# Visual Studio / Rider
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+*~
+
+# ASP.NET Core
+_PublishLocalSettings/
+*.[Cc]ert
+*.pfx
+*.secret
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+
+# Environment / Local settings
+appsettings.Development.json
+appsettings.Local.json
