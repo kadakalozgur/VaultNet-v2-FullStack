@@ -20,7 +20,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDto registerDto)
+        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
 
             var result = await _authService.RegisterAsync(registerDto);
@@ -31,6 +31,21 @@ namespace VaultNetAPIv2.Controllers
                 Message = result.Message
             });
             
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {
+
+            var result = await _authService.LoginAsync(loginDto);
+
+            return StatusCode(result.StatusCode, new
+            {
+                IsSuccess = result.IsSuccess,
+                Data = result.Data,
+                Message = result.Message
+            });
+
         }
     }
 }

@@ -8,5 +8,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> RegisterAsync(RegisterDto registerDto);
 
+        Task<ServiceResult> LoginAsync(LoginDto loginDto);
+
     }
 }

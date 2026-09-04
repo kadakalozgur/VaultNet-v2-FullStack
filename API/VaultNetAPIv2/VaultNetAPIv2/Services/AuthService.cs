@@ -11,10 +11,12 @@ namespace VaultNetAPIv2.Services
     {
 
         private readonly AppDbContext _context;
+        private readonly ITokenService _tokenService;
 
-        public AuthService(AppDbContext context)
+        public AuthService(AppDbContext context, ITokenService tokenService)
         {
             _context = context;
+            _tokenService = tokenService;
         }
 
         public async Task<ServiceResult> RegisterAsync(RegisterDto registerDto)
@@ -48,6 +50,64 @@ namespace VaultNetAPIv2.Services
                 IsSuccess = true,
                 StatusCode = 201,
                 Message = "Registration completed successfully."
+            };
+
+        }
+
+        public async Task<ServiceResult> LoginAsync(LoginDto loginDto)
+        {
+
+            var email = loginDto.Email.Trim().ToLower().Replace(" ", "");
+
+            var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Email == email);
+
+            if(user == null)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 401,
+                    Message = "The email address or password is incorrect."
+                };
+            }
+
+            bool isPasswordCorret = BCrypt.Net.BCrypt.Verify(loginDto.Password,user.PasswordHash);
+
+            if (!isPasswordCorret)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 401,
+                    Message = "The email address or password is incorrect."
+                };
+            }
+
+            if (!user.IsActive)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 403,
+                    Message = "Your account has been deactivated."
+                };
+            }
+
+            var token = _tokenService.GenerateToken(user);
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Data = new
+                {
+                    Token = token,
+                    Id = user.Id,
+                    Email = user.Email,
+                    IsActive = user.IsActive,
+                    CreatedAt = user.CreatedAt
+                },
+                Message = "The login process was successfully completed."
             };
 
         }
