@@ -3,7 +3,7 @@ using VaultNetAPIv2.Results;
 
 namespace VaultNetAPIv2.Services.Interfaces
 {
-    public interface IAuthServices
+    public interface IAuthService
     {
 
         Task<ServiceResult> RegisterAsync(RegisterDto registerDto);
