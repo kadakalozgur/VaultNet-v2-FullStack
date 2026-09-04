@@ -20,7 +20,7 @@ namespace VaultNetAPIv2.Services
         public async Task<ServiceResult> RegisterAsync(RegisterDto registerDto)
         {
             
-            var email = registerDto.Email.Trim().ToLower();
+            var email = registerDto.Email.Trim().ToLower().Replace(" ","");
 
             bool isUserExist = await _context.Users.AnyAsync(user => user.Email == email);
 
