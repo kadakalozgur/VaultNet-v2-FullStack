@@ -42,6 +42,7 @@
               >
               <input
                 type="email"
+                id="email-input"
                 class="form-control email-input-icon"
                 placeholder="you@example.com"
                 style="border-radius: 7px; color: #334155"
@@ -69,8 +70,14 @@
             </div>
             <button
               type="submit"
+              id="login-button"
               class="btn btn-primary btn-block mt-4"
-              style="border-radius: 15px; height: 40px; background-color: #4965fa; border-color: #4965fa;"
+              style="
+                border-radius: 15px;
+                height: 40px;
+                background-color: #4965fa;
+                border-color: #4965fa;
+              "
             >
               Login
             </button>
@@ -98,6 +105,8 @@
       integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
       crossorigin="anonymous"
     ></script>
+    <script src="JS/config.js"></script>
+    <script src="JS/services/authService.js"></script>
     <script src="JS/pages/index.js"></script>
   </body>
 </html>
