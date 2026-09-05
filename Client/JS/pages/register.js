@@ -4,6 +4,7 @@ const confirmPasswordInput = document.getElementById("confirm-password-input");
 const togglePasswordButton1 = document.getElementById("toggle-password");
 const togglePasswordButton2 = document.getElementById("toggle-password-2");
 const registerButton = document.getElementById("register-button");
+const alertBox = document.getElementById("register-alert");
 
 togglePasswordButton1.addEventListener('click',function(){
 
@@ -53,19 +54,23 @@ registerButton.addEventListener('click',async function(e){
 
     e.preventDefault(); // Butonun sayfayı yenilemesini kapattım.
 
+    hideAlert(alertBox);
+
     const email = emailInput.value.trim().toLowerCase().replaceAll(" ", "");
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
 
-    if(!email || !password || !confirmPassword){
-        // hata ekrana basılacak
+    if(!email || !password || !confirmPassword){   
+        showAlert(alertBox,"Please fill in all fields completely.","warning");
         return;
     }
 
     if(password != confirmPassword){
-        // hata ekrana basılacak
+        showAlert(alertBox,"The passwords don't match.","danger");
         return;
     }
+
+    registerButton.disabled = true;
 
     try{
 
@@ -74,7 +79,9 @@ registerButton.addEventListener('click',async function(e){
         window.location.href = "index.html";
 
     }catch(error){
-        // hata ekrana basılacak
+        showAlert(alertBox,error.message,"danger");
+        registerButton.disabled = false;
     }
     
 });
+
