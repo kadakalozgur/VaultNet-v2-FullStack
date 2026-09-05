@@ -1,7 +1,9 @@
+const emailInput = document.getElementById("email-input");
 const passwordInput = document.getElementById("password-input");
 const confirmPasswordInput = document.getElementById("confirm-password-input");
 const togglePasswordButton1 = document.getElementById("toggle-password");
 const togglePasswordButton2 = document.getElementById("toggle-password-2");
+const registerButton = document.getElementById("register-button");
 
 togglePasswordButton1.addEventListener('click',function(){
 
@@ -45,4 +47,32 @@ togglePasswordButton2.addEventListener('click',function(){
         togglePasswordButton2.style.backgroundSize = "20px";
     }
 
+});
+
+registerButton.addEventListener('click',async function(e){
+
+    e.preventDefault(); // Butonun sayfayı yenilemesini kapattım.
+
+    const email = emailInput.value.trim().toLowerCase().replaceAll(" ", "");
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    if(!email || !password || !confirmPassword){
+        // hata ekrana basılacak
+        return;
+    }
+
+    if(password != confirmPassword){
+        // hata ekrana basılacak
+        return;
+    }
+
+    try{
+
+        await register(email,password);
+
+    }catch(error){
+        // hata ekrana basılacak
+    }
+    
 });
