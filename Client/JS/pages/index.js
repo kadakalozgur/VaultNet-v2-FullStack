@@ -40,6 +40,8 @@ loginButton.addEventListener('click',async function(e){
 
         await login(email,password);
 
+        window.location.href = "dashboard.html";
+
     }catch(error){
         showAlert(alertBox,error.message,"danger");
         loginButton.disabled = false;
