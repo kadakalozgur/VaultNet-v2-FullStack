@@ -71,6 +71,8 @@ registerButton.addEventListener('click',async function(e){
 
         await register(email,password);
 
+        window.location.href = "index.html";
+
     }catch(error){
         // hata ekrana basılacak
     }
