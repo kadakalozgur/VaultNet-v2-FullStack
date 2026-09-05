@@ -11,3 +11,14 @@ function hideAlert(alertBox){
     alertBox.classList.add("d-none");
     
 }
+
+// API'den gelen .net'e özel validation errorlarını ui'a basmak için oluşturduğum fonksiyon
+function getApiErrorMessage(result){
+
+    if (result.errors && Object.keys(result.errors).length > 0) {
+        return Object.values(result.errors)[0][0];
+    }
+    
+    return result.message || "An unknown error occurred.";
+
+}

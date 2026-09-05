@@ -19,7 +19,7 @@ async function login(email,password){
         const result = await response.json();
 
         if(!response.ok){
-            throw new Error(result.message || "Login failed.");
+            throw new Error(getApiErrorMessage(result));
         }  
 
         if (result.data && result.data.token) {
@@ -53,7 +53,7 @@ async function register(email,password) {
         const result = await response.json();
 
         if(!response.ok){
-            throw new Error(result.message || "Registration failed.");
+            throw new Error(getApiErrorMessage(result));
         }
 
         return result ;
