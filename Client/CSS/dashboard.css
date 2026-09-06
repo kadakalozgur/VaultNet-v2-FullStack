@@ -35,3 +35,31 @@
     color: #4965fa;
     background-color: #e2e8ff;
 }
+
+/* Bu kısım bootstapten ayrı olarak yapıldı. Hazır olarak alınıp projeye dahil edildi. Kendim yazmadım*/
+.dashboard-row {
+    display: flex;
+    flex-wrap: wrap; 
+}
+
+.sidebar {
+    flex: 0 0 350px;   
+    max-width: 350px;
+    border-right: 1px solid #e5e7eb;
+}
+
+.main-content {
+    flex: 1 1 0;       
+    min-width: 0;      
+}
+
+@media (max-width: 991px) {
+    .dashboard-row {
+        flex-direction: column;
+    }
+    .sidebar {
+        flex: 1 1 auto;
+        max-width: 100%;
+    }
+}
+/* ----------------------------------------------------- */
