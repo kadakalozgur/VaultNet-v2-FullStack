@@ -26,7 +26,7 @@
     >
       <div class="row m-0 flex-grow-1 dashboard-row">
         <div
-          class="col-12 sidebar bg-white p-4"
+          class="col-12 sidebar bg-white p-4 d-flex flex-column"
           style="border-right: 1px solid #e5e7eb"
         >
           <h4 class="ml-1" style="color: #111827">
@@ -34,7 +34,7 @@
           </h4>
           <hr class="mt-4 mb-4" />
 
-          <nav class="nav flex-column">
+          <nav class="nav flex-column mb-auto">
             <a href="dashboard.html" class="custom-nav-link active">
               <img
                 src="Media/Icons/dashboard-active-icon.png"
@@ -52,6 +52,39 @@
               My Vault
             </a>
           </nav>
+          <div class="mt-auto">
+            <hr class="mb-3" style="opacity: 0.5" />
+
+            <a
+              href="#"
+              class="custom-nav-link d-flex justify-content-between align-items-center"
+              style="margin-bottom: 0"
+            >
+              <div class="d-flex align-items-center">
+                <img
+                  src="Media/Icons/avatar-icon.png"
+                  class="profile-avatar-img"
+                  alt="Profile"
+                />
+                <span class="ml-3" style="font-size: 16px; color: #111827"
+                  >My Profile</span
+                >
+              </div>
+
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#6b7280"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </a>
+          </div>
         </div>
         <div class="col-12 main-content p-4 p-lg-5"></div>
       </div>

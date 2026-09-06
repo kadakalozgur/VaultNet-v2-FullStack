@@ -36,6 +36,13 @@
     background-color: #e2e8ff;
 }
 
+.profile-avatar-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%; 
+    object-fit: cover;
+}
+
 /* Bu kısım bootstrapten ayrı olarak yapıldı. Hazır olarak alınıp projeye dahil edildi. Kendim yazmadım*/
 .dashboard-row {
     display: flex;
