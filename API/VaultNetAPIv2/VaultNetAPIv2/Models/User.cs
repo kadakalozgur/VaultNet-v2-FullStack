@@ -24,5 +24,8 @@ namespace VaultNetAPIv2.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        [MaxLength(2048, ErrorMessage = "Profile url can be a maximum of 2048 characters long.")]
+        public string? ProfilePictureUrl { get; set; }
+
     }
 }
