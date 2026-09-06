@@ -36,7 +36,7 @@
     background-color: #e2e8ff;
 }
 
-/* Bu kısım bootstapten ayrı olarak yapıldı. Hazır olarak alınıp projeye dahil edildi. Kendim yazmadım*/
+/* Bu kısım bootstrapten ayrı olarak yapıldı. Hazır olarak alınıp projeye dahil edildi. Kendim yazmadım*/
 .dashboard-row {
     display: flex;
     flex-wrap: wrap; 
