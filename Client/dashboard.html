@@ -17,40 +17,43 @@
     />
     <link rel="stylesheet" href="CSS/dashboard.css" />
   </head>
-  <body class="dashboard-background min-vh-100">
-    <div class="container-fluid p-0">
-      <div class="row m-0 min-vh-100">
-        <div class="col-12 col-lg-3 p-3 p-lg-4">
-          <div
-            class="card h-100 shadow border-0"
-            style="
-              background-color: rgba(255, 255, 255, 0.7);
-              border-radius: 24px;
-            "
-          >
-            <div class="card-body">
-              <h2 class="card-title text-center mt-3">
-                VaultNet
-                <span style="color: #4965fa">v2</span>
-              </h2>
+  <body
+    class="dashboard-background min-vh-100 p-2 p-lg-4 d-flex align-items-stretch"
+  >
+    <div
+      class="container-fluid p-0 shadow-lg d-flex flex-column animate__animated animate__fadeIn animate__faster"
+      style="border-radius: 24px; overflow: hidden; background-color: #f8fafc"
+    >
+      <div class="row m-0 flex-grow-1">
+        <div
+          class="col-12 col-lg-2 bg-white p-4"
+          style="border-right: 1px solid #e5e7eb"
+        >
+          <h4 class="ml-1" style="color: #111827">
+            VaultNet <span style="color: #4965fa">v2</span>
+          </h4>
+          <hr class="mt-4 mb-4" />
 
-              <hr />
-              <p class="card-text">Dashboard</p>
-            </div>
-          </div>
+          <nav class="nav flex-column">
+            <a href="dashboard.html" class="custom-nav-link active">
+              <img
+                src="Media/Icons/dashboard-active-icon.png"
+                class="nav-icon"
+                alt="Dashboard"
+              />
+              Dashboard
+            </a>
+            <a href="#" class="custom-nav-link">
+              <img
+                src="Media/Icons/myvault-icon.png"
+                class="nav-icon"
+                alt="My Vault"
+              />
+              My Vault
+            </a>
+          </nav>
         </div>
-
-        <div class="col-12 col-lg-9 p-3 p-lg-4">
-          <div
-            class="card h-100 shadow border-0"
-            style="
-              background-color: rgba(255, 255, 255, 0.7);
-              border-radius: 24px;
-            "
-          >
-            <div class="card-body"></div>
-          </div>
-        </div>
+        <div class="col-12 col-lg-10 p-4 p-lg-5"></div>
       </div>
     </div>
 
