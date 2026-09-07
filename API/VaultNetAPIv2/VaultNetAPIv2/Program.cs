@@ -13,6 +13,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
+builder.Services.AddScoped<IStorageService, SupabaseStorageService>();
+
+// Supabase Konfigürasyonu
+var supabaseUrl = builder.Configuration["Supabase:Url"];
+var supabaseKey = builder.Configuration["Supabase:Key"];
+var options = new Supabase.SupabaseOptions { AutoConnectRealtime = false };
+builder.Services.AddSingleton(new Supabase.Client(supabaseUrl, supabaseKey, options));
 
 // JWT için bölüm. Hazýr olarak alýndý.
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
