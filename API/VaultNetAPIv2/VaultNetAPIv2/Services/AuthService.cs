@@ -101,11 +101,7 @@ namespace VaultNetAPIv2.Services
                 StatusCode = 200,
                 Data = new
                 {
-                    Token = token,
-                    Id = user.Id,
-                    Email = user.Email,
-                    IsActive = user.IsActive,
-                    CreatedAt = user.CreatedAt
+                    Token = token
                 },
                 Message = "The login process was successfully completed."
             };

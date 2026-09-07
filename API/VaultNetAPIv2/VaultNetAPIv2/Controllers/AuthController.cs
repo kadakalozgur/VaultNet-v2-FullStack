@@ -25,12 +25,8 @@ namespace VaultNetAPIv2.Controllers
 
             var result = await _authService.RegisterAsync(registerDto);
 
-            return StatusCode(result.StatusCode, new
-            {
-                IsSuccess = result.IsSuccess,
-                Message = result.Message
-            });
-            
+            return StatusCode(result.StatusCode, result);
+
         }
 
         [HttpPost("login")]
@@ -39,12 +35,7 @@ namespace VaultNetAPIv2.Controllers
 
             var result = await _authService.LoginAsync(loginDto);
 
-            return StatusCode(result.StatusCode, new
-            {
-                IsSuccess = result.IsSuccess,
-                Data = result.Data,
-                Message = result.Message
-            });
+            return StatusCode(result.StatusCode, result);
 
         }
     }
