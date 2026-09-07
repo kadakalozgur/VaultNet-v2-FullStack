@@ -35,7 +35,26 @@ namespace VaultNetAPIv2.Controllers
 
             var result = await _authService.LoginAsync(loginDto);
 
-            return StatusCode(result.StatusCode, result);
+            if (result.IsSuccess)
+            {
+
+                var tokenValue = result.Data.GetType().GetProperty("Token").GetValue(result.Data, null).ToString();
+
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true, 
+                    SameSite = SameSiteMode.Strict, 
+                    Expires = DateTime.UtcNow.AddMinutes(15) // You must make this the same as your JWT's expiration date.
+                };
+
+                Response.Cookies.Append("jwt_token", tokenValue, cookieOptions);
+
+                result.Data = null; // Tokenı dışarıya yollamamak için.
+
+            }
+
+            return StatusCode(result.StatusCode,result);
 
         }
     }

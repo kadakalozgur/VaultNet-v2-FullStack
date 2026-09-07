@@ -1,6 +1,6 @@
 const CONFIG = {
 
-    API_BASE_URL: "https://localhost:7020/api", 
+    API_BASE_URL: "http://localhost:5203/api", 
 
     ENDPOINTS: {
         REGISTER: "/Auth/register",

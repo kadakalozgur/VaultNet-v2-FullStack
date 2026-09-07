@@ -8,7 +8,7 @@ async function login(email,password){
                 headers: {
                     "Content-Type": "application/json"
                 },
-
+                credentials: "include",
                 body: JSON.stringify({
                     email: email,
                     password: password
@@ -21,10 +21,6 @@ async function login(email,password){
         if(!response.ok){
             throw new Error(getApiErrorMessage(result));
         }  
-
-        if (result.data && result.data.token) {
-                sessionStorage.setItem("token", result.data.token);
-        }
 
         return result;
 
