@@ -50,7 +50,11 @@ savePhotoModalButton.addEventListener('click', async function(e) {
 
         await updateProfilePicture(file);
 
+        sessionStorage.removeItem("user_profile");
+
         $('#changePhotoModal').modal('hide');
+
+        location.reload();
 
     }catch(error){
         alert(error.message);
