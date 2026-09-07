@@ -2,6 +2,7 @@
 
 const openPhotoModalButton = document.getElementById("open-photo-modal-button");
 const cancelPhotoModalButton = document.getElementById("cancel-photo-modal-button");
+const savePhotoModalButton = document.getElementById("save-photo-button");
 const fileLabelPhotoModal = document.getElementById("file-label-photo-modal");
 const fileInput = document.getElementById("customFile");
 const previewImagePhotoModal = document.getElementById("previewAvatar");
@@ -35,4 +36,29 @@ fileInput.addEventListener("change", function() {
         previewImagePhotoModal.src = imageSource;
 
     }
+});
+
+savePhotoModalButton.addEventListener('click', async function(e) {
+    
+    e.preventDefault();
+
+    const file = fileInput.files[0];
+
+    savePhotoModalButton.disabled = true;
+
+    try{
+
+        await updateProfilePicture(file);
+
+        $('#changePhotoModal').modal('hide');
+
+    }catch(error){
+        alert(error.message);
+    } finally{
+        savePhotoModalButton.disabled = false;
+        fileInput.value = "";
+        fileLabelPhotoModal.innerText = "Choose file...";
+        previewImagePhotoModal.src = "Media/Icons/avatar-icon.png";     
+    }
+
 });

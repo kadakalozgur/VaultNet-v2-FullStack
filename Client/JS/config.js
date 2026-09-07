@@ -4,7 +4,8 @@ const CONFIG = {
 
     ENDPOINTS: {
         REGISTER: "/Auth/register",
-        LOGIN: "/Auth/login"
+        LOGIN: "/Auth/login",
+        UPDATE_PROFILE_PICTURE: "/UserProfile/update-profile-picture"
     }
 
 };
