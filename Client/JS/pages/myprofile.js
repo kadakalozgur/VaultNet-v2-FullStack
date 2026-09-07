@@ -66,3 +66,41 @@ savePhotoModalButton.addEventListener('click', async function(e) {
     }
 
 });
+
+// E-mail değiştirme modal kısmı
+
+const openEmailModalButton = document.getElementById("open-email-modal-button");
+const cancelEmailModalButton = document.getElementById("cancel-email-modal-button");
+const saveEmailModalButton = document.getElementById("save-email-button");
+const newEmailInput = document.getElementById("new-email-input");
+const emailModalAlert = document.getElementById("email-modal-alert");
+
+openEmailModalButton.addEventListener('click', function() {
+    $('#changeEmailModal').modal('show');
+});
+
+cancelEmailModalButton.addEventListener("click", function() {
+    $('#changeEmailModal').modal('hide');
+    newEmailInput.value = "";
+    hideAlert(emailModalAlert);
+});
+
+// Şimdilik sadece input kontrolü yapıyor. (değişecek)
+saveEmailModalButton.addEventListener('click', async function(e) {
+
+    e.preventDefault();
+
+    hideAlert(emailModalAlert);
+
+    const newEmail = newEmailInput.value.trim().toLowerCase().replaceAll(" ", "")
+
+    if (!newEmail) {
+        showAlert(emailModalAlert, "Please enter a valid email address.", "warning");
+        return;
+    }
+
+    saveEmailModalButton.disabled = true;
+
+    // API işlemleri buraya gelecek
+
+});

@@ -144,7 +144,10 @@
                   >
                 </div>
               </div>
-              <button class="btn btn-outline-custom-blue font-weight-bold">
+              <button
+                class="btn btn-outline-custom-blue font-weight-bold"
+                id="open-email-modal-button"
+              >
                 Change Email
               </button>
             </div>
@@ -210,6 +213,8 @@
     </div>
 
     <!--Modal Kısımları -->
+
+    <!--Change Profile Picture Modal Kısımı -->
     <div class="modal fade" id="changePhotoModal">
       <div class="modal-dialog modal-dialog-centered">
         <div
@@ -266,6 +271,66 @@
             <button
               type="button"
               id="save-photo-button"
+              class="btn text-white font-weight-bold px-4"
+              style="background-color: #4965fa; border-radius: 8px"
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Change Email Modal Kısımı -->
+    <div class="modal fade" id="changeEmailModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content border-0 shadow-lg"
+          style="border-radius: 16px"
+        >
+          <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+            <h5 class="modal-title font-weight-bold text-dark">
+              Update Email Address
+            </h5>
+          </div>
+
+          <div class="modal-body px-4 py-3">
+            <p class="text-muted mb-4" style="font-size: 14px">
+              Enter your new email address below.
+            </p>
+
+            <div
+              id="email-modal-alert"
+              class="alert d-none animate__animated animate__fadeIn"
+              role="alert"
+            ></div>
+
+            <div class="form-group">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >New Email</label
+              >
+              <input
+                type="email"
+                id="new-email-input"
+                class="form-control"
+                placeholder="new@example.com"
+                style="border-radius: 7px; color: #334155"
+              />
+            </div>
+          </div>
+
+          <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+            <button
+              type="button"
+              class="btn btn-outline-secondary font-weight-bold px-4 close-modal-btn"
+              style="border-radius: 8px"
+              id="cancel-email-modal-button"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              id="save-email-button"
               class="btn text-white font-weight-bold px-4"
               style="background-color: #4965fa; border-radius: 8px"
             >
