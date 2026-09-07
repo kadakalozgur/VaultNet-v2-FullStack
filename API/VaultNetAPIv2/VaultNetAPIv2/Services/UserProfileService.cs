@@ -75,6 +75,11 @@ namespace VaultNetAPIv2.Services
                 };
             }
 
+            var oldPictureUrl = await _context.Users
+                .Where(user => user.Id == userId && user.IsActive)
+                .Select(user => user.ProfilePictureUrl)
+                .FirstOrDefaultAsync();
+
             var imageUrl = await _storageService.UploadFileAsync(photo, "avatars");
 
             if (string.IsNullOrEmpty(imageUrl))
@@ -90,6 +95,11 @@ namespace VaultNetAPIv2.Services
             await _context.Users
                 .Where(user => user.Id == userId && user.IsActive)
                 .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.ProfilePictureUrl, imageUrl));
+
+            if (!string.IsNullOrEmpty(oldPictureUrl))
+            {
+                await _storageService.DeleteFileAsync(oldPictureUrl);
+            }
 
             return new ServiceResult
             {
