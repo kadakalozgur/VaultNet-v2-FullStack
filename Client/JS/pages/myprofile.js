@@ -6,6 +6,7 @@ const savePhotoModalButton = document.getElementById("save-photo-button");
 const fileLabelPhotoModal = document.getElementById("file-label-photo-modal");
 const fileInput = document.getElementById("customFile");
 const previewImagePhotoModal = document.getElementById("previewAvatar");
+const photoModalAlert = document.getElementById("photo-modal-alert");
 
 openPhotoModalButton.addEventListener('click' ,function(){
     $('#changePhotoModal').modal('show');
@@ -16,9 +17,12 @@ cancelPhotoModalButton.addEventListener("click", function() {
     fileInput.value = "";
     fileLabelPhotoModal.innerText = "Choose file...";
     previewImagePhotoModal.src = "Media/Icons/avatar-icon.png";
+    hideAlert(photoModalAlert);
 });
 
 fileInput.addEventListener("change", function() {
+
+    hideAlert(photoModalAlert);
 
     const file = fileInput.files[0];
     
@@ -26,7 +30,7 @@ fileInput.addEventListener("change", function() {
 
         if(!file.type.startsWith('image/')){
             fileInput.value = "";
-            alert("Please select a valid image file (JPG, PNG...).");
+            showAlert(photoModalAlert, "Please select a valid image file (JPG, PNG...).", "warning");
             return;
         }
 
@@ -42,10 +46,12 @@ savePhotoModalButton.addEventListener('click', async function(e) {
     
     e.preventDefault();
 
+    hideAlert(photoModalAlert);
+
     const file = fileInput.files[0];
 
     if (!file) {
-        alert("Please select a photo before saving."); 
+        showAlert(photoModalAlert, "Please select a valid image file.", "warning");
         return;
     }
 
@@ -62,7 +68,7 @@ savePhotoModalButton.addEventListener('click', async function(e) {
         location.reload();
 
     }catch(error){
-        alert(error.message);
+        showAlert(photoModalAlert,error.message,"danger");
     } finally{
         savePhotoModalButton.disabled = false;
         fileInput.value = "";
