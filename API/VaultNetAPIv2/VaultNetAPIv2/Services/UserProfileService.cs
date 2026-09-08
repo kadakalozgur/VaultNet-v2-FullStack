@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VaultNetAPIv2.Data;
+using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Results;
 using VaultNetAPIv2.Services.Interfaces;
 
@@ -110,6 +111,50 @@ namespace VaultNetAPIv2.Services
                     ProfilePictureUrl = imageUrl
                 },
                 Message = "Profile picture updated successfully."
+            };
+
+        }
+
+        public async Task<ServiceResult> UpdateEmailAsync(Guid userId, UpdateEmailDto updateEmailDto)
+        {
+
+            bool isUserExist = await _context.Users.AnyAsync(user => user.Id == userId && user.IsActive);
+
+            if (!isUserExist)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "No such user was found."
+                };
+            }
+
+            var newEmail = updateEmailDto.NewEmail.Trim().ToLower().Replace(" ", "");
+
+            bool isEmailExist = await _context.Users.AnyAsync(user => user.Email == newEmail);
+
+            if (isEmailExist)
+            {
+
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 409,
+                    Message = "This email is already in use."
+                };
+
+            }
+
+            await _context.Users
+                .Where(user => user.Id == userId && user.IsActive)
+                .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.Email, newEmail));
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "The email address has been successfully updated."
             };
 
         }
