@@ -55,3 +55,32 @@ async function getProfileWithCache() {
     }
 
 }
+
+async function updateEmail(newEmailAddress) {
+    
+    try{
+
+        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.UPDATE_EMAIL_ADDRESS,{
+
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({newEmail: newEmailAddress})
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result;
+
+
+    }catch(error){
+        throw error;
+    }
+
+}

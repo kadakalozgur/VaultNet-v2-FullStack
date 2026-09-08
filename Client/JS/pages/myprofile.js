@@ -85,7 +85,6 @@ cancelEmailModalButton.addEventListener("click", function() {
     hideAlert(emailModalAlert);
 });
 
-// Şimdilik sadece input kontrolü yapıyor. (değişecek)
 saveEmailModalButton.addEventListener('click', async function(e) {
 
     e.preventDefault();
@@ -101,6 +100,21 @@ saveEmailModalButton.addEventListener('click', async function(e) {
 
     saveEmailModalButton.disabled = true;
 
-    // API işlemleri buraya gelecek
+    try{
+
+        await updateEmail(newEmail);
+
+        sessionStorage.removeItem("user-profile");
+
+        $('#changeEmailModal').modal('hide');
+
+        location.reload();
+
+    }catch(error){
+        showAlert(emailModalAlert,error.message,"danger");
+    }finally{
+        saveEmailModalButton.disabled = false;
+        newEmailInput.value = "";
+    }
 
 });
