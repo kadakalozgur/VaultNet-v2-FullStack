@@ -6,7 +6,8 @@ namespace VaultNetAPIv2.DTOs
     {
 
         [Required(ErrorMessage = "An email address is required.")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
+        [EmailAddress(ErrorMessage = "Invalid email address format.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email address format.")]
         [MaxLength(150, ErrorMessage = "Email addresses can be a maximum of 150 characters long.")]
         public string Email { get; set; }
 
