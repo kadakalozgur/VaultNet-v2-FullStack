@@ -37,7 +37,7 @@ namespace VaultNetAPIv2.Controllers
 
         }
 
-        [HttpPost("update-profile-picture")]
+        [HttpPut("update-profile-picture")]
         public async Task<IActionResult> UpdateProfilePicture(IFormFile photo)
         {
 

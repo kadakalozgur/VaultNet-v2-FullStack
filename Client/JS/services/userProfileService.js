@@ -6,7 +6,7 @@ async function updateProfilePicture(photoFile) {
         formData.append("photo", photoFile);
 
         const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.UPDATE_PROFILE_PICTURE,{
-            method: "POST",
+            method: "PUT",
             credentials: "include",
             body: formData
         }); 
