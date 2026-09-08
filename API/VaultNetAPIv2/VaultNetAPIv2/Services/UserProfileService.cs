@@ -51,8 +51,10 @@ namespace VaultNetAPIv2.Services
 
         }
 
-        public async Task<ServiceResult> UpdateProfilePictureAsync(Guid userId, IFormFile photo)
+        public async Task<ServiceResult> UpdateProfilePictureAsync(Guid userId, UpdateProfilePictureDto updateProfilePictureDto)
         {
+
+            var photo = updateProfilePictureDto.Photo;
 
             if (photo == null || photo.Length == 0)
             {

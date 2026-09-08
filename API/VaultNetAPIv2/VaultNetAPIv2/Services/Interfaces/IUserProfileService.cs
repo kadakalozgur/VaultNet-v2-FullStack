@@ -7,7 +7,7 @@ namespace VaultNetAPIv2.Services.Interfaces
     {
         Task<ServiceResult> GetUserProfileAsync(Guid userId);
 
-        Task<ServiceResult> UpdateProfilePictureAsync(Guid userId, IFormFile photo);
+        Task<ServiceResult> UpdateProfilePictureAsync(Guid userId, UpdateProfilePictureDto updateProfilePictureDto);
 
         Task<ServiceResult> UpdateEmailAsync(Guid userId,UpdateEmailDto updateEmailDto);
 

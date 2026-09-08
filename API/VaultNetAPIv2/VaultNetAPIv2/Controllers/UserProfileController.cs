@@ -38,7 +38,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPut("update-profile-picture")]
-        public async Task<IActionResult> UpdateProfilePicture(IFormFile photo)
+        public async Task<IActionResult> UpdateProfilePicture([FromForm] UpdateProfilePictureDto updateProfilePictureDto)
         {
 
             var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -48,7 +48,7 @@ namespace VaultNetAPIv2.Controllers
                 return Unauthorized(new { Message = "Invalid or missing user identity." });
             }
 
-            var result = await _userProfileService.UpdateProfilePictureAsync(userId, photo);
+            var result = await _userProfileService.UpdateProfilePictureAsync(userId, updateProfilePictureDto);
 
             return StatusCode(result.StatusCode, result);
 
