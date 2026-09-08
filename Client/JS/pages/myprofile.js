@@ -44,6 +44,11 @@ savePhotoModalButton.addEventListener('click', async function(e) {
 
     const file = fileInput.files[0];
 
+    if (!file) {
+        alert("Please select a photo before saving."); 
+        return;
+    }
+
     savePhotoModalButton.disabled = true;
 
     try{
@@ -104,7 +109,7 @@ saveEmailModalButton.addEventListener('click', async function(e) {
 
         await updateEmail(newEmail);
 
-        sessionStorage.removeItem("user-profile");
+        sessionStorage.removeItem("user_profile");
 
         $('#changeEmailModal').modal('hide');
 

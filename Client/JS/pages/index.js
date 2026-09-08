@@ -34,6 +34,12 @@ loginButton.addEventListener('click',async function(e){
         return;
     }
 
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        showAlert(alertBox, "Invalid email address format.", "warning");
+        return;
+    }
+
     loginButton.disabled = true;
 
     try{

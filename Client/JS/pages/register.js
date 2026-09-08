@@ -65,10 +65,26 @@ registerButton.addEventListener('click',async function(e){
         return;
     }
 
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        showAlert(alertBox, "Invalid email address format.", "warning");
+        return;
+    }
+
+    if(password.length < 8){
+        showAlert(alertBox, "Password must be at least 8 characters long.", "warning");
+        return;
+    }
+
+    if(password.length >64){
+        showAlert(alertBox, "Passwords can be a maximum of 64 characters long.", "warning");
+        return;
+    }
+
     if(password != confirmPassword){
         showAlert(alertBox,"The passwords don't match.","danger");
         return;
-    }
+    }  
 
     registerButton.disabled = true;
 
