@@ -175,7 +175,7 @@
                   >
                 </div>
               </div>
-              <button class="btn btn-outline-custom-blue font-weight-bold">
+              <button class="btn btn-outline-custom-blue font-weight-bold" id="open-password-modal-button">
                 Change Password
               </button>
             </div>
@@ -341,6 +341,116 @@
               style="background-color: #4965fa; border-radius: 8px"
             >
               Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Change Password Modal Kısımı -->
+    <div class="modal fade" id="changePasswordModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content border-0 shadow-lg"
+          style="border-radius: 16px"
+        >
+          <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+            <h5 class="modal-title font-weight-bold text-dark">
+              Update Password
+            </h5>
+          </div>
+
+          <div class="modal-body px-4 py-3">
+            <p class="text-muted mb-4" style="font-size: 14px">
+              Please enter your current password and choose a new secure password.
+            </p>
+
+            <div
+              id="password-modal-alert"
+              class="alert d-none animate__animated animate__fadeIn"
+              role="alert"
+            ></div>
+
+            <div class="form-group">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Current Password</label
+              >
+              <div class="position-relative">
+                <input
+                  type="password"
+                  id="current-password-input"
+                  class="form-control password-input-icon"
+                  placeholder="Enter current password"
+                  style="border-radius: 7px; color: #334155"
+                />
+                <img
+                  src="Media/Icons/open-eye-icon.png"
+                  class="password-eye-icon"
+                  id="toggle-current-password"
+                  alt="Toggle Password"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >New Password</label
+              >
+              <div class="position-relative">
+                <input
+                  type="password"
+                  id="new-password-input"
+                  class="form-control password-input-icon"
+                  placeholder="Enter new password"
+                  style="border-radius: 7px; color: #334155"
+                />
+                <img
+                  src="Media/Icons/open-eye-icon.png"
+                  class="password-eye-icon"
+                  id="toggle-new-password"
+                  alt="Toggle Password"
+                />
+              </div>
+            </div>
+
+            <div class="form-group mb-0">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Confirm New Password</label
+              >
+              <div class="position-relative">
+                <input
+                  type="password"
+                  id="confirm-password-input"
+                  class="form-control password-input-icon"
+                  placeholder="Confirm new password"
+                  style="border-radius: 7px; color: #334155"
+                />
+                <img
+                  src="Media/Icons/open-eye-icon.png"
+                  class="password-eye-icon"
+                  id="toggle-confirm-password"
+                  alt="Toggle Password"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer border-top-0 pt-3 pb-4 px-4">
+            <button
+              type="button"
+              class="btn btn-outline-secondary font-weight-bold px-4 close-modal-btn"
+              style="border-radius: 8px"
+              id="cancel-password-modal-button"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              id="save-password-button"
+              class="btn text-white font-weight-bold px-4"
+              style="background-color: #4965fa; border-radius: 8px"
+            >
+              Update Password
             </button>
           </div>
         </div>

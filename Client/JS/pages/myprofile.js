@@ -129,3 +129,100 @@ saveEmailModalButton.addEventListener('click', async function(e) {
     }
 
 });
+
+// Şifre değiştirme modal kısmı
+
+const openPasswordModalButton = document.getElementById("open-password-modal-button");
+const currentPasswordInput = document.getElementById("current-password-input");
+const newPasswordInput = document.getElementById("new-password-input");
+const confirmPasswordInput = document.getElementById("confirm-password-input");
+const toggleCurrentPasswordButton = document.getElementById("toggle-current-password");
+const toggleNewPasswordButton = document.getElementById("toggle-new-password");
+const toggleConfirmPasswordButton = document.getElementById("toggle-confirm-password");
+const cancelPasswordModalButton = document.getElementById("cancel-password-modal-button");
+const savePasswordModalButton = document.getElementById("save-password-button");
+const passwordModalAlert = document.getElementById("password-modal-alert");
+
+openPasswordModalButton.addEventListener('click', function() {
+    $('#changePasswordModal').modal('show');
+});
+
+cancelPasswordModalButton.addEventListener("click", function() {
+    $('#changePasswordModal').modal('hide');
+    currentPasswordInput.value = "";
+    newPasswordInput.value = "";
+    confirmPasswordInput.value = "";
+
+    // Göz İconları
+    currentPasswordInput.type = 'password';
+    toggleCurrentPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+    newPasswordInput.type = 'password';
+    toggleNewPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+    confirmPasswordInput.type = 'password';
+    toggleConfirmPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+
+    hideAlert(passwordModalAlert);
+
+});
+
+toggleCurrentPasswordButton.addEventListener('click',function(){
+
+    if(currentPasswordInput.type == 'password'){
+        currentPasswordInput.type = 'text';
+        toggleCurrentPasswordButton.style.backgroundImage = "url('../Media/Icons/close-eye-icon.png')";
+        toggleCurrentPasswordButton.style.backgroundSize = "20px";
+    }
+
+    else{
+        currentPasswordInput.type = 'password';
+        toggleCurrentPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+        toggleCurrentPasswordButton.style.backgroundSize = "20px";
+    }
+
+});
+
+toggleNewPasswordButton.addEventListener('click',function(){
+
+    if(newPasswordInput.type == 'password'){
+        newPasswordInput.type = 'text';
+        toggleNewPasswordButton.style.backgroundImage = "url('../Media/Icons/close-eye-icon.png')";
+        toggleNewPasswordButton.style.backgroundSize = "20px";
+        confirmPasswordInput.type = 'text';
+        toggleConfirmPasswordButton.style.backgroundImage = "url('../Media/Icons/close-eye-icon.png')";
+        toggleConfirmPasswordButton.style.backgroundSize = "20px";
+    }
+
+    else{
+        newPasswordInput.type = 'password';
+        toggleNewPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+        toggleNewPasswordButton.style.backgroundSize = "20px";
+        confirmPasswordInput.type = 'password';
+        toggleConfirmPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+        toggleConfirmPasswordButton.style.backgroundSize = "20px";
+    }
+
+});
+
+toggleConfirmPasswordButton.addEventListener('click',function(){
+
+    if(confirmPasswordInput.type == 'password'){
+        newPasswordInput.type = 'text';
+        toggleNewPasswordButton.style.backgroundImage = "url('../Media/Icons/close-eye-icon.png')";
+        toggleNewPasswordButton.style.backgroundSize = "20px";
+        confirmPasswordInput.type = 'text';
+        toggleConfirmPasswordButton.style.backgroundImage = "url('../Media/Icons/close-eye-icon.png')";
+        toggleConfirmPasswordButton.style.backgroundSize = "20px";
+    }
+
+    else{
+        newPasswordInput.type = 'password';
+        toggleNewPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+        toggleNewPasswordButton.style.backgroundSize = "20px";
+        confirmPasswordInput.type = 'password';
+        toggleConfirmPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+        toggleConfirmPasswordButton.style.backgroundSize = "20px";
+    }
+
+});
+
+

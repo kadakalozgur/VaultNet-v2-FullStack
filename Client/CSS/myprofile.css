@@ -14,3 +14,21 @@
     color: #ffffff;
     background-color: #4965fa;
 }
+
+.password-eye-icon{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    cursor: pointer;
+}
+
+.password-input-icon{
+    background-image: url('../Media/Icons/lock-icon.png');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: 21px;
+    padding-left: 40px;
+    padding-right: 45px;
+}
