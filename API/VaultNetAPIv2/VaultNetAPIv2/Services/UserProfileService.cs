@@ -66,9 +66,13 @@ namespace VaultNetAPIv2.Services
                 };
             }
 
-            bool isUserExist = await _context.Users.AnyAsync(user => user.Id == userId && user.IsActive);
+            var user = await _context.Users
+                .AsNoTracking()
+                .Where(user => user.Id == userId && user.IsActive)
+                .Select(user => new { user.ProfilePictureUrl })
+                .FirstOrDefaultAsync();
 
-            if (!isUserExist)
+            if (user == null)
             {
                 return new ServiceResult
                 {
@@ -77,11 +81,6 @@ namespace VaultNetAPIv2.Services
                     Message = "No such user was found."
                 };
             }
-
-            var oldPictureUrl = await _context.Users
-                .Where(user => user.Id == userId && user.IsActive)
-                .Select(user => user.ProfilePictureUrl)
-                .FirstOrDefaultAsync();
 
             var imageUrl = await _storageService.UploadFileAsync(photo, "avatars");
 
@@ -99,9 +98,9 @@ namespace VaultNetAPIv2.Services
                 .Where(user => user.Id == userId && user.IsActive)
                 .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.ProfilePictureUrl, imageUrl));
 
-            if (!string.IsNullOrEmpty(oldPictureUrl))
+            if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
             {
-                await _storageService.DeleteFileAsync(oldPictureUrl);
+                await _storageService.DeleteFileAsync(user.ProfilePictureUrl);
             }
 
             return new ServiceResult
@@ -119,19 +118,7 @@ namespace VaultNetAPIv2.Services
 
         public async Task<ServiceResult> UpdateEmailAsync(Guid userId, UpdateEmailDto updateEmailDto)
         {
-
-            bool isUserExist = await _context.Users.AnyAsync(user => user.Id == userId && user.IsActive);
-
-            if (!isUserExist)
-            {
-                return new ServiceResult
-                {
-                    IsSuccess = false,
-                    StatusCode = 404,
-                    Message = "No such user was found."
-                };
-            }
-
+         
             var newEmail = updateEmailDto.NewEmail.Trim().ToLower().Replace(" ", "");
 
             bool isEmailExist = await _context.Users.AnyAsync(user => user.Email == newEmail);
@@ -148,9 +135,19 @@ namespace VaultNetAPIv2.Services
 
             }
 
-            await _context.Users
+            var affectedRows = await _context.Users
                 .Where(user => user.Id == userId && user.IsActive)
                 .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.Email, newEmail));
+
+            if(affectedRows == 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "No such user was found."
+                };
+            }
 
             return new ServiceResult
             {
