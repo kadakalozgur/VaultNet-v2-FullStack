@@ -11,5 +11,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> UpdateEmailAsync(Guid userId,UpdateEmailDto updateEmailDto);
 
+        Task<ServiceResult> ChangePasswordAsync(Guid userId, ChangePasswordDto changePasswordDto);
+
     }
 }
