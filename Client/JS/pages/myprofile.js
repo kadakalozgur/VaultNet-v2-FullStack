@@ -153,7 +153,7 @@ cancelPasswordModalButton.addEventListener("click", function() {
     newPasswordInput.value = "";
     confirmPasswordInput.value = "";
 
-    // Göz İconları
+    // Göz İconları ve input tipleri
     currentPasswordInput.type = 'password';
     toggleCurrentPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
     newPasswordInput.type = 'password';
@@ -221,6 +221,70 @@ toggleConfirmPasswordButton.addEventListener('click',function(){
         confirmPasswordInput.type = 'password';
         toggleConfirmPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
         toggleConfirmPasswordButton.style.backgroundSize = "20px";
+    }
+
+});
+
+savePasswordModalButton.addEventListener('click', async function(e) {
+
+    e.preventDefault();
+
+    hideAlert(passwordModalAlert);
+
+    const currentPassword = currentPasswordInput.value;
+    const newPassword = newPasswordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    if(!currentPassword || !newPassword || !confirmPassword){
+        showAlert(passwordModalAlert, "Please fill in all fields completely.", "warning");
+        return;
+    }
+
+    if(newPassword.length < 8) {
+        showAlert(passwordModalAlert, "Password must be at least 8 characters long.", "warning");
+        return;
+    }
+
+    if(newPassword.length > 64) {
+        showAlert(passwordModalAlert, "Passwords can be a maximum of 64 characters long.", "warning");
+        return;
+    }
+
+    if(currentPassword == newPassword){
+        showAlert(passwordModalAlert, "Your new password cannot be the same as your old password.", "warning");
+        return;
+    }
+
+    if(newPassword != confirmPassword){
+        showAlert(passwordModalAlert, "The new password and password confirmation do not match.", "warning");
+        return;
+    }
+
+    savePasswordModalButton.disabled = true;
+
+    try{
+
+        await changePassword(currentPassword,newPassword)
+
+        $('#changePasswordModal').modal('hide'); 
+        
+        currentPasswordInput.value = "";
+        newPasswordInput.value = "";
+        confirmPasswordInput.value = "";
+
+        // Göz İconları ve input tipleri
+        currentPasswordInput.type = 'password';
+        toggleCurrentPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+        newPasswordInput.type = 'password';
+        toggleNewPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+        confirmPasswordInput.type = 'password';
+        toggleConfirmPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+
+
+    }catch(error){
+        showAlert(passwordModalAlert,error.message,"danger");
+    }finally{
+        savePasswordModalButton.disabled = false;    
     }
 
 });

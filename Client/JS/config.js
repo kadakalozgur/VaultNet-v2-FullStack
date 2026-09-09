@@ -7,7 +7,8 @@ const CONFIG = {
         LOGIN: "/Auth/login",
         UPDATE_PROFILE_PICTURE: "/UserProfile/update-profile-picture",
         GET_USER_PROFILE : "/UserProfile/profile",
-        UPDATE_EMAIL_ADDRESS: "/UserProfile/update-email-address"
+        UPDATE_EMAIL_ADDRESS: "/UserProfile/update-email-address",
+        CHANGE_PASSWORD: "/UserProfile/change-password"
     }
 
 };
