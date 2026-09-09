@@ -87,5 +87,22 @@ namespace VaultNetAPIv2.Controllers
             return StatusCode(result.StatusCode, result);
 
         }
+
+        [HttpDelete("delete-account")]
+        public async Task<IActionResult> DeleteAccount([FromBody] DeleteAccountDto deleteAccountDto)
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _userProfileService.DeleteAccountAsync(userId,deleteAccountDto);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
     }
 }
