@@ -13,5 +13,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> ChangePasswordAsync(Guid userId, ChangePasswordDto changePasswordDto);
 
+        Task<ServiceResult> DeleteAccountAsync(Guid userId, DeleteAccountDto deleteAccountDto);
+
     }
 }
