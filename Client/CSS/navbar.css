@@ -62,4 +62,19 @@
         max-width: 100%;
     }
 }
+
+@media (min-width: 992px) {
+    .dashboard-row {
+        height: calc(100vh - 3rem);
+    }
+
+    .sidebar {
+        height: 100%;
+    }
+
+    .main-content {
+        height: 100%;
+        overflow-y: auto;
+    }
+}
 /* ----------------------------------------------------- */
