@@ -58,3 +58,28 @@ async function register(email,password) {
         throw error;
     }
 }
+
+async function logout() {
+    
+    try{
+
+        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.LOGOUT,
+            {
+                method: "POST",
+                credentials: "include"
+            }
+        );
+
+        const result = await response.json();
+
+        if(!response.ok){
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result ;
+
+    }catch(error){
+        throw error;
+    }
+
+}
