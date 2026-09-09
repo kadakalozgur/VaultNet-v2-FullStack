@@ -101,6 +101,11 @@ namespace VaultNetAPIv2.Controllers
 
             var result = await _userProfileService.DeleteAccountAsync(userId,deleteAccountDto);
 
+            if (result.IsSuccess)
+            {
+                Response.Cookies.Delete("jwt_token");
+            }
+
             return StatusCode(result.StatusCode, result);
 
         }
