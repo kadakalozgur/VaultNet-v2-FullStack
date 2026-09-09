@@ -44,6 +44,29 @@ document.addEventListener("DOMContentLoaded", async function() {
                 });
 
             }
+
+            if (userData.email) {
+                document.querySelectorAll('.profile-email-text').forEach(el => {
+                    el.textContent = userData.email;
+                });
+            }
+
+            if (userData.createdAt) {
+
+                const dateObj = new Date(userData.createdAt);
+                
+                const formattedDate = dateObj.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
+                document.querySelectorAll('.profile-created-date').forEach(el => {
+                    el.textContent = formattedDate;
+                });
+                
+            }
+
         }
 
     } catch (error) {
