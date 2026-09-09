@@ -36,6 +36,28 @@
     object-fit: cover;
 }
 
+.logout-btn{
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #ef4444;
+    font-size: 17px;
+    padding: 12px 22px;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.logout-btn .logout-icon{
+    width: 30px;
+    height: 30px;
+    margin-right: 22px;
+}
+
+.logout-btn:hover{
+    transform: scale(1.03);
+    background-color: #fecaca;
+    color: #dc2626;
+}
+
 /* Bu kısım bootstrapten ayrı olarak yapıldı. Hazır olarak alınıp projeye dahil edildi. Kendim yazmadım*/
 .dashboard-row {
     display: flex;
