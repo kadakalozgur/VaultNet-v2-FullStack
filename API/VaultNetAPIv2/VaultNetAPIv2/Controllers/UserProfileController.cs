@@ -70,5 +70,22 @@ namespace VaultNetAPIv2.Controllers
             return StatusCode(result.StatusCode, result);
 
         }
+
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _userProfileService.ChangePasswordAsync(userId,changePasswordDto);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
     }
 }
