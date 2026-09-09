@@ -283,7 +283,6 @@ savePasswordModalButton.addEventListener('click', async function(e) {
         confirmPasswordInput.type = 'password';
         toggleConfirmPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
 
-
     }catch(error){
         showAlert(passwordModalAlert,error.message,"danger");
     }finally{
@@ -295,4 +294,43 @@ savePasswordModalButton.addEventListener('click', async function(e) {
 
 });
 
+// Hesabı silme modal kısmı
 
+const openDeleteModalButton = document.getElementById("open-delete-modal-button");
+const cancelDeleteModalButton = document.getElementById("cancel-delete-modal-button");
+const confirmDeleteButton = document.getElementById("confirm-delete-button");
+const deletePasswordInput = document.getElementById("delete-password-input");
+const toggleDeletePasswordButton = document.getElementById("toggle-delete-password");
+const deleteModalAlert = document.getElementById("delete-modal-alert");
+
+openDeleteModalButton.addEventListener('click', function() {
+    $('#deleteAccountModal').modal('show');
+});
+
+cancelDeleteModalButton.addEventListener("click", function() {
+    $('#deleteAccountModal').modal('hide');
+    deletePasswordInput.value = "";
+
+    // Göz İconları ve input tipleri
+    deletePasswordInput.type = 'password';
+    toggleDeletePasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+
+    hideAlert(deleteModalAlert);
+
+});
+
+toggleDeletePasswordButton.addEventListener('click',function(){
+
+    if(deletePasswordInput.type == 'password'){
+        deletePasswordInput.type = 'text';
+        toggleDeletePasswordButton.style.backgroundImage = "url('../Media/Icons/close-eye-icon.png')"
+        toggleDeletePasswordButton.style.backgroundSize = "20px";
+    }
+
+    else{
+        deletePasswordInput.type = 'password';
+        toggleDeletePasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')"
+        toggleDeletePasswordButton.style.backgroundSize = "20px";
+    }
+
+});

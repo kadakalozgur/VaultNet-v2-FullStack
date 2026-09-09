@@ -206,7 +206,7 @@
                   >
                 </div>
               </div>
-              <button class="btn btn-outline-danger font-weight-bold">
+              <button class="btn btn-outline-danger font-weight-bold" id="open-delete-modal-button">
                 Delete Account
               </button>
             </div>
@@ -455,6 +455,74 @@
               style="background-color: #4965fa; border-radius: 8px"
             >
               Change Password
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Delete Account Modal Kısmı -->
+    <div class="modal fade" id="deleteAccountModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content border-0 shadow-lg"
+          style="border-radius: 16px"
+        >
+          <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+            <h5 class="modal-title font-weight-bold text-danger">
+              Delete Account
+            </h5>
+          </div>
+
+          <div class="modal-body px-4 py-3">
+            <p class="text-muted mb-4" style="font-size: 14px">
+              This action is permanent and cannot be undone. All your data will be permanently deleted. Please enter your password to confirm.
+            </p>
+
+            <div
+              id="delete-modal-alert"
+              class="alert d-none animate__animated animate__fadeIn"
+              role="alert"
+            ></div>
+
+            <div class="form-group mb-0">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Current Password</label
+              >
+              <div class="position-relative">
+                <input
+                  type="password"
+                  id="delete-password-input"
+                  class="form-control password-input-icon"
+                  placeholder="Enter your password"
+                  style="border-radius: 7px; color: #334155"
+                />
+                <img
+                  src="Media/Icons/open-eye-icon.png"
+                  class="password-eye-icon"
+                  id="toggle-delete-password"
+                  alt="Toggle Password"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer border-top-0 pt-3 pb-4 px-4">
+            <button
+              type="button"
+              class="btn btn-outline-secondary font-weight-bold px-4 close-modal-btn"
+              style="border-radius: 8px"
+              id="cancel-delete-modal-button"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              id="confirm-delete-button"
+              class="btn btn-danger font-weight-bold px-4"
+              style="border-radius: 8px"
+            >
+              Delete Account
             </button>
           </div>
         </div>
