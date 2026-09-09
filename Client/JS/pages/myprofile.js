@@ -56,6 +56,7 @@ savePhotoModalButton.addEventListener('click', async function(e) {
     }
 
     savePhotoModalButton.disabled = true;
+    fileInput.disabled = true;
 
     try{
 
@@ -71,9 +72,7 @@ savePhotoModalButton.addEventListener('click', async function(e) {
         showAlert(photoModalAlert,error.message,"danger");
     } finally{
         savePhotoModalButton.disabled = false;
-        fileInput.value = "";
-        fileLabelPhotoModal.innerText = "Choose file...";
-        previewImagePhotoModal.src = "Media/Icons/avatar-icon.png";     
+        fileInput.disabled = false;    
     }
 
 });
@@ -110,6 +109,7 @@ saveEmailModalButton.addEventListener('click', async function(e) {
     }
 
     saveEmailModalButton.disabled = true;
+    newEmailInput.disabled = true;
 
     try{
 
@@ -125,7 +125,7 @@ saveEmailModalButton.addEventListener('click', async function(e) {
         showAlert(emailModalAlert,error.message,"danger");
     }finally{
         saveEmailModalButton.disabled = false;
-        newEmailInput.value = "";
+        newEmailInput.disabled = false;
     }
 
 });
@@ -261,6 +261,9 @@ savePasswordModalButton.addEventListener('click', async function(e) {
     }
 
     savePasswordModalButton.disabled = true;
+    currentPasswordInput.disabled = true;
+    newPasswordInput.disabled = true;
+    confirmPasswordInput.disabled = true;
 
     try{
 
@@ -285,6 +288,9 @@ savePasswordModalButton.addEventListener('click', async function(e) {
         showAlert(passwordModalAlert,error.message,"danger");
     }finally{
         savePasswordModalButton.disabled = false;    
+        currentPasswordInput.disabled = false;
+        newPasswordInput.disabled = false;
+        confirmPasswordInput.disabled = false;
     }
 
 });
