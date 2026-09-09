@@ -334,3 +334,38 @@ toggleDeletePasswordButton.addEventListener('click',function(){
     }
 
 });
+
+confirmDeleteButton.addEventListener('click', async function(e){
+
+    e.preventDefault();
+
+    hideAlert(deleteModalAlert);
+
+    const currentPassword = deletePasswordInput.value;
+
+    if(!currentPassword){
+        showAlert(deleteModalAlert, "Please enter your password to confirm.", "warning");
+        return;
+    }
+
+    confirmDeleteButton.disabled = true;
+    deletePasswordInput.disabled = true;
+
+    try{
+
+        await deleteAccount(currentPassword);
+
+        sessionStorage.clear();
+
+        $('#deleteAccountModal').modal('hide');
+
+        window.location.href = "index.html";
+
+    }catch(error){
+        showAlert(deleteModalAlert, error.message, "danger");
+    }finally{
+        confirmDeleteButton.disabled = false;
+        deletePasswordInput.disabled = false;
+    }
+
+});

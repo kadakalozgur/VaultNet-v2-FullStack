@@ -115,3 +115,33 @@ async function changePassword(currentPassword,newPassword){
     }
     
 }
+
+async function deleteAccount(currentPassword) {
+    
+    try{
+
+        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.DELETE_ACCOUNT,{
+
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                currentPassword: currentPassword
+            })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result;
+
+    }catch(error){
+        throw error;
+    }
+
+}
