@@ -160,5 +160,62 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> ChangePasswordAsync(Guid userId, ChangePasswordDto changePasswordDto)
+        {        
+            
+            if(changePasswordDto.CurrentPassword == changePasswordDto.NewPassword)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Message = "Your new password cannot be the same as your old password."
+                };
+
+            }
+
+            var userPasswordHash = await _context.Users
+                .AsNoTracking()
+                .Where(user => user.Id == userId && user.IsActive)
+                .Select(user => user.PasswordHash)
+                .FirstOrDefaultAsync();
+
+            if(userPasswordHash == null)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "No such user was found."
+                };
+            }
+
+            bool isCurrentPasswordVerify = BCrypt.Net.BCrypt.Verify(changePasswordDto.CurrentPassword, userPasswordHash);
+
+            if (!isCurrentPasswordVerify)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Message = "The current password you entered is incorrect."
+                };
+            }
+
+            var newPasswordHash = BCrypt.Net.BCrypt.HashPassword(changePasswordDto.NewPassword);
+
+            await _context.Users
+                .Where(user => user.Id == userId && user.IsActive)
+                .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.PasswordHash, newPasswordHash));
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Password has been successfully updated."
+            };
+
+        }
     }
 }
