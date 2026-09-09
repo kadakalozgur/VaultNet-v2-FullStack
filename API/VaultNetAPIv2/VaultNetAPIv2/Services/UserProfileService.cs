@@ -217,5 +217,58 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> DeleteAccountAsync(Guid userId, DeleteAccountDto deleteAccountDto)
+        {
+
+            var user = await _context.Users
+                .AsNoTracking()
+                .Where(user => user.Id == userId && user.IsActive)
+                .Select(user => new
+                {
+                    user.PasswordHash,
+                    user.ProfilePictureUrl
+                })
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "No such user was found."
+                };
+            }
+
+            bool isCurrentPasswordVerify = BCrypt.Net.BCrypt.Verify(deleteAccountDto.CurrentPassword, user.PasswordHash);
+
+            if (!isCurrentPasswordVerify)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Message = "The current password you entered is incorrect."
+                };
+            }
+
+            if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
+            {
+                await _storageService.DeleteFileAsync(user.ProfilePictureUrl);
+            }
+
+            await _context.Users
+                .Where(user => user.Id == userId)
+                .ExecuteDeleteAsync();
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Your account and all associated data have been permanently deleted."
+            };
+
+        }
     }
 }
