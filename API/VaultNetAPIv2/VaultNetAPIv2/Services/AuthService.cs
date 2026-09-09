@@ -107,5 +107,17 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public ServiceResult Logout()
+        {
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "The logout process was successfully completed."
+            };
+
+        }
     }
 }

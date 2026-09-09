@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using VaultNetAPIv2.DTOs;
@@ -55,6 +56,22 @@ namespace VaultNetAPIv2.Controllers
             }
 
             return StatusCode(result.StatusCode,result);
+
+        }
+
+        [HttpPost("logout")]
+        [Authorize]
+        public IActionResult Logout()
+        {
+
+            var result = _authService.Logout();
+
+            if (result.IsSuccess)
+            {
+                Response.Cookies.Delete("jwt_token");
+            }
+
+            return StatusCode(result.StatusCode, result);
 
         }
     }
