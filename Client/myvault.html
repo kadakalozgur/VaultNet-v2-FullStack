@@ -16,11 +16,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
-
+    <link rel="stylesheet" href="CSS/myvault.css" />
     <link rel="stylesheet" href="CSS/navbar.css" />
   </head>
   <body
-    class="dashboard-background min-vh-100 p-2 p-lg-4 d-flex align-items-stretch"
+    class="myvault-background min-vh-100 p-2 p-lg-4 d-flex align-items-stretch"
   >
     <div
       class="container-fluid p-0 shadow-lg d-flex flex-column animate__animated animate__fadeIn animate__faster"
@@ -59,8 +59,7 @@
 
             <a
               href="myprofile.html"
-              class="custom-nav-link d-flex justify-content-between align-items-center"
-              style="margin-bottom: 0"
+              class="custom-nav-link d-flex justify-content-between align-items-center mb-0"
             >
               <div class="d-flex align-items-center">
                 <img
@@ -100,10 +99,69 @@
             </button>
           </div>
         </div>
-        <div class="col-12 main-content p-4 p-lg-5"></div>
+        <div class="col-12 main-content p-4 p-lg-5">
+          <div class="mb-4">
+            <h3 class="font-weight-bold text-dark mb-1">My Vault</h3>
+            <p class="text-muted" style="font-size: 14px">
+              Manage and organize your secure credentials and sensitive
+              information in one place.
+            </p>
+          </div>
+
+          <div
+            class="bg-white p-3 p-md-4 shadow-sm mt-5"
+            style="border-radius: 20px"
+          >
+            <div class="d-flex align-items-center mb-3">
+              <img
+                src="Media/Icons/items-icon.png"
+                style="width: 30px; height: 30px"
+                class="mr-2"
+                alt="Items Icon"
+              />
+              <h4
+                class="mb-0 font-weight-bold"
+                style="color: #1e1b4b; font-size: 21px"
+              >
+                Items
+              </h4>
+            </div>
+
+            <div class="d-flex flex-column flex-md-row align-items-center">
+              <div
+                class="position-relative flex-grow-1 w-100 mr-md-3 mb-3 mb-md-0"
+              >
+                <img
+                  src="Media/Icons/search-icon.png"
+                  class="vault-search-icon"
+                  alt="Search"
+                />
+                <input
+                  type="text"
+                  class="form-control border-0 w-100 vault-search-input"
+                  placeholder="Search your vault..."
+                  id="vault-search-input"
+                />
+              </div>
+
+              <button
+                type="button"
+                class="btn text-white font-weight-bold px-4 d-flex align-items-center justify-content-center flex-shrink-0 vault-add-btn"
+                id="open-add-item-modal"
+              >
+                <img
+                  src="Media/Icons/add-icon.png"
+                  style="width: 18px; height: 18px"
+                  class="mr-2"
+                  alt="Add"
+                />
+                Add Item
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
 
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
