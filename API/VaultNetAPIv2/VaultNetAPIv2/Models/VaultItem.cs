@@ -16,19 +16,19 @@ namespace VaultNetAPIv2.Models
         public Guid UserId { get; set; }
 
         [Required(ErrorMessage = "Title is required.")]
-        [MaxLength(100, ErrorMessage = "Title can be a maximum of 100 characters long.")]
-        public string Title { get; set; }
+        [MaxLength(1000, ErrorMessage = "Title can be a maximum of 1000 characters long.")]
+        public string EncryptedTitle { get; set; }
 
         [Required(ErrorMessage = "An email address or username is required.")]
-        [MaxLength(150, ErrorMessage = "Email addresses or username can be a maximum of 150 characters long.")]
-        public string UsernameOrEmail { get; set; }
+        [MaxLength(1000, ErrorMessage = "Email addresses or username can be a maximum of 1000 characters long.")]
+        public string EncryptedUsernameOrEmail { get; set; }
 
         [Required(ErrorMessage = "A password is required.")]
         [MaxLength(1000, ErrorMessage = "Passwords can be a maximum of 1000 characters long.")]
         public string EncryptedPassword { get; set; }
 
-        [MaxLength(150, ErrorMessage = "The domain name can be a maximum of 150 characters long.")]
-        public string Domain { get; set; }
+        [MaxLength(1000, ErrorMessage = "The domain name can be a maximum of 1000 characters long.")]
+        public string EncryptedDomain { get; set; }
 
         public bool IsFavorite { get; set; } = false;
 
