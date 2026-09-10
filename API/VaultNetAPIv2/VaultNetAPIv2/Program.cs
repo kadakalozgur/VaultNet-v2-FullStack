@@ -20,6 +20,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services.AddScoped<IStorageService, SupabaseStorageService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddScoped<IEncryptionService, DataProtectionEncryptionService>();
 
 // Supabase Konfigürasyonu
 var supabaseUrl = builder.Configuration["Supabase:Url"];
