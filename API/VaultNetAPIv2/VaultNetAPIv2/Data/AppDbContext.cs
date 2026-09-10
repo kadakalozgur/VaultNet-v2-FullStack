@@ -13,5 +13,7 @@ namespace VaultNetAPIv2.Data
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<VaultItem> VaultItems { get; set; }
+
     }
 }
