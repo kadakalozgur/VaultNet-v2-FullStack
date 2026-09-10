@@ -8,9 +8,9 @@ namespace VaultNetAPIv2.Services
 
         private readonly IDataProtector _dataProtector;
 
-        public DataProtectionEncryptionService(IDataProtector dataProtector)
+        public DataProtectionEncryptionService(IDataProtectionProvider provider)
         {
-            _dataProtector = dataProtector.CreateProtector("VaultNet.VaultItemProtector");
+            _dataProtector = provider.CreateProtector("VaultNet.VaultItemProtector");
         }
 
         public string Encrypt(string plainText)
