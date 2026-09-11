@@ -8,7 +8,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> AddItemAsync(Guid userId,AddVaultItemDto addVaultItemDto);
 
-        Task<ServiceResult> GetItemsAsync(Guid userId,int pageNumber,int pageSize);
+        Task<ServiceResult> GetItemsAsync(Guid userId,int pageNumber);
 
     }
 }

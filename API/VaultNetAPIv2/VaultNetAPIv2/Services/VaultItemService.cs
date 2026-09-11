@@ -43,17 +43,14 @@ namespace VaultNetAPIv2.Services
 
         }
 
-        public async Task<ServiceResult> GetItemsAsync(Guid userId, int pageNumber, int pageSize)
+        // Sıkı sıkıya bağımlı yaptım. Benim projemde bu değerde olmasını istiyorum.
+        private const int pageSize = 6;
+        public async Task<ServiceResult> GetItemsAsync(Guid userId, int pageNumber)
         {
 
             if(pageNumber < 1)
             {
                 pageNumber = 1;
-            }
-
-            if(pageSize < 1)
-            {
-                pageSize = 6;
             }
 
             var query = _context.VaultItems
