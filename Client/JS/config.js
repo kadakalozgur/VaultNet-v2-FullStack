@@ -11,7 +11,8 @@ const CONFIG = {
         UPDATE_EMAIL_ADDRESS: "/UserProfile/update-email-address",
         CHANGE_PASSWORD: "/UserProfile/change-password",
         DELETE_ACCOUNT: "/UserProfile/delete-account",
-        ADD_VAULT_ITEM: "/Vault/add-vault-item"
+        ADD_VAULT_ITEM: "/Vault/add-vault-item",
+        GET_VAULT_ITEMS: "/Vault/get-vault-items"
     }
 
 };
