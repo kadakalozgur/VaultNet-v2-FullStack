@@ -36,5 +36,23 @@ namespace VaultNetAPIv2.Controllers
             return StatusCode(result.StatusCode, result);
 
         }
+
+        [HttpGet("get-vault-items")]
+        public async Task<IActionResult> GetVaultItems([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 6)
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _vaultItemService.GetItemsAsync(userId,pageNumber,pageSize);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
+
     }
 }
