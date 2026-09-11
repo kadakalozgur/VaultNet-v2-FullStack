@@ -24,10 +24,10 @@ namespace VaultNetAPIv2.Services
             var newVaultItem = new VaultItem
             {
                 UserId = userId,
-                EncryptedTitle = _encryptionService.Encrypt(addVaultItemDto.Title),
-                EncryptedUsernameOrEmail = _encryptionService.Encrypt(addVaultItemDto.UsernameOrEmail),
+                EncryptedTitle = _encryptionService.Encrypt(addVaultItemDto.Title.Trim()),
+                EncryptedUsernameOrEmail = _encryptionService.Encrypt(addVaultItemDto.UsernameOrEmail.Trim()),
                 EncryptedPassword = _encryptionService.Encrypt(addVaultItemDto.Password),
-                EncryptedDomain = addVaultItemDto.Domain != null ? _encryptionService.Encrypt(addVaultItemDto.Domain) : null
+                EncryptedDomain = addVaultItemDto.Domain.Trim() != null ? _encryptionService.Encrypt(addVaultItemDto.Domain.Trim()) : null
             };
 
             _context.VaultItems.Add(newVaultItem);

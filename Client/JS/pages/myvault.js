@@ -43,3 +43,71 @@ toggleAddPasswordButton.addEventListener('click',function(){
 
 });
 
+saveItemButton.addEventListener('click', async function(e) {
+
+    e.preventDefault();
+
+    hideAlert(addItemModalAlert);
+
+    const title = addTitleInput.value.trim();
+    const usernameOrEmail = addUsernameInput.value.trim();
+    const password = addPasswordInput.value;
+    const website = addDomainInput.value.trim();
+
+    if(!title || !usernameOrEmail || !password || !password.trim()){
+        showAlert(addItemModalAlert, "Please fill in all the required fields..", "warning");
+        return;
+    }
+
+    if (title.length > 100) {
+        showAlert(addItemModalAlert, "Title can be a maximum of 100 characters.", "warning");
+        return;
+    }
+
+    if (usernameOrEmail.length > 150) {
+        showAlert(addItemModalAlert, "Username or email can be a maximum of 150 characters.", "warning");
+        return;
+    }
+
+    if (password.length > 256) {
+        showAlert(addItemModalAlert, "Password can be a maximum of 256 characters.", "warning");
+        return;
+    }
+
+    if (website.length > 150) {
+        showAlert(addItemModalAlert, "Domain can be a maximum of 150 characters.", "warning");
+        return;
+    }
+
+    addTitleInput.disabled = true;
+    addUsernameInput.disabled = true;
+    addPasswordInput.disabled = true;
+    addDomainInput.disabled = true;
+    saveItemButton.disabled = true;
+
+    try{
+
+        await addVaultItem(title,usernameOrEmail,password,website);
+
+        $('#addItemModal').modal('hide'); 
+        
+        addTitleInput.value = "";
+        addUsernameInput.value = "";
+        addPasswordInput.value = "";
+        addDomainInput.value = "";
+
+        addPasswordInput.type = 'password';
+        toggleAddPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+
+    }catch(error){
+        showAlert(addItemModalAlert,error.message,"danger");
+    }finally{
+        addTitleInput.disabled = false;
+        addUsernameInput.disabled = false;
+        addPasswordInput.disabled = false;
+        addDomainInput.disabled = false;
+        saveItemButton.disabled = false;
+    }
+
+});
+
