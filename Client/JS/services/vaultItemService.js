@@ -30,3 +30,53 @@ async function addVaultItem(itemName,usernameOrEmail,password,website = null) {
     }
 
 }
+
+async function getVaultItems(pageNumber = 1) {
+    
+    try{
+
+        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.GET_VAULT_ITEMS}?pageNumber=${pageNumber}`,{
+
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result;
+
+    }catch(error){
+        throw error;
+    }
+
+}
+
+// Alttaki fonksiyon için gerekli olan global değişkenler.
+let vaultItems = [];
+let currentPage = 1;
+let totalPages = 1;
+
+async function loadVaultItemPage(pageNumber = 1) {
+    
+    try{
+
+        const result = await getVaultItems(pageNumber);
+
+        if(result.IsSuccess){
+            vaultItems = result.data.items;
+            currentPage = result.data.currentPage;
+            totalPages = result.data.totalPages;
+        }
+
+    }catch(error){
+        console.error(error.message);
+    }
+    
+}

@@ -111,3 +111,7 @@ saveItemButton.addEventListener('click', async function(e) {
 
 });
 
+document.addEventListener("DOMContentLoaded", async function() {
+    loadVaultItemPage(1);
+});
+
