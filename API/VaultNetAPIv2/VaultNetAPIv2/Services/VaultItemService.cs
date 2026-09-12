@@ -96,7 +96,7 @@ namespace VaultNetAPIv2.Services
             {
                 item.Id,
                 Title = _encryptionService.Decrypt(item.EncryptedTitle),
-                EncryptedDomain = item.EncryptedDomain != null ? _encryptionService.Decrypt(item.EncryptedDomain) : null,
+                Domain = item.EncryptedDomain != null ? _encryptionService.Decrypt(item.EncryptedDomain) : null,
                 item.UpdatedAt,
                 item.CreatedAt,
                 item.IsFavorite
