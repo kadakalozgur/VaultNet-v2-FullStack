@@ -146,6 +146,7 @@ namespace VaultNetAPIv2.Services
 
             var decryptedItem = new
             {
+                Id = itemId,
                 Title = _encryptionService.Decrypt(item.EncryptedTitle),
                 UsernameOrEmail = _encryptionService.Decrypt(item.EncryptedUsernameOrEmail),
                 Password = _encryptionService.Decrypt(item.EncryptedPassword),
