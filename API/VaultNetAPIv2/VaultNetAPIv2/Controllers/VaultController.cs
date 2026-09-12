@@ -54,5 +54,22 @@ namespace VaultNetAPIv2.Controllers
 
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetItemById(Guid id)
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _vaultItemService.GetItemByIdAsync(userId,id);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
+
     }
 }
