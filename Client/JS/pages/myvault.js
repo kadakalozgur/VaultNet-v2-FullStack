@@ -83,18 +83,18 @@ function showCardVaultItems() {
                         
                         <div class="mb-1 mt-2">
                             <div class="d-flex align-items-center mb-1">
-                                <img src="Media/Icons/temp-updated-icon.png" alt="Updated" style="width: 14px; height: 14px; flex-shrink: 0;" class="mr-2 opacity-50">
+                                <img src="Media/Icons/updated-icon.png" alt="Updated" style="width: 14px; height: 14px; flex-shrink: 0;" class="mr-2 opacity-50">
                                 <span class="text-truncate" style="font-size: 13px; color: #6b7280; font-weight: 500; min-width: 0;">${updatedDate}</span>
                             </div>
                             <div class="d-flex align-items-center">
-                                <img src="Media/Icons/temp-created-icon.png" alt="Created" style="width: 14px; height: 14px; flex-shrink: 0;" class="mr-2 opacity-50">
+                                <img src="Media/Icons/calendar-icon.png" alt="Created" style="width: 14px; height: 14px; flex-shrink: 0;" class="mr-2 opacity-50">
                                 <span class="text-truncate" style="font-size: 13px; color: #6b7280; font-weight: 500; min-width: 0;">${createdDate}</span>
                             </div>
                         </div>
                         
                         <div class="d-flex justify-content-end mt-auto pt-2">
                             <button class="btn btn-sm d-flex align-items-center justify-content-center px-4 py-2 font-weight-bold" style="background-color: #eff6ff; color: #2563eb; border-radius: 20px; border: none;" onclick="viewItem('${item.id}')">
-                                <img src="Media/Icons/temp-view-icon.png" alt="View" style="width: 16px; height: 16px; flex-shrink: 0;" class="mr-2">
+                                <img src="Media/Icons/view-icon.png" alt="View" style="width: 18px; height: 18px; flex-shrink: 0;" class="mr-2">
                                 View
                             </button>
                         </div>
