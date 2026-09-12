@@ -102,3 +102,33 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
     
 });
+
+async function copyToClipboard(elementId, isInput = true,clickedButton = null){
+    
+    const element = document.getElementById(elementId);
+
+    if (!element){
+        return;
+    }
+
+    const textToCopy = isInput ? element.value : element.innerText;
+
+    try {
+
+        await navigator.clipboard.writeText(textToCopy);
+        
+        if (clickedButton) {
+            const icon = clickedButton.querySelector('img');
+            
+            if (icon) {
+                icon.classList.remove('animate__animated', 'animate__flip');
+                void icon.offsetWidth; 
+                icon.classList.add('animate__animated', 'animate__flip');
+            }
+        }
+        
+    } catch (error) {
+        console.error("Error");
+    }
+
+}
