@@ -53,3 +53,28 @@ async function loadVaultItemDetails(itemId) {
     }
 
 }
+
+// Şifreyi gösterme-gizleme kısmı
+
+const togglePasswordButton = document.getElementById("toggle-password-button");
+const passwordInput = document.getElementById("detail-password");
+
+togglePasswordButton.addEventListener('click', function(){
+
+    if(passwordInput.type == 'password'){
+
+        passwordInput.type = 'text';
+        togglePasswordButton.style.backgroundImage = "url('../Media/Icons/close-eye-blue-icon.png')"
+        togglePasswordButton.style.backgroundSize = "18px";
+
+    }
+
+    else{
+
+        passwordInput.type = 'password';
+        togglePasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-blue-icon.png')"
+        togglePasswordButton.style.backgroundSize = "18px";
+
+    }
+
+});
