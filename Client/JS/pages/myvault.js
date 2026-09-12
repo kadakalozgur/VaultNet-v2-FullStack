@@ -17,6 +17,7 @@ async function loadVaultItemPage(pageNumber = 1) {
             totalPages = result.data.totalPages;
 
             showCardVaultItems();
+            loadPageNumberButtons();
         }
 
     }catch(error){
@@ -107,6 +108,11 @@ function showCardVaultItems() {
 
     });
 
+}
+
+function loadPageNumberButtons() {
+
+    
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
