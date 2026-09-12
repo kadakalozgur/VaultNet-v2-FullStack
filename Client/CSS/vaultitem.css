@@ -34,6 +34,11 @@
     min-height: 380px; 
 }
 
+.form-control-plaintext:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 @media (min-width: 991px) and (max-width: 1300px) {
 
   .vault-details-container .row {

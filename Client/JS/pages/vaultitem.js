@@ -25,7 +25,7 @@ async function loadVaultItemDetails(itemId) {
             document.getElementById("title-label").textContent = item.title;
             document.getElementById("detail-username").value = item.usernameOrEmail;
             document.getElementById("detail-password").value = item.password;
-            document.getElementById("detail-domain").value = item.domain || "";
+            document.getElementById("detail-domain").value = item.domain;
 
             document.getElementById("item-icon").src = item.domain 
                 ? `https://www.google.com/s2/favicons?domain=${item.domain}&sz=128` 
