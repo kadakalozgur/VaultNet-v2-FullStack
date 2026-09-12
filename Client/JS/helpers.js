@@ -73,6 +73,14 @@ document.addEventListener("DOMContentLoaded", async function() {
 
             }
 
+            else{
+
+                document.querySelectorAll('.profile-avatar-img').forEach(img => {
+                    img.src = img.src = "Media/Icons/avatar-icon.png";
+                });
+
+            }
+
             if (userData.email) {
                 document.querySelectorAll('.profile-email-text').forEach(el => {
                     el.textContent = userData.email;
