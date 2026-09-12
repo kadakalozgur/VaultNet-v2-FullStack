@@ -57,26 +57,3 @@ async function getVaultItems(pageNumber = 1) {
     }
 
 }
-
-// Alttaki fonksiyon için gerekli olan global değişkenler.
-let vaultItems = [];
-let currentPage = 1;
-let totalPages = 1;
-
-async function loadVaultItemPage(pageNumber = 1) {
-    
-    try{
-
-        const result = await getVaultItems(pageNumber);
-
-        if(result.IsSuccess){
-            vaultItems = result.data.items;
-            currentPage = result.data.currentPage;
-            totalPages = result.data.totalPages;
-        }
-
-    }catch(error){
-        console.error(error.message);
-    }
-    
-}

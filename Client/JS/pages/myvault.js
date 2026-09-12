@@ -1,3 +1,32 @@
+// Sayfadaki item kartlarının yönetildiği kısım
+
+// Alttaki fonksiyon için gerekli olan global değişkenler.
+let vaultItems = [];
+let currentPage = 1;
+let totalPages = 1;
+
+async function loadVaultItemPage(pageNumber = 1) {
+    
+    try{
+
+        const result = await getVaultItems(pageNumber);
+
+        if(result.IsSuccess){
+            vaultItems = result.data.items;
+            currentPage = result.data.currentPage;
+            totalPages = result.data.totalPages;
+        }
+
+    }catch(error){
+        console.error(error.message);
+    }
+    
+}
+
+document.addEventListener("DOMContentLoaded", async function() {
+    loadVaultItemPage(1);
+});
+
 // Add item modal kısmı
 
 const openAddItemModalButton = document.getElementById("open-add-item-modal-button");
@@ -111,7 +140,4 @@ saveItemButton.addEventListener('click', async function(e) {
 
 });
 
-document.addEventListener("DOMContentLoaded", async function() {
-    loadVaultItemPage(1);
-});
 
