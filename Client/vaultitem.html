@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VaultNet - My Vault</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="CSS/myvault.css" />
+    <link rel="stylesheet" href="CSS/navbar.css" />
+  </head>
+  <body
+    class="myvault-background min-vh-100 p-2 p-lg-4 d-flex align-items-stretch"
+  >
+    <div
+      class="container-fluid p-0 shadow-lg d-flex flex-column animate__animated animate__fadeIn animate__faster"
+      style="border-radius: 24px; overflow: hidden; background-color: #f8fafc"
+    >
+      <div class="row m-0 flex-grow-1 dashboard-row">
+        <div
+          class="col-12 sidebar bg-white p-4 d-flex flex-column"
+          style="border-right: 1px solid #e5e7eb"
+        >
+          <h4 class="ml-1" style="color: #111827">
+            VaultNet <span style="color: #4965fa">v2</span>
+          </h4>
+          <hr class="w-100 mt-2 mb-4" />
+
+          <nav class="nav flex-column mb-auto">
+            <a href="dashboard.html" class="custom-nav-link">
+              <img
+                src="Media/Icons/dashboard-icon.png"
+                class="nav-icon"
+                alt="Dashboard"
+              />
+              Dashboard
+            </a>
+            <a href="myvault.html" class="custom-nav-link active">
+              <img
+                src="Media/Icons/myvault-active-icon.png"
+                class="nav-icon"
+                alt="My Vault"
+              />
+              My Vault
+            </a>
+          </nav>
+          <div class="mt-auto">
+            <hr class="mb-3" />
+
+            <a
+              href="myprofile.html"
+              class="custom-nav-link d-flex justify-content-between align-items-center"
+              style="margin-bottom: 0"
+            >
+              <div class="d-flex align-items-center">
+                <img
+                  src="Media/Icons/avatar-icon.png"
+                  class="profile-avatar-img"
+                  alt="Profile"
+                />
+                <span class="ml-3" style="font-size: 16px; color: #111827"
+                  >My Profile</span
+                >
+              </div>
+
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#6b7280"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </a>
+            <button
+              type="button"
+              id="logout-button"
+              class="btn btn-block mt-3 font-weight-bold d-flex align-items-center justify-content-start logout-btn"
+            >
+              <img
+                src="Media/Icons/logout-icon.png"
+                class="logout-icon"
+                alt="Log out"
+              />
+              Log out
+            </button>
+          </div>
+        </div>
+        <div class="col-12 main-content p-4 p-lg-5"></div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+      integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+      crossorigin="anonymous"
+    ></script>
+    <script src="JS/helpers.js"></script>
+    <script src="JS/config.js"></script>
+    <script src="JS/services/authService.js"></script>
+    <script src="JS/services/vaultItemService.js"></script>
+    <script src="JS/navbar.js"></script>
+    <script src="JS/pages/myvault.js"></script>
+  </body>
+</html>
