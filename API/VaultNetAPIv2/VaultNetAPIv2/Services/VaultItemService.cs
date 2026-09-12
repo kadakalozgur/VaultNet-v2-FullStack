@@ -117,5 +117,51 @@ namespace VaultNetAPIv2.Services
 
         }
 
+        public async Task<ServiceResult> GetItemByIdAsync(Guid userId, Guid itemId)
+        {
+
+            var item = await _context.VaultItems
+                .AsNoTracking()
+                .Where(item => item.Id == itemId && item.UserId == userId)
+                .Select(v => new
+                {
+                    v.EncryptedTitle,
+                    v.EncryptedUsernameOrEmail,
+                    v.EncryptedPassword,
+                    v.EncryptedDomain,
+                    v.CreatedAt,
+                    v.UpdatedAt
+                })
+                .FirstOrDefaultAsync();
+
+            if(item == null)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Vault item not found."
+                };
+            }
+
+            var decryptedItem = new
+            {
+                Title = _encryptionService.Decrypt(item.EncryptedTitle),
+                UsernameOrEmail = _encryptionService.Decrypt(item.EncryptedUsernameOrEmail),
+                Password = _encryptionService.Decrypt(item.EncryptedPassword),
+                Domain = item.EncryptedDomain != null ? _encryptionService.Decrypt(item.EncryptedDomain) : null,
+                item.CreatedAt,
+                item.UpdatedAt
+            };
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Item retrieved successfully.",
+                Data = decryptedItem
+            };
+
+        }
     }
 }

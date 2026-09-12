@@ -10,5 +10,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> GetItemsAsync(Guid userId,int pageNumber);
 
+        Task<ServiceResult> GetItemByIdAsync(Guid userId, Guid itemId);
+
     }
 }
