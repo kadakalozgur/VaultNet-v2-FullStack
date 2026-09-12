@@ -94,7 +94,7 @@ function showCardVaultItems() {
                         </div>
                         
                         <div class="d-flex justify-content-end mt-auto pt-2">
-                            <button class="btn btn-sm d-flex align-items-center justify-content-center px-4 py-2 font-weight-bold" style="background-color: #eff6ff; color: #2563eb; border-radius: 20px; border: none;" onclick="viewItem('${item.id}')">
+                            <button class="btn btn-sm d-flex align-items-center justify-content-center px-4 py-2 font-weight-bold" style="background-color: #eff6ff; color: #2563eb; border-radius: 20px; border: none;" onclick="window.location.href='vaultitem.html?id=${item.id}'">
                                 <img src="Media/Icons/view-icon.png" alt="View" style="width: 18px; height: 18px; flex-shrink: 0;" class="mr-2">
                                 View
                             </button>
