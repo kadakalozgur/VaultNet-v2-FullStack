@@ -55,3 +55,10 @@
     padding-left: 40px;
     padding-right: 45px;
 }
+
+@media (min-width: 1600px) {
+    .custom-vault-grid {
+        flex: 0 0 33.333333% !important;
+        max-width: 33.333333% !important;
+    }
+}

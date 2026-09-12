@@ -11,16 +11,102 @@ async function loadVaultItemPage(pageNumber = 1) {
 
         const result = await getVaultItems(pageNumber);
 
-        if(result.IsSuccess){
+        if(result.isSuccess){
             vaultItems = result.data.items;
             currentPage = result.data.currentPage;
             totalPages = result.data.totalPages;
+
+            showCardVaultItems();
         }
 
     }catch(error){
         console.error(error.message);
     }
     
+}
+
+function showCardVaultItems() {
+    
+    const container = document.getElementById("vault-items-container");
+    container.innerHTML = "";
+
+    if (!vaultItems || vaultItems.length === 0) {
+
+        container.innerHTML = `
+            <div class="col-12 text-center mt-5">
+                <p class="text-muted">No items found in your vault.</p>
+            </div>`;
+
+        return;
+
+    }
+
+    vaultItems.forEach(item => {
+
+        const iconUrl = item.domain 
+            ? `https://www.google.com/s2/favicons?domain=${item.domain}&sz=64` 
+            : `Media/Icons/items-default-icon.png`; 
+
+        const updatedDate = new Date(item.updatedAt).toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        });
+
+        const createdDate = new Date(item.createdAt).toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        });
+
+        // Bootstrap hazır classları ile yaptım.
+        const cardHtml = `
+            <div class="col-12 col-md-6 custom-vault-grid mb-4 animate__animated animate__fadeIn">
+                <div class="card h-100 border-0 shadow-sm vault-card p-2" style="border-radius: 16px; transition: transform 0.2s; background-color: #ffffff; position: relative;">
+                    <div class="card-body p-3 d-flex flex-column">
+                        
+                        <button class="btn btn-sm btn-link p-0 shadow-none" style="text-decoration: none; position: absolute; top: 16px; right: 16px;">
+                            <span style="font-size: 30px; line-height: 1; color: ${item.isFavorite ? '#4965fa' : '#d1d5db'};">★</span>
+                        </button>
+
+                        <div class="d-flex align-items-center mb-3 w-100" style="padding-right: 28px;">
+                            <div class="mr-3 d-flex align-items-center justify-content-center flex-shrink-0" style="background-color: #f3f4f6; border-radius: 12px; width: 48px; height: 48px; padding: 10px;">
+                                <img src="${iconUrl}" alt="icon" style="max-width: 100%; max-height: 100%; border-radius: 6px;">
+                            </div>
+                            
+                            <div style="flex: 1; min-width: 0;">
+                                <h5 class="card-title mb-0 font-weight-bold text-truncate" style="color: #111827; font-size: 16px;">
+                                    ${item.title}
+                                </h5>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-1 mt-2">
+                            <div class="d-flex align-items-center mb-1">
+                                <img src="Media/Icons/temp-updated-icon.png" alt="Updated" style="width: 14px; height: 14px; flex-shrink: 0;" class="mr-2 opacity-50">
+                                <span class="text-truncate" style="font-size: 13px; color: #6b7280; font-weight: 500; min-width: 0;">${updatedDate}</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <img src="Media/Icons/temp-created-icon.png" alt="Created" style="width: 14px; height: 14px; flex-shrink: 0;" class="mr-2 opacity-50">
+                                <span class="text-truncate" style="font-size: 13px; color: #6b7280; font-weight: 500; min-width: 0;">${createdDate}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end mt-auto pt-2">
+                            <button class="btn btn-sm d-flex align-items-center justify-content-center px-4 py-2 font-weight-bold" style="background-color: #eff6ff; color: #2563eb; border-radius: 20px; border: none;" onclick="viewItem('${item.id}')">
+                                <img src="Media/Icons/temp-view-icon.png" alt="View" style="width: 16px; height: 16px; flex-shrink: 0;" class="mr-2">
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.insertAdjacentHTML('beforeend', cardHtml);
+
+    });
+
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
@@ -127,6 +213,8 @@ saveItemButton.addEventListener('click', async function(e) {
 
         addPasswordInput.type = 'password';
         toggleAddPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+
+        await loadVaultItemPage(1);
 
     }catch(error){
         showAlert(addItemModalAlert,error.message,"danger");
