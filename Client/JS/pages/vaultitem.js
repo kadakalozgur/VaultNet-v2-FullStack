@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const itemId = urlParams.get('id');
 
     if (!itemId) {
-        //window.location.href = "myvault.html";
+        window.location.href = "myvault.html";
         return;
     }
 
@@ -82,7 +82,7 @@ togglePasswordButton.addEventListener('click', function(){
 // Item silme modal kısmı
 
 const openDeleteItemModalButton = document.getElementById("open-delete-item-modal-button");
-const deleteItemConfirmButton = document.getElementById("confirm-delete-button");
+const deleteItemConfirmButton = document.getElementById("confirm-delete-item-button");
 const deleteItemCancelButton = document.getElementById("cancel-delete-item-modal-button");
 const deleteItemModalAlert = document.getElementById("delete-item-modal-alert");
 
@@ -93,5 +93,36 @@ openDeleteItemModalButton.addEventListener('click' ,function(){
 deleteItemCancelButton.addEventListener("click", function() {
     $('#deleteItemModal').modal('hide');
     hideAlert(deleteItemModalAlert);
+});
+
+deleteItemConfirmButton.addEventListener('click' ,async function(e){
+    
+    e.preventDefault();
+
+    hideAlert(deleteItemModalAlert);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const itemId = urlParams.get('id');
+
+    if (!itemId) {
+        return;
+    }
+
+    deleteItemConfirmButton.disabled = true;
+    deleteItemCancelButton.disabled = true;
+
+    try{
+
+        await deleteVaultItem(itemId);
+
+        window.location.href = "myvault.html";
+
+    }catch(error){
+        showAlert(deleteItemModalAlert,error.message,"danger");
+    }finally{
+        deleteItemConfirmButton.disabled = false;
+        deleteItemCancelButton.disabled = false;
+    }
+
 });
 
