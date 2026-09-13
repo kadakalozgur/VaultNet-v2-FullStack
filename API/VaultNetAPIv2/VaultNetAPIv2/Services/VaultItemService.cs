@@ -190,5 +190,41 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> UpdateItemAsync(Guid userId, Guid itemId, UpdateVaultItemDto updateVaultItemDto)
+        {
+
+            var encryptedTitle = _encryptionService.Encrypt(updateVaultItemDto.Title.Trim());
+            var encryptedUsernameOrEmail = _encryptionService.Encrypt(updateVaultItemDto.UsernameOrEmail.Trim());
+            var encryptedPassword = _encryptionService.Encrypt(updateVaultItemDto.Password);
+            var encryptedDomain = updateVaultItemDto.Domain.Trim() != null ? _encryptionService.Encrypt(updateVaultItemDto.Domain.Trim()) : null;
+
+            var affectedRows = await _context.VaultItems
+                .Where(item => item.Id == itemId && item.UserId == userId)
+                .ExecuteUpdateAsync(setters => setters
+                .SetProperty(item => item.EncryptedTitle, encryptedTitle)
+                .SetProperty(item => item.EncryptedUsernameOrEmail, encryptedUsernameOrEmail)
+                .SetProperty(item => item.EncryptedPassword, encryptedPassword)
+                .SetProperty(item => item.EncryptedDomain, encryptedDomain)
+                .SetProperty(item => item.UpdatedAt, DateTime.UtcNow));
+
+            if (affectedRows == 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Vault item not found."
+                };
+            }
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Vault item updated successfully."
+            };
+
+        }
     }
 }
