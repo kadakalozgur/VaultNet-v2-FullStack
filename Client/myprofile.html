@@ -420,10 +420,21 @@
             </div>
           </div>
 
-          <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+          <div
+            class="modal-footer border-top-0 pt-0 pb-4 px-4 d-flex justify-content-center flex-nowrap"
+          >
             <button
               type="button"
-              class="btn btn-outline-secondary font-weight-bold px-4 close-modal-btn"
+              class="btn btn-danger font-weight-bold px-3"
+              style="border-radius: 8px"
+              id="remove-photo-button"
+            >
+              Remove Photo
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-secondary font-weight-bold px-3 mx-2 close-modal-btn"
               style="border-radius: 8px"
               id="cancel-photo-modal-button"
             >
@@ -433,8 +444,12 @@
             <button
               type="button"
               id="save-photo-button"
-              class="btn text-white font-weight-bold px-4"
-              style="background-color: #4965fa; border-radius: 8px"
+              class="btn text-white font-weight-bold px-3"
+              style="
+                background-color: #4965fa;
+                border-radius: 8px;
+                white-space: nowrap;
+              "
             >
               Change Photo
             </button>
