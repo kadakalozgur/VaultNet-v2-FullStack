@@ -111,3 +111,36 @@ async function deleteVaultItem(itemId) {
     }
 
 }
+
+async function updateVaultItem(itemId,title,usernameOrEmail,password,domain) {
+    
+    try{
+
+        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.UPDATE_VAULT_ITEM}/${itemId}`,{
+
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Title: title,
+                UsernameOrEmail: usernameOrEmail,
+                Password: password,
+                Domain: domain
+            })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result;
+
+    }catch(error){
+        throw error;
+    }
+
+}

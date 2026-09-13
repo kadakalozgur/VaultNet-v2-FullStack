@@ -14,7 +14,8 @@ const CONFIG = {
         ADD_VAULT_ITEM: "/Vault/add-vault-item",
         GET_VAULT_ITEMS: "/Vault/get-vault-items",
         GET_VAULT_ITEM_BY_ID: "/Vault",
-        DELETE_VAULT_ITEM: "/Vault"
+        DELETE_VAULT_ITEM: "/Vault",
+        UPDATE_VAULT_ITEM: "/Vault"
     }
 
 };
