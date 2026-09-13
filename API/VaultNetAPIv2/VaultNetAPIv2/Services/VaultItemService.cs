@@ -164,5 +164,31 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> DeleteItemAsync(Guid userId, Guid itemId)
+        {
+
+            var affectedRows = await _context.VaultItems
+                .Where(item => item.Id == itemId && item.UserId == userId)
+                .ExecuteDeleteAsync();
+
+            if(affectedRows == 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Vault item not found."
+                };
+            }
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Vault item deleted successfully."
+            };
+
+        }
     }
 }
