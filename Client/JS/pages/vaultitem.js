@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const itemId = urlParams.get('id');
 
     if (!itemId) {
-        window.location.href = "myvault.html";
+        //window.location.href = "myvault.html";
         return;
     }
 
@@ -78,3 +78,20 @@ togglePasswordButton.addEventListener('click', function(){
     }
 
 });
+
+// Item silme modal kısmı
+
+const openDeleteItemModalButton = document.getElementById("open-delete-item-modal-button");
+const deleteItemConfirmButton = document.getElementById("confirm-delete-button");
+const deleteItemCancelButton = document.getElementById("cancel-delete-item-modal-button");
+const deleteItemModalAlert = document.getElementById("delete-item-modal-alert");
+
+openDeleteItemModalButton.addEventListener('click' ,function(){
+    $('#deleteItemModal').modal('show');
+});
+
+deleteItemCancelButton.addEventListener("click", function() {
+    $('#deleteItemModal').modal('hide');
+    hideAlert(deleteItemModalAlert);
+});
+
