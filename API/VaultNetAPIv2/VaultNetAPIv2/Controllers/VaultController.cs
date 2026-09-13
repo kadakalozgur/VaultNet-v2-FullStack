@@ -88,5 +88,22 @@ namespace VaultNetAPIv2.Controllers
 
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateItem(Guid id, [FromBody] UpdateVaultItemDto updateVaultItemDto)
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _vaultItemService.UpdateItemAsync(userId, id, updateVaultItemDto);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
+
     }
 }
