@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using VaultNetAPIv2.DTOs;
@@ -105,6 +106,23 @@ namespace VaultNetAPIv2.Controllers
             {
                 Response.Cookies.Delete("jwt_token");
             }
+
+            return StatusCode(result.StatusCode, result);
+
+        }
+
+        [HttpDelete("remove-profile-picture")]
+        public async Task<IActionResult> RemoveProfilePicture()
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _userProfileService.RemoveProfilePictureAsync(userId);
 
             return StatusCode(result.StatusCode, result);
 
