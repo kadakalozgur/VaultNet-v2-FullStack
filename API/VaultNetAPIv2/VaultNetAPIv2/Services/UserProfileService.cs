@@ -267,5 +267,49 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> RemoveProfilePictureAsync(Guid userId)
+        {
+
+            var user = await _context.Users
+                .AsNoTracking()
+                .Where(user => user.Id == userId && user.IsActive)
+                .Select(user => new { user.ProfilePictureUrl })
+                .FirstOrDefaultAsync();
+
+            if(user == null)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "No such user was found."
+                };
+            }
+
+            if (string.IsNullOrEmpty(user.ProfilePictureUrl))
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Message = "User does not have a profile picture to remove."
+                };
+            }
+
+            await _context.Users
+                .Where(user => user.Id == userId && user.IsActive)
+                .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.ProfilePictureUrl, (string?)null));
+
+            await _storageService.DeleteFileAsync(user.ProfilePictureUrl);
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Profile picture removed successfully."
+            };
+
+        }
     }
 }

@@ -15,5 +15,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> DeleteAccountAsync(Guid userId, DeleteAccountDto deleteAccountDto);
 
+        Task<ServiceResult> RemoveProfilePictureAsync(Guid userId);
+
     }
 }
