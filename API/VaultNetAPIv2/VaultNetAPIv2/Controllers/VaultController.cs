@@ -71,5 +71,22 @@ namespace VaultNetAPIv2.Controllers
 
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteItem(Guid id)
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _vaultItemService.DeleteItemAsync(userId,id);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
+
     }
 }
