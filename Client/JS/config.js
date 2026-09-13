@@ -13,7 +13,8 @@ const CONFIG = {
         DELETE_ACCOUNT: "/UserProfile/delete-account",
         ADD_VAULT_ITEM: "/Vault/add-vault-item",
         GET_VAULT_ITEMS: "/Vault/get-vault-items",
-        GET_VAULT_ITEM_BY_ID: "/Vault"
+        GET_VAULT_ITEM_BY_ID: "/Vault",
+        DELETE_VAULT_ITEM: "/Vault"
     }
 
 };

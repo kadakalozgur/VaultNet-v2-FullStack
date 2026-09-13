@@ -84,3 +84,30 @@ async function getVaultItemById(itemId) {
     }
 
 }
+
+async function deleteVaultItem(itemId) {
+    
+    try{
+
+        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.DELETE_VAULT_ITEM}/${itemId}`,{
+
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result;
+
+    }catch(error){
+        throw error;
+    }
+
+}
