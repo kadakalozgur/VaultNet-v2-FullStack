@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const itemId = urlParams.get('id');
 
     if (!itemId) {
-        //window.location.href = "myvault.html";
+        window.location.href = "myvault.html";
         return;
     }
 
@@ -173,6 +173,78 @@ toggleUpdatePasswordButton.addEventListener('click',function(){
         updatePasswordInput.type = 'password';
         toggleUpdatePasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
         toggleUpdatePasswordButton.style.backgroundSize = "20px";
+    }
+
+});
+
+updateItemButton.addEventListener('click', async function(e) {
+
+    e.preventDefault();
+    hideAlert(updateItemModalAlert);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const itemId = urlParams.get('id');
+
+    if (!itemId){
+        return;
+    }
+
+    const title = updateTitleInput.value.trim();
+    const usernameOrEmail = updateUsernameInput.value.trim();
+    const password = updatePasswordInput.value;
+    const domain = updateDomainInput.value.trim();
+
+    const currentTitle = document.getElementById("title-label").innerText;
+    const currentUsername = document.getElementById("detail-username").value;
+    const currentPassword = document.getElementById("detail-password").value;
+    const currentDomain = document.getElementById("detail-domain").value;
+
+    if (title === currentTitle && usernameOrEmail === currentUsername && password === currentPassword && domain === currentDomain) {
+        showAlert(updateItemModalAlert, "No changes were made to update.", "warning");
+        return;
+    }
+
+    if (!title || !usernameOrEmail || !password) {
+        showAlert(updateItemModalAlert, "Please fill in all required fields.", "warning");
+        return;
+    }
+
+    if (title.length > 100) {
+        showAlert(updateItemModalAlert, "Title can be a maximum of 100 characters.", "warning");
+        return;
+    }
+
+    if (usernameOrEmail.length > 150) {
+        showAlert(updateItemModalAlert, "Username or email can be a maximum of 150 characters.", "warning");
+        return;
+    }
+
+    if (password.length > 256) {
+        showAlert(updateItemModalAlert, "Password can be a maximum of 256 characters.", "warning");
+        return;
+    }
+
+    if (domain.length > 150) {
+        showAlert(updateItemModalAlert, "Domain can be a maximum of 150 characters.", "warning");
+        return;
+    }
+
+    updateItemButton.disabled = true;
+    cancelUpdateItemModalButton.disabled = true;
+
+    try {
+
+        await updateVaultItem(itemId, title, usernameOrEmail, password, domain);
+        
+        $('#updateItemModal').modal('hide');
+
+        window.location.reload(); 
+        
+    } catch (error) {
+        showAlert(updateItemModalAlert, error.message, "danger");
+    } finally {
+        updateItemButton.disabled = false;
+        cancelUpdateItemModalButton.disabled = false;
     }
 
 });
