@@ -168,6 +168,7 @@
             <div class="d-flex mb-5">
               <button
                 class="btn btn-vault-edit d-flex align-items-center justify-content-center px-4 py-2 mr-3 font-weight-bold"
+                id="open-update-item-modal-button"
               >
                 <img
                   src="Media/Icons/pencil-icon.png"
@@ -425,6 +426,116 @@
               style="border-radius: 8px"
             >
               Delete Item
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item Update Modal Kısmı-->
+
+    <div class="modal fade" id="updateItemModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content border-0 shadow-lg"
+          style="border-radius: 16px"
+        >
+          <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+            <h5 class="modal-title font-weight-bold text-dark">
+              Edit Vault Item
+            </h5>
+          </div>
+
+          <div class="modal-body px-4 py-3">
+            <p class="text-muted mb-4" style="font-size: 14px">
+              Update the credentials for this item. Ensure the information is
+              correct before saving.
+            </p>
+
+            <div
+              id="update-item-alert"
+              class="alert d-none animate__animated animate__fadeIn"
+              role="alert"
+            ></div>
+
+            <div class="form-group">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Item Name <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                id="update-title-input"
+                class="form-control"
+                placeholder="GitHub, Netflix, Gmail..."
+                style="border-radius: 7px; color: #334155"
+              />
+            </div>
+
+            <div class="form-group">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Username / Email <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                id="update-username-input"
+                class="form-control"
+                placeholder="user@example.com, username..."
+                style="border-radius: 7px; color: #334155"
+              />
+            </div>
+
+            <div class="form-group">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Password <span class="text-danger">*</span></label
+              >
+              <div class="position-relative">
+                <input
+                  type="password"
+                  id="update-password-input"
+                  class="form-control password-input-icon"
+                  placeholder="Enter password"
+                  style="border-radius: 7px; color: #334155"
+                />
+                <img
+                  src="Media/Icons/open-eye-icon.png"
+                  class="password-eye-icon"
+                  id="toggle-update-password"
+                  alt="Toggle Password"
+                />
+              </div>
+            </div>
+
+            <div class="form-group mb-0">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Website (Optional)</label
+              >
+              <input
+                type="text"
+                id="update-domain-input"
+                class="form-control"
+                placeholder="https://example.com"
+                style="border-radius: 7px; color: #334155"
+              />
+            </div>
+          </div>
+
+          <div class="modal-footer border-top-0 pt-3 pb-4 px-4">
+            <button
+              type="button"
+              class="btn btn-outline-secondary font-weight-bold px-4 close-modal-btn"
+              style="border-radius: 8px"
+              id="cancel-update-modal-button"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              id="update-item-button"
+              class="btn text-white font-weight-bold px-4"
+              style="background-color: #4965fa; border-radius: 8px"
+            >
+              Update Item
             </button>
           </div>
         </div>

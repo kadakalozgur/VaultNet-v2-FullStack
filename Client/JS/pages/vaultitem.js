@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const itemId = urlParams.get('id');
 
     if (!itemId) {
-        window.location.href = "myvault.html";
+        //window.location.href = "myvault.html";
         return;
     }
 
@@ -122,6 +122,57 @@ deleteItemConfirmButton.addEventListener('click' ,async function(e){
     }finally{
         deleteItemConfirmButton.disabled = false;
         deleteItemCancelButton.disabled = false;
+    }
+
+});
+
+// Update item modal kısmı
+
+const openUpdateItemModalButton = document.getElementById("open-update-item-modal-button");
+const cancelUpdateItemModalButton = document.getElementById("cancel-update-modal-button");
+const updateItemButton = document.getElementById("update-item-button");
+const toggleUpdatePasswordButton = document.getElementById("toggle-update-password");
+const updateItemModalAlert = document.getElementById("update-item-alert");
+const updateTitleInput = document.getElementById("update-title-input");
+const updateUsernameInput = document.getElementById("update-username-input");
+const updatePasswordInput = document.getElementById("update-password-input");
+const updateDomainInput = document.getElementById("update-domain-input");
+
+openUpdateItemModalButton.addEventListener('click' ,function(){
+
+    updateTitleInput.value = document.getElementById("title-label").innerText;
+    updateUsernameInput.value = document.getElementById("detail-username").value;
+    updatePasswordInput.value = document.getElementById("detail-password").value;
+    updateDomainInput.value = document.getElementById("detail-domain").value;
+
+    $('#updateItemModal').modal('show');
+});
+
+cancelUpdateItemModalButton.addEventListener("click", function() {
+    $('#updateItemModal').modal('hide');
+    updateTitleInput.value = "";
+    updateUsernameInput.value = "";
+    updatePasswordInput.value = "";
+    updateDomainInput.value = "";
+
+    updatePasswordInput.type = 'password';
+    toggleUpdatePasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+    
+    hideAlert(updateItemModalAlert);
+});
+
+toggleUpdatePasswordButton.addEventListener('click',function(){
+
+    if(updatePasswordInput.type == 'password'){
+        updatePasswordInput.type = 'text';
+        toggleUpdatePasswordButton.style.backgroundImage = "url('../Media/Icons/close-eye-icon.png')";
+        toggleUpdatePasswordButton.style.backgroundSize = "20px";
+    }
+
+    else{
+        updatePasswordInput.type = 'password';
+        toggleUpdatePasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+        toggleUpdatePasswordButton.style.backgroundSize = "20px";
     }
 
 });
