@@ -14,5 +14,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> DeleteItemAsync(Guid userId,Guid itemId);
 
+        Task<ServiceResult> UpdateItemAsync(Guid userId, Guid itemId, UpdateVaultItemDto updateVaultItemDto);
+
     }
 }
