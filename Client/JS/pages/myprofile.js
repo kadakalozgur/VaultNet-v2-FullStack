@@ -3,6 +3,7 @@
 const openPhotoModalButton = document.getElementById("open-photo-modal-button");
 const cancelPhotoModalButton = document.getElementById("cancel-photo-modal-button");
 const savePhotoModalButton = document.getElementById("save-photo-button");
+const removePhotoButton = document.getElementById("remove-photo-button");
 const fileLabelPhotoModal = document.getElementById("file-label-photo-modal");
 const fileInput = document.getElementById("customFile");
 const previewImagePhotoModal = document.getElementById("previewAvatar");
@@ -57,6 +58,7 @@ savePhotoModalButton.addEventListener('click', async function(e) {
 
     savePhotoModalButton.disabled = true;
     fileInput.disabled = true;
+    removePhotoButton.disabled = true;
 
     try{
 
@@ -73,8 +75,38 @@ savePhotoModalButton.addEventListener('click', async function(e) {
     } finally{
         savePhotoModalButton.disabled = false;
         fileInput.disabled = false;    
+        removePhotoButton.disabled = false;
     }
 
+});
+
+removePhotoButton.addEventListener("click", async function (e) {
+
+    e.preventDefault();
+
+    hideAlert(photoModalAlert);
+
+    removePhotoButton.disabled = true;
+    savePhotoModalButton.disabled = true;
+    cancelPhotoModalButton.disabled = true;
+
+    try {
+
+        await removeProfilePicture();
+
+        sessionStorage.removeItem("user_profile");
+
+        $('#changePhotoModal').modal('hide');
+
+        window.location.reload();
+
+    } catch (error) {
+        showAlert(photoModalAlert, error.message, "danger");
+    } finally {
+        removePhotoButton.disabled = false;
+        savePhotoModalButton.disabled = false;
+        cancelPhotoModalButton.disabled = false;
+    }
 });
 
 // E-mail değiştirme modal kısmı
