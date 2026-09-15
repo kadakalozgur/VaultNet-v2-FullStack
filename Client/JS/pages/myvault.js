@@ -4,12 +4,15 @@
 let vaultItems = [];
 let currentPage = 1;
 let totalPages = 1;
+let currentSearchQuery = "";
 
-async function loadVaultItemPage(pageNumber = 1) {
+async function loadVaultItemPage(pageNumber = 1, searchQuery = null) {
     
     try{
 
-        const result = await getVaultItems(pageNumber);
+        currentSearchQuery = searchQuery;
+
+        const result = await getVaultItems(pageNumber,currentSearchQuery);
 
         if(result.isSuccess){
             vaultItems = result.data.items;
@@ -122,7 +125,7 @@ function loadPageNumberButtons() {
     let html = "";
 
     html += `
-        <button class="page-btn" onclick="loadVaultItemPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+        <button class="page-btn" onclick="loadVaultItemPage(${currentPage - 1}, '${currentSearchQuery}')" ${currentPage === 1 ? 'disabled' : ''}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
@@ -141,13 +144,13 @@ function loadPageNumberButtons() {
         startPage = Math.max(1, totalPages - maxPageShow + 1);
     }
 
-    for(let i = startPage;i<=endPage;i++){
+    for(let i = startPage; i <= endPage; i++){
         const activeClass = i == currentPage ? "active" : "";
-        html += `<button class="page-btn ${activeClass}" onclick="loadVaultItemPage(${i})">${i}</button>`;
+        html += `<button class="page-btn ${activeClass}" onclick="loadVaultItemPage(${i}, '${currentSearchQuery}')">${i}</button>`;
     }
 
     html += `
-        <button class="page-btn" onclick="loadVaultItemPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+        <button class="page-btn" onclick="loadVaultItemPage(${currentPage + 1}, '${currentSearchQuery}')" ${currentPage === totalPages ? 'disabled' : ''}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
@@ -160,6 +163,23 @@ function loadPageNumberButtons() {
 
 document.addEventListener("DOMContentLoaded", async function() {
     loadVaultItemPage(1);
+});
+
+// Arama input kısmı enter dinleyicisi kısmı
+
+const searchInput = document.getElementById("vault-search-input");
+
+searchInput.addEventListener("keydown", async function(e) {
+
+    if (e.key === "Enter") {
+
+        e.preventDefault(); 
+
+        const query = searchInput.value.trim();
+
+        await loadVaultItemPage(1, query); 
+        
+    }
 });
 
 // Add item modal kısmı
