@@ -31,11 +31,17 @@ async function addVaultItem(itemName,usernameOrEmail,password,website = null) {
 
 }
 
-async function getVaultItems(pageNumber = 1) {
+async function getVaultItems(pageNumber = 1, searchQuery = null) {
     
     try{
 
-        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.GET_VAULT_ITEMS}?pageNumber=${pageNumber}`,{
+        let url =  `${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.GET_VAULT_ITEMS}?pageNumber=${pageNumber}`;
+
+        if(searchQuery && searchQuery.trim() != ""){
+            url += `&searchQuery=${encodeURIComponent(searchQuery.trim())}`;
+        }
+
+        const response = await fetch(url,{
 
             method: "GET",
             credentials: "include",
