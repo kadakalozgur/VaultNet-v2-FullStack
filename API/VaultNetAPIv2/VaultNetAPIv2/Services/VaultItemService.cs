@@ -45,7 +45,7 @@ namespace VaultNetAPIv2.Services
 
         // Sıkı sıkıya bağımlı yaptım. Benim projemde bu değerde olmasını istiyorum.
         private const int pageSize = 6;
-        public async Task<ServiceResult> GetItemsAsync(Guid userId, int pageNumber)
+        public async Task<ServiceResult> GetItemsAsync(Guid userId, int pageNumber, string? searchQuery = null)
         {
 
             if(pageNumber < 1)
@@ -55,11 +55,77 @@ namespace VaultNetAPIv2.Services
 
             var query = _context.VaultItems
                 .AsNoTracking()
-                .Where(item => item.UserId == userId);    
+                .Where(item => item.UserId == userId);
 
-            var totalCount = await query.CountAsync();
+            // Bu if bloğu search işlemi esnasında çalışıyor.
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
 
-            var encryptedItems = await query
+                var lowerSearchQuery = searchQuery.Trim().ToLower();
+
+                var allEncryptedItems = await query
+                    .Select(item => new 
+                    { item.Id, 
+                      item.EncryptedTitle,
+                      item.UpdatedAt 
+                    })
+                    .ToListAsync();
+
+                var filteredItems = allEncryptedItems
+                    .Select(item => new
+                    {
+                        item.Id,
+                        Title = _encryptionService.Decrypt(item.EncryptedTitle),
+                        item.UpdatedAt
+                    })
+                    .Where(item => item.Title.ToLower().Contains(lowerSearchQuery))
+                    .ToList();
+
+                var totalCountSearch = filteredItems.Count;
+                var totalPagesSearch = (int)Math.Ceiling((double)totalCountSearch / pageSize);
+
+                if(totalCountSearch == 0)
+                {
+                    return new ServiceResult
+                    {
+                        IsSuccess = true,
+                        StatusCode = 200,
+                        Message = "No vault items found.",
+                        Data = new
+                        {
+                            Items = new List<object>(),
+                            TotalPages = 1,
+                            CurrentPage = pageNumber
+                        }
+                    };
+                }
+
+                var pagedSearchItems = filteredItems
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                return new ServiceResult
+                {
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Message = "Search results retrieved successfully.",
+                    Data = new
+                    {
+                        Items = pagedSearchItems,
+                        TotalPages = totalPagesSearch,
+                        CurrentPage = pageNumber
+                    }
+                };
+
+            }
+
+            // Buradan aşağısı ise normal şartlardaki arama.
+
+            var totalCountNormal = await query.CountAsync();
+            var totalPagesNormal = (int)Math.Ceiling((double)totalCountNormal / pageSize);
+
+            var pagedEncryptedItems = await query
                 .OrderByDescending(item => item.UpdatedAt)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -74,9 +140,8 @@ namespace VaultNetAPIv2.Services
                 })
                 .ToListAsync();
 
-            var totalPage = (int)Math.Ceiling((double)totalCount / pageSize);
-
-            if (!encryptedItems.Any())
+            
+            if (!pagedEncryptedItems.Any())
             {
                 return new ServiceResult
                 {
@@ -86,13 +151,13 @@ namespace VaultNetAPIv2.Services
                     Data = new
                     {
                         Items = new List<object>(),
-                        TotalPages = totalPage,
+                        TotalPages = totalPagesNormal,
                         CurrentPage = pageNumber
                     }
                 };
             }
 
-            var decryptedItems = encryptedItems.Select(item => new
+            var pagedDecryptedItems = pagedEncryptedItems.Select(item => new
             {
                 item.Id,
                 Title = _encryptionService.Decrypt(item.EncryptedTitle),
@@ -109,8 +174,8 @@ namespace VaultNetAPIv2.Services
                 Message = "Vault items successfully retrieved.",
                 Data = new
                 {
-                    Items = decryptedItems,
-                    TotalPages = totalPage,
+                    Items = pagedDecryptedItems,
+                    TotalPages = totalPagesNormal,
                     CurrentPage = pageNumber
                 }
             };
