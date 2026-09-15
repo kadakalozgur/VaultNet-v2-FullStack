@@ -67,7 +67,8 @@ namespace VaultNetAPIv2.Services
                     .Select(item => new 
                     { item.Id, 
                       item.EncryptedTitle,
-                      item.UpdatedAt 
+                      item.UpdatedAt,
+                      item.CreatedAt
                     })
                     .ToListAsync();
 
@@ -76,7 +77,8 @@ namespace VaultNetAPIv2.Services
                     {
                         item.Id,
                         Title = _encryptionService.Decrypt(item.EncryptedTitle),
-                        item.UpdatedAt
+                        item.UpdatedAt,
+                        item.CreatedAt
                     })
                     .Where(item => item.Title.ToLower().Contains(lowerSearchQuery))
                     .ToList();
