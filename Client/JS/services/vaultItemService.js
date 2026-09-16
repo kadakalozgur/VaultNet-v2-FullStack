@@ -150,3 +150,30 @@ async function updateVaultItem(itemId,title,usernameOrEmail,password,domain) {
     }
 
 }
+
+async function toggleFavoriteItem(itemId) {
+    
+    try{
+
+        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.TOGGLE_FAVORITE_VAULT_ITEM}/${itemId}`,{
+
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result;
+
+    }catch(error){
+        throw error;
+    }
+
+}
