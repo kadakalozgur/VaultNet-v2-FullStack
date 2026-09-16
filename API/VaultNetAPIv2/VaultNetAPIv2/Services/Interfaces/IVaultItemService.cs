@@ -16,5 +16,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> UpdateItemAsync(Guid userId, Guid itemId, UpdateVaultItemDto updateVaultItemDto);
 
+        Task<ServiceResult> ChangeFavoriteItemAsync(Guid userId, Guid itemId);
+
     }
 }
