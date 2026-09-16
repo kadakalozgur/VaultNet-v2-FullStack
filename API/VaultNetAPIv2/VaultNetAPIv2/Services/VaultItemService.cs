@@ -294,7 +294,7 @@ namespace VaultNetAPIv2.Services
 
         }
 
-        public async Task<ServiceResult> ChangeFavoriteItemAsync(Guid userId, Guid itemId)
+        public async Task<ServiceResult> ToggleFavoriteItemAsync(Guid userId, Guid itemId)
         {
 
             var affectedRows = await _context.VaultItems

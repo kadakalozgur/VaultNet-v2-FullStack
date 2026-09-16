@@ -106,7 +106,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPatch("toggle-item-favorite/{id}")]
-        public async Task<IActionResult> ToggleFavorite(Guid id)
+        public async Task<IActionResult> ToggleFavoriteItem(Guid id)
         {
 
             var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -116,7 +116,7 @@ namespace VaultNetAPIv2.Controllers
                 return Unauthorized(new { Message = "Invalid or missing user identity." });
             }
 
-            var result = await _vaultItemService.ChangeFavoriteItemAsync(userId,id);
+            var result = await _vaultItemService.ToggleFavoriteItemAsync(userId, id);
 
             return StatusCode(result.StatusCode, result);
 
