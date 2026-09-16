@@ -293,5 +293,34 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> ChangeFavoriteItemAsync(Guid userId, Guid itemId)
+        {
+
+            var affectedRows = await _context.VaultItems
+                .Where(item => item.Id == itemId && item.UserId == userId)
+                .ExecuteUpdateAsync(setter => setter
+                    .SetProperty(item => item.IsFavorite, item => !item.IsFavorite)
+                    .SetProperty(item => item.UpdatedAt, DateTime.UtcNow)
+                );
+
+            if (affectedRows == 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Vault item not found."
+                };
+            }
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Favorite status updated successfully."
+            };
+
+        }
     }
 }
