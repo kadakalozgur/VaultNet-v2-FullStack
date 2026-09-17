@@ -72,7 +72,7 @@ function showCardVaultItems() {
                         <button class="btn btn-sm btn-link p-0 shadow-none" 
                                 style="text-decoration: none; position: absolute; top: 16px; right: 16px;"
                                 onclick="toggleFavoriteItem('${item.id}', this)">
-                            <span style="font-size: 30px; line-height: 1; color: ${item.isFavorite ? '#4965fa' : '#d1d5db'};">★</span>
+                            <span class="d-inline-block" style="font-size: 30px; line-height: 1; color: ${item.isFavorite ? '#4965fa' : '#d1d5db'};">★</span>
                         </button>
 
                         <div class="d-flex align-items-center mb-3 w-100" style="padding-right: 28px;">
@@ -119,6 +119,14 @@ async function toggleFavoriteItem(itemId,button) {
     
     const starSpan = button.querySelector("span");
     const previousColor = starSpan.style.color;
+
+    function animationEnd(){
+        starSpan.classList.remove("animate__animated", "animate__bounceIn");
+        starSpan.removeEventListener("animationend", animationEnd);
+    }
+
+    starSpan.addEventListener("animationend", animationEnd);
+    starSpan.classList.add("animate__animated", "animate__bounceIn");
 
     const isCurrentlyFavorite = starSpan.style.color === "rgb(73, 101, 250)" || starSpan.style.color === "#4965fa";
     starSpan.style.color = isCurrentlyFavorite ? "#d1d5db" : "#4965fa";
