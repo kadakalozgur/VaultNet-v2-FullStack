@@ -38,7 +38,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpGet("get-vault-items")]
-        public async Task<IActionResult> GetVaultItems([FromQuery] int pageNumber = 1, [FromQuery] string? searchQuery = null)
+        public async Task<IActionResult> GetVaultItems([FromQuery] int pageNumber = 1, [FromQuery] string? searchQuery = null, [FromQuery] bool? isFavorite = null)
         {
 
             var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -48,7 +48,7 @@ namespace VaultNetAPIv2.Controllers
                 return Unauthorized(new { Message = "Invalid or missing user identity." });
             }
 
-            var result = await _vaultItemService.GetItemsAsync(userId,pageNumber, searchQuery);
+            var result = await _vaultItemService.GetItemsAsync(userId,pageNumber, searchQuery, isFavorite);
 
             return StatusCode(result.StatusCode, result);
 

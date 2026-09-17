@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 using VaultNetAPIv2.Data;
 using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Models;
@@ -45,7 +46,7 @@ namespace VaultNetAPIv2.Services
 
         // Sıkı sıkıya bağımlı yaptım. Benim projemde bu değerde olmasını istiyorum.
         private const int pageSize = 6;
-        public async Task<ServiceResult> GetItemsAsync(Guid userId, int pageNumber, string? searchQuery = null)
+        public async Task<ServiceResult> GetItemsAsync(Guid userId, int pageNumber, string? searchQuery = null, bool? isFavorite = null)
         {
 
             if(pageNumber < 1)
@@ -56,6 +57,11 @@ namespace VaultNetAPIv2.Services
             var query = _context.VaultItems
                 .AsNoTracking()
                 .Where(item => item.UserId == userId);
+
+            if (isFavorite == true)
+            {
+                query = query.Where(item => item.IsFavorite == true);
+            }
 
             // Bu if bloğu search işlemi esnasında çalışıyor.
             if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -68,7 +74,8 @@ namespace VaultNetAPIv2.Services
                     { item.Id, 
                       item.EncryptedTitle,
                       item.UpdatedAt,
-                      item.CreatedAt
+                      item.CreatedAt,
+                      item.IsFavorite
                     })
                     .ToListAsync();
 
@@ -78,7 +85,8 @@ namespace VaultNetAPIv2.Services
                         item.Id,
                         Title = _encryptionService.Decrypt(item.EncryptedTitle),
                         item.UpdatedAt,
-                        item.CreatedAt
+                        item.CreatedAt,
+                        item.IsFavorite
                     })
                     .Where(item => item.Title.ToLower().Contains(lowerSearchQuery))
                     .ToList();
