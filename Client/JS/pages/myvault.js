@@ -69,7 +69,9 @@ function showCardVaultItems() {
                 <div class="card h-100 border-0 shadow-sm vault-card p-2" style="border-radius: 16px; transition: transform 0.2s; background-color: #ffffff; position: relative;">
                     <div class="card-body p-3 d-flex flex-column">
                         
-                        <button class="btn btn-sm btn-link p-0 shadow-none" style="text-decoration: none; position: absolute; top: 16px; right: 16px;">
+                        <button class="btn btn-sm btn-link p-0 shadow-none" 
+                                style="text-decoration: none; position: absolute; top: 16px; right: 16px;"
+                                onclick="toggleFavoriteItem('${item.id}', this)">
                             <span style="font-size: 30px; line-height: 1; color: ${item.isFavorite ? '#4965fa' : '#d1d5db'};">★</span>
                         </button>
 
@@ -110,6 +112,35 @@ function showCardVaultItems() {
         container.insertAdjacentHTML('beforeend', cardHtml);
 
     });
+
+}
+
+async function toggleFavoriteItem(itemId,button) {
+    
+    const starSpan = button.querySelector("span");
+    const previousColor = starSpan.style.color;
+
+    const isCurrentlyFavorite = starSpan.style.color === "rgb(73, 101, 250)" || starSpan.style.color === "#4965fa";
+    starSpan.style.color = isCurrentlyFavorite ? "#d1d5db" : "#4965fa";
+
+    button.disabled = true ;
+
+    try{
+
+        await toggleFavoriteItemAsync(itemId);
+
+        const targetItem = vaultItems.find(item => item.id === itemId);
+
+        if (targetItem) {
+            targetItem.isFavorite = !isCurrentlyFavorite;
+        }
+
+    }catch(error){
+        starSpan.style.color = previousColor;
+        console.error(error.message);
+    }finally{
+        button.disabled = false ;
+    }
 
 }
 

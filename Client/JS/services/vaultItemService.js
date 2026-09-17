@@ -151,7 +151,7 @@ async function updateVaultItem(itemId,title,usernameOrEmail,password,domain) {
 
 }
 
-async function toggleFavoriteItem(itemId) {
+async function toggleFavoriteItemAsync(itemId) {
     
     try{
 
