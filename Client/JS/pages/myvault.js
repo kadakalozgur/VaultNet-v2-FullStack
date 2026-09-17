@@ -6,13 +6,16 @@ let currentPage = 1;
 let totalPages = 1;
 let currentSearchQuery = "";
 
+// Sayfa urlsinden favoriler sayfasında olup olmadığıma baktım. Favoriler sayfasında isem ona göre API'ye istek atıcam.
+const isFavoritePage = window.location.pathname.toLowerCase().includes('favorites');
+
 async function loadVaultItemPage(pageNumber = 1, searchQuery = "") {
     
     try{
 
         currentSearchQuery = searchQuery;
 
-        const result = await getVaultItems(pageNumber,currentSearchQuery);
+        const result = await getVaultItems(pageNumber,currentSearchQuery,isFavoritePage);
 
         if(result.isSuccess){
             vaultItems = result.data.items;
@@ -143,11 +146,21 @@ async function toggleFavoriteItem(itemId,button) {
             targetItem.isFavorite = !isCurrentlyFavorite;
         }
 
+        if(isFavoritePage && isCurrentlyFavorite){
+            
+            const targetPage = (vaultItems.length === 1 && currentPage > 1) ? currentPage - 1 : currentPage;
+
+            await loadVaultItemPage(targetPage, currentSearchQuery);
+
+        }
+
     }catch(error){
         starSpan.style.color = previousColor;
         console.error(error.message);
     }finally{
-        button.disabled = false ;
+        if (document.body.contains(button)) {
+            button.disabled = false;
+        }
     }
 
 }
@@ -224,6 +237,10 @@ searchInput.addEventListener("keydown", async function(e) {
 // Add item modal kısmı
 
 const openAddItemModalButton = document.getElementById("open-add-item-modal-button");
+
+// Favorites sayfası ile MyVault bu scripti kullanıyor. Favorites sayfasında modal olmadığı için bu kısım gereksiz O yüzden if bloğuna aldım.
+if(openAddItemModalButton){
+
 const cancelAddItemModalButton = document.getElementById("cancel-add-modal-button");
 const saveItemButton = document.getElementById("save-item-button");
 const toggleAddPasswordButton = document.getElementById("toggle-add-password");
@@ -335,5 +352,9 @@ saveItemButton.addEventListener('click', async function(e) {
     }
 
 });
+
+}
+
+
 
 

@@ -31,7 +31,7 @@ async function addVaultItem(itemName,usernameOrEmail,password,website = null) {
 
 }
 
-async function getVaultItems(pageNumber = 1, searchQuery = null) {
+async function getVaultItems(pageNumber = 1, searchQuery = null, isFavorite = false) {
     
     try{
 
@@ -39,6 +39,10 @@ async function getVaultItems(pageNumber = 1, searchQuery = null) {
 
         if(searchQuery && searchQuery.trim() != ""){
             url += `&searchQuery=${encodeURIComponent(searchQuery.trim())}`;
+        }
+
+        if(isFavorite) {
+            url += `&isFavorite=true`;
         }
 
         const response = await fetch(url,{
