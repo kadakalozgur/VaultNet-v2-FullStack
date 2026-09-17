@@ -6,7 +6,7 @@ let currentPage = 1;
 let totalPages = 1;
 let currentSearchQuery = "";
 
-async function loadVaultItemPage(pageNumber = 1, searchQuery = null) {
+async function loadVaultItemPage(pageNumber = 1, searchQuery = "") {
     
     try{
 
