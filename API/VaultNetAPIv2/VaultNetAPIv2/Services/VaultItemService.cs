@@ -301,7 +301,6 @@ namespace VaultNetAPIv2.Services
                 .Where(item => item.Id == itemId && item.UserId == userId)
                 .ExecuteUpdateAsync(setter => setter
                     .SetProperty(item => item.IsFavorite, item => !item.IsFavorite)
-                    .SetProperty(item => item.UpdatedAt, DateTime.UtcNow)
                 );
 
             if (affectedRows == 0)
