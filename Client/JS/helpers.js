@@ -76,6 +76,10 @@ async function getProfileWithCache() {
 // Sayfa yüklendiği an arkadan User bilgilerini çektiğim kısım
 document.addEventListener("DOMContentLoaded", async function() {
 
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+        return;
+    }
+
     try {
 
         const response = await getProfileWithCache();
