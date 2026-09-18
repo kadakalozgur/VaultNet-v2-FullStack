@@ -46,6 +46,8 @@ loginButton.addEventListener('click',async function(e){
 
         await login(email,password);
 
+        localStorage.setItem("isLoggedIn", "true");
+
         window.location.href = "dashboard.html";
 
     }catch(error){

@@ -12,6 +12,24 @@ function hideAlert(alertBox){
     
 }
 
+// Bu kısımda çıkış yapıldıktan sonra tarayıcının geri-ileri tuşları ile gezilmesini engelledim.
+// BFCache olayını hallettim kısacası.
+const currentPath = window.location.pathname.toLowerCase();
+
+if (!currentPath.includes("index.html") && !currentPath.includes("register.html") && currentPath !== "/" && currentPath !== "") {
+    
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.replace("index.html");
+    }
+
+    window.addEventListener('pageshow', function (event) {
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.replace("index.html");
+        }
+    });
+
+}
+
 // API'den gelen .net'e özel validation errorlarını ui'a basmak için oluşturduğum fonksiyon
 function getApiErrorMessage(result){
 

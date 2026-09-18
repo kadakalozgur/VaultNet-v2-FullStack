@@ -7,6 +7,8 @@ logoutButton.addEventListener('click',async function(e){
     try{
 
         await logout();
+
+        localStorage.removeItem("isLoggedIn");
  
     }catch(error){
         console.error("Error:", error.message);
