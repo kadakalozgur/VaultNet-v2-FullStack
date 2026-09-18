@@ -81,52 +81,79 @@
             </a>
           </nav>
 
-          <div class="mt-auto">
+          <div class="mt-auto w-100">
             <hr class="mb-3" />
 
-            <a
-              href="myprofile.html"
-              class="custom-nav-link active d-flex justify-content-between align-items-center"
-              style="margin-bottom: 0"
-            >
-              <div class="d-flex align-items-center">
-                <img
-                  src="Media/Icons/avatar-icon.png"
-                  class="profile-avatar-img"
-                  alt="Profile"
-                />
-
-                <span class="ml-3" style="font-size: 16px; color: #111827"
-                  >My Profile</span
-                >
-              </div>
-
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#6b7280"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+            <div class="dropup w-100">
+              <a
+                href="#"
+                class="custom-nav-link d-flex justify-content-between align-items-center w-100 mb-0 text-decoration-none"
+                id="profileDropdown"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </a>
+                <div class="d-flex align-items-center">
+                  <img
+                    src="Media/Icons/avatar-icon.png"
+                    class="profile-avatar-img"
+                    alt="Profile"
+                  />
+                  <span class="ml-3 font-weight-bold text-dark"
+                    >My Account</span
+                  >
+                </div>
 
-            <button
-              type="button"
-              id="logout-button"
-              class="btn btn-block mt-3 font-weight-bold d-flex align-items-center justify-content-start logout-btn"
-            >
-              <img
-                src="Media/Icons/logout-icon.png"
-                class="logout-icon"
-                alt="Log out"
-              />
-              Log out
-            </button>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#6b7280"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
+              </a>
+
+              <div
+                class="dropdown-menu w-100 shadow border-0 rounded-lg mb-2"
+                aria-labelledby="profileDropdown"
+              >
+                <a
+                  class="dropdown-item py-2 d-flex align-items-center"
+                  href="myprofile.html"
+                >
+                  <img
+                    src="Media/Icons/settings-icon.png"
+                    alt="Profile"
+                    class="mr-2"
+                    style="width: 18px"
+                  />
+                  <span class="font-weight-bold text-dark"
+                    >Profile Settings</span
+                  >
+                </a>
+
+                <div class="dropdown-divider"></div>
+
+                <button
+                  class="dropdown-item py-2 d-flex align-items-center text-danger"
+                  type="button"
+                  id="logout-button"
+                >
+                  <img
+                    src="Media/Icons/logout-icon.png"
+                    alt="Logout"
+                    class="mr-2"
+                    style="width: 18px"
+                  />
+                  <span class="font-weight-bold">Log out</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
