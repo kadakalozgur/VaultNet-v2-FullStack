@@ -329,5 +329,32 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> GetDashboardStatsAsync(Guid userId)
+        {
+
+            // Şuanlık sadece total sayılarını aldım ileride buraya son eklenen itemler falanda yazılacak.
+
+            var totalItemCount = await _context.VaultItems
+                .AsNoTracking()
+                .CountAsync(item => item.UserId == userId);
+
+            var favoriteItemCount = await _context.VaultItems
+                .AsNoTracking()
+                .CountAsync(item => item.UserId == userId && item.IsFavorite);
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Dashboard statistics retrieved successfully.",
+                Data = new
+                {
+                    TotalCount = totalItemCount,
+                    FavoriteCount = favoriteItemCount
+                }
+            };
+
+        }
     }
 }

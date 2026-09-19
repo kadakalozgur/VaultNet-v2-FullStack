@@ -18,5 +18,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> ToggleFavoriteItemAsync(Guid userId, Guid itemId);
 
+        Task<ServiceResult> GetDashboardStatsAsync(Guid userId);
+
     }
 }
