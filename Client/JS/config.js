@@ -17,7 +17,8 @@ const CONFIG = {
         GET_VAULT_ITEM_BY_ID: "/Vault",
         DELETE_VAULT_ITEM: "/Vault",
         UPDATE_VAULT_ITEM: "/Vault",
-        TOGGLE_FAVORITE_VAULT_ITEM: "/Vault/toggle-item-favorite"
+        TOGGLE_FAVORITE_VAULT_ITEM: "/Vault/toggle-item-favorite",
+        GET_DASHBOARD_STATS: "/Vault/dashboard-stats"
     }
 
 };
