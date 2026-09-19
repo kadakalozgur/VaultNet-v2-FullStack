@@ -181,3 +181,30 @@ async function toggleFavoriteItemAsync(itemId) {
     }
 
 }
+
+async function getDashboardStats() {
+    
+    try{
+
+        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.GET_DASHBOARD_STATS,{
+
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result;
+
+    }catch(error){
+        throw error;
+    }
+
+}
