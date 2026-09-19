@@ -122,5 +122,22 @@ namespace VaultNetAPIv2.Controllers
 
         }
 
+        [HttpGet("dashboard-stats")]
+        public async Task<IActionResult> GetDashboardStats()
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _vaultItemService.GetDashboardStatsAsync(userId);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
+
     }
 }
