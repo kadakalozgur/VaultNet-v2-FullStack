@@ -109,6 +109,13 @@
   margin-top: auto;
 }
 
+.pg-header-icon-box {
+  background-color: #eef2ff;
+  border-radius: 16px;
+  width: 64px;
+  height: 64px;
+}
+
 @media (min-width: 1600px) {
     .custom-vault-grid {
         flex: 0 0 33.333333% !important;
