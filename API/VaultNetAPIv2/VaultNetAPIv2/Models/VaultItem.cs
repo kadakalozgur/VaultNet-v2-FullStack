@@ -38,5 +38,7 @@ namespace VaultNetAPIv2.Models
         [ForeignKey("UserId")]
         public User User { get; set; }
 
+        public Guid? CategoryId { get; set; }
+
     }
 }

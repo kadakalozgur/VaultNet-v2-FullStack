@@ -16,6 +16,8 @@ namespace VaultNetAPIv2.Data
 
         public DbSet<VaultItem> VaultItems { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
 
     }
