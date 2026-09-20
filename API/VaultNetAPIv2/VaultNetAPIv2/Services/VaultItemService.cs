@@ -333,8 +333,6 @@ namespace VaultNetAPIv2.Services
         public async Task<ServiceResult> GetDashboardStatsAsync(Guid userId)
         {
 
-            // Şuanlık sadece total sayılarını aldım ileride buraya son eklenen itemler falanda yazılacak.
-
             var totalItemCount = await _context.VaultItems
                 .AsNoTracking()
                 .CountAsync(item => item.UserId == userId);
@@ -342,6 +340,29 @@ namespace VaultNetAPIv2.Services
             var favoriteItemCount = await _context.VaultItems
                 .AsNoTracking()
                 .CountAsync(item => item.UserId == userId && item.IsFavorite);
+
+            var recentEncryptedItems = await _context.VaultItems
+                .AsNoTracking()
+                .Where(item => item.UserId == userId)
+                .OrderByDescending(item => item.CreatedAt)
+                .Take(5)
+                .Select(item => new
+                {
+                    item.Id,
+                    item.EncryptedTitle,
+                    item.EncryptedDomain,
+                    item.CreatedAt
+                })
+                .ToListAsync();
+
+            var recentDecryptedItems = recentEncryptedItems.Select(item => new
+            {
+                item.Id,
+                Title = _encryptionService.Decrypt(item.EncryptedTitle),
+                Domain = item.EncryptedDomain != null ? _encryptionService.Decrypt(item.EncryptedDomain) : null,
+                item.CreatedAt
+            })
+            .ToList();
 
             return new ServiceResult
             {
@@ -351,7 +372,8 @@ namespace VaultNetAPIv2.Services
                 Data = new
                 {
                     TotalCount = totalItemCount,
-                    FavoriteCount = favoriteItemCount
+                    FavoriteCount = favoriteItemCount,
+                    RecentItems = recentDecryptedItems
                 }
             };
 
