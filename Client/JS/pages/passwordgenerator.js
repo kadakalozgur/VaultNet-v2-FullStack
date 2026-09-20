@@ -11,7 +11,7 @@ const charSets = {
         uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
         lowercase: "abcdefghijklmnopqrstuvwxyz",
         numbers: "0123456789",
-        symbols: "!@#$%^&*_-+="
+        symbols: "!@#$%^&*"
 };
 
 generateButton.addEventListener('click', function(){
