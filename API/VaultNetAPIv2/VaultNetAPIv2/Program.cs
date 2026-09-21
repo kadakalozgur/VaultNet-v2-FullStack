@@ -22,6 +22,7 @@ builder.Services.AddScoped<IStorageService, SupabaseStorageService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped<IEncryptionService, DataProtectionEncryptionService>();
 builder.Services.AddScoped<IVaultItemService, VaultItemService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Supabase Konfigürasyonu
 var supabaseUrl = builder.Configuration["Supabase:Url"];
