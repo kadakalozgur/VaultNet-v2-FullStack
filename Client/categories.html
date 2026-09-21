@@ -239,6 +239,70 @@
       </div>
     </div>
 
+    <!--Modal Kısımları -->
+
+    <!-- Kategori Oluşturma Modal Kısmı-->
+
+    <div class="modal fade" id="addCategoryModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content border-0 shadow-lg"
+          style="border-radius: 16px"
+        >
+          <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+            <h5 class="modal-title font-weight-bold text-dark">
+              Create New Category
+            </h5>
+          </div>
+
+          <div class="modal-body px-4 py-3">
+            <p class="text-muted mb-4" style="font-size: 14px">
+              Give your new category a name to keep your vault organized.
+            </p>
+
+            <div
+              id="add-category-alert"
+              class="alert d-none animate__animated animate__fadeIn"
+              role="alert"
+            ></div>
+
+            <div class="form-group mb-0">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Category Name <span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                id="add-category-name-input"
+                class="form-control"
+                placeholder="Social Media, Gaming, Bank ..."
+                style="border-radius: 7px; color: #334155"
+              />
+            </div>
+          </div>
+
+          <div class="modal-footer border-top-0 pt-3 pb-4 px-4">
+            <button
+              type="button"
+              class="btn btn-outline-secondary font-weight-bold px-4 close-modal-btn"
+              style="border-radius: 8px"
+              id="cancel-add-category-modal-button"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              id="save-category-button"
+              class="btn text-white font-weight-bold px-4"
+              style="background-color: #4965fa; border-radius: 8px"
+            >
+              Create
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -258,5 +322,6 @@
     <script src="JS/config.js"></script>
     <script src="JS/services/authService.js"></script>
     <script src="JS/navbar.js"></script>
+    <script src="JS/pages/categories.js"></script>
   </body>
 </html>
