@@ -18,7 +18,8 @@ const CONFIG = {
         DELETE_VAULT_ITEM: "/Vault",
         UPDATE_VAULT_ITEM: "/Vault",
         TOGGLE_FAVORITE_VAULT_ITEM: "/Vault/toggle-item-favorite",
-        GET_DASHBOARD_STATS: "/Vault/dashboard-stats"
+        GET_DASHBOARD_STATS: "/Vault/dashboard-stats",
+        CREATE_CATEGORY: "/Category/create-category"
     }
 
 };

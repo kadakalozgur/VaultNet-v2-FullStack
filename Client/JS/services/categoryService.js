@@ -1,0 +1,29 @@
+async function createCategory (categoryName) {
+    
+    try{
+
+        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.CREATE_CATEGORY,{
+
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                CategoryName: categoryName
+            })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result;
+
+    }catch(error){
+        throw error;
+    }
+
+}
