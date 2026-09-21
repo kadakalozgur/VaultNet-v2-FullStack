@@ -1,0 +1,82 @@
+.categories-background {
+  background-image: url('../Media/Images/login-background-image.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.pg-header-icon-box {
+  background-color: #eef2ff;
+  border-radius: 16px;
+  width: 64px;
+  height: 64px;
+}
+
+.vault-search-icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.vault-search-input {
+  border-radius: 100px;
+  padding-left: 46px;
+  height: 48px;
+  background-color: #f4f6fb;
+  color: #334155;
+  font-size: 16px;
+}
+
+.vault-search-input:focus {
+  box-shadow: 0 0 0 3px rgba(73, 101, 250, 0.2);
+  outline: none;
+}
+
+.vault-add-btn {
+  background-color: #4965fa;
+  border-radius: 100px;
+  height: 48px;
+  transition: all 0.2s ease-in-out;
+}
+
+.vault-add-btn:hover {
+  background-color: #3b52d9;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-card {
+  border-radius: 16px;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #f1f5f9;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06) !important;
+  border-color: #e2e8f0;
+}
+
+.category-icon-container {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 1600px) {
+  .custom-category-grid {
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+  }
+}

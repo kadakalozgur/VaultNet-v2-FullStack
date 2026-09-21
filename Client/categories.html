@@ -15,11 +15,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
-    <link rel="stylesheet" href="CSS/dashboard.css" />
+    <link rel="stylesheet" href="CSS/categories.css" />
     <link rel="stylesheet" href="CSS/navbar.css" />
   </head>
   <body
-    class="dashboard-background min-vh-100 p-2 p-lg-4 d-flex align-items-stretch"
+    class="categories-background min-vh-100 p-2 p-lg-4 d-flex align-items-stretch"
   >
     <div
       class="container-fluid p-0 shadow-lg d-flex flex-column animate__animated animate__fadeIn animate__faster"
@@ -162,7 +162,80 @@
           </div>
         </div>
 
-        <div class="col-12 main-content p-4 p-lg-5"></div>
+        <div class="col-12 main-content p-4 p-lg-5">
+          <div class="d-flex align-items-center mb-5">
+            <div
+              class="mr-3 d-flex align-items-center justify-content-center flex-shrink-0 pg-header-icon-box"
+            >
+              <img
+                src="Media/Icons/folder-icon-active.png"
+                alt="Categories Icon"
+                style="width: 32px; height: 32px"
+              />
+            </div>
+            <div class="mb-0">
+              <h3 class="font-weight-bold text-dark mb-1">Categories</h3>
+              <p class="text-muted mb-0" style="font-size: 14px">
+                Create and manage custom categories to organize your vault
+                items.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bg-white p-3 p-md-4 shadow-sm"
+            style="border-radius: 20px"
+          >
+            <div class="d-flex align-items-center mb-3">
+              <img
+                src="Media/Icons/folder-icon.png"
+                style="width: 30px; height: 30px"
+                class="mr-2"
+                alt="Categories Icon"
+              />
+              <h4
+                class="mb-0 font-weight-bold"
+                style="color: #1e1b4b; font-size: 21px"
+              >
+                My Categories
+              </h4>
+            </div>
+
+            <div class="d-flex flex-column flex-md-row align-items-center">
+              <div
+                class="position-relative flex-grow-1 w-100 mr-md-3 mb-3 mb-md-0"
+              >
+                <img
+                  src="Media/Icons/search-icon.png"
+                  class="vault-search-icon"
+                  alt="Search"
+                />
+                <input
+                  type="text"
+                  class="form-control border-0 w-100 vault-search-input"
+                  placeholder="Search categories..."
+                  id="category-search-input"
+                />
+              </div>
+
+              <button
+                type="button"
+                class="btn text-white font-weight-bold px-4 d-flex align-items-center justify-content-center flex-shrink-0 vault-add-btn"
+                id="open-add-category-modal-button"
+              >
+                <img
+                  src="Media/Icons/add-icon.png"
+                  style="width: 18px; height: 18px"
+                  class="mr-2"
+                  alt="Add"
+                />
+                Create Category
+              </button>
+            </div>
+          </div>
+
+          <div class="row mt-4" id="categories-container"></div>
+        </div>
       </div>
     </div>
 
