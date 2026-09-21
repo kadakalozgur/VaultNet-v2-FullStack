@@ -15,3 +15,42 @@ cancelCreateCategoryModalButton.addEventListener('click' ,function(){
     categoryNameInput.value = "";
     hideAlert(createCategoryModalAlert);
 });
+
+saveCreateCategoryModalButton.addEventListener('click' ,async function(e){
+
+    e.preventDefault();
+    
+    hideAlert(createCategoryModalAlert);
+
+    const categoryName = categoryNameInput.value.trim();
+
+    if(!categoryName){
+        showAlert(createCategoryModalAlert, "Please fill in all the required fields.", "warning");
+        return;
+    }
+
+    if (categoryName.length > 100) {
+        showAlert(createCategoryModalAlert, "Category name can be a maximum of 100 characters.", "warning");
+        return;
+    }
+
+    categoryNameInput.disabled = true;
+    saveCreateCategoryModalButton.disabled = true;
+
+    try{
+
+        await createCategory(categoryName);
+
+        $('#addCategoryModal').modal('hide');
+
+        categoryNameInput.value = "";
+
+
+    }catch(error){
+        showAlert(createCategoryModalAlert,error.message,"danger");
+    }finally{
+        categoryNameInput.disabled = false;
+        saveCreateCategoryModalButton.disabled = false;
+    }
+
+});
