@@ -21,7 +21,7 @@ namespace VaultNetAPIv2.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpPost]
+        [HttpPost("create-category")]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto createCategoryDto)
         {
 
