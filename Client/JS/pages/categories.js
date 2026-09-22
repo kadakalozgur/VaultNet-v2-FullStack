@@ -221,6 +221,7 @@ saveCreateCategoryModalButton.addEventListener('click' ,async function(e){
         $('#addCategoryModal').modal('hide');
 
         categoryNameInput.value = "";
+        searchInput.value = "";
 
         await loadCategoryPage(1);
 

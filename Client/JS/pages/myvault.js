@@ -335,6 +335,7 @@ saveItemButton.addEventListener('click', async function(e) {
         addUsernameInput.value = "";
         addPasswordInput.value = "";
         addDomainInput.value = "";
+        searchInput.value = "";
 
         addPasswordInput.type = 'password';
         toggleAddPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
