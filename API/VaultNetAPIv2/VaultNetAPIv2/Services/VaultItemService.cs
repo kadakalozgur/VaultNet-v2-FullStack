@@ -89,6 +89,7 @@ namespace VaultNetAPIv2.Services
                         item.IsFavorite
                     })
                     .Where(item => item.Title.ToLower().Contains(lowerSearchQuery))
+                    .OrderByDescending(item => item.UpdatedAt)
                     .ToList();
 
                 var totalCountSearch = filteredItems.Count;
