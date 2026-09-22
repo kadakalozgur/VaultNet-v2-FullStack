@@ -19,7 +19,8 @@ const CONFIG = {
         UPDATE_VAULT_ITEM: "/Vault",
         TOGGLE_FAVORITE_VAULT_ITEM: "/Vault/toggle-item-favorite",
         GET_DASHBOARD_STATS: "/Vault/dashboard-stats",
-        CREATE_CATEGORY: "/Category/create-category"
+        CREATE_CATEGORY: "/Category/create-category",
+        GET_CATEGORIES: "/Category/get-category-items"
     }
 
 };
