@@ -37,5 +37,22 @@ namespace VaultNetAPIv2.Controllers
             return StatusCode(result.StatusCode, result);
 
         }
+
+        [HttpGet("get-category-items")]
+        public async Task<IActionResult> GetCategories([FromQuery] int pageNumber = 1, [FromQuery] string? searchQuery = null)
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _categoryService.GetCategoriesAsync(userId,pageNumber,searchQuery);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
     }
 }
