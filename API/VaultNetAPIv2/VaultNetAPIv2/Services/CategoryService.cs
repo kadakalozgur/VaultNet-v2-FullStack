@@ -178,5 +178,51 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> DeleteCategoryAsync(Guid userId, Guid categoryId)
+        {
+
+            // Transaction işlemi ekledim.
+            // 2 farklı db işlemi var ve savechanges kullanmak istemedim. Bütün lsiteyi rame çekmeye gerek yok.
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+
+                await _context.VaultItems
+                .Where(item => item.CategoryId == categoryId && item.UserId == userId)
+                .ExecuteUpdateAsync(setters => setters.SetProperty(item => item.CategoryId, (Guid?)null));
+
+                var affectedRows = await _context.Categories
+                    .Where(category => category.Id == categoryId && category.UserId == userId)
+                    .ExecuteDeleteAsync();
+
+                if (affectedRows == 0)
+                {
+                    return new ServiceResult
+                    {
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Message = "Category not found."
+                    };
+                }
+
+                await transaction.CommitAsync();
+
+                return new ServiceResult
+                {
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Message = "Category deleted successfully."
+                };
+
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+           
+        }
     }
 }

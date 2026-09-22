@@ -10,5 +10,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> GetCategoriesAsync(Guid userId, int pageNumber, string? searchQuery = null);
 
+        Task<ServiceResult> DeleteCategoryAsync(Guid userId, Guid categoryId);
+
     }
 }
