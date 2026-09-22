@@ -8,5 +8,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> CreateCategoryAsync(Guid userId, CreateCategoryDto createCategoryDto);
 
+        Task<ServiceResult> GetCategoriesAsync(Guid userId, int pageNumber, string? searchQuery = null);
+
     }
 }
