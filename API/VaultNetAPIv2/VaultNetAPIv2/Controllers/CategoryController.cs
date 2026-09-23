@@ -49,7 +49,7 @@ namespace VaultNetAPIv2.Controllers
                 return Unauthorized(new { Message = "Invalid or missing user identity." });
             }
 
-            var result = await _categoryService.GetCategoriesAsync(userId,pageNumber,searchQuery);
+            var result = await _categoryService.GetCategoriesAsync(userId, pageNumber, searchQuery);
 
             return StatusCode(result.StatusCode, result);
 
@@ -67,6 +67,23 @@ namespace VaultNetAPIv2.Controllers
             }
 
             var result = await _categoryService.DeleteCategoryAsync(userId, id);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] UpdateCategoryDto updateCategoryDto)
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _categoryService.UpdateCategoryAsync(userId, id, updateCategoryDto);
 
             return StatusCode(result.StatusCode, result);
 
