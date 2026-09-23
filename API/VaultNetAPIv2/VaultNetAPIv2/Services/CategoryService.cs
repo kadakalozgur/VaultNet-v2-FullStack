@@ -224,5 +224,35 @@ namespace VaultNetAPIv2.Services
             }
            
         }
+
+        public async Task<ServiceResult> UpdateCategoryAsync(Guid userId, Guid categoryId, UpdateCategoryDto updateCategoryDto)
+        {
+
+            var encryptedName = _encryptionService.Encrypt(updateCategoryDto.CategoryName.Trim());
+
+            var affectedRows = await _context.Categories
+                .Where(item => item.Id == categoryId && item.UserId == userId)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(item => item.EncryptedName, encryptedName)
+                    .SetProperty(item => item.UpdatedAt, DateTime.UtcNow));
+
+            if (affectedRows == 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Category not found."
+                };
+            }
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Category updated successfully."
+            };
+
+        }
     }
 }

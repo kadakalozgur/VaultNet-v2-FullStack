@@ -12,5 +12,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> DeleteCategoryAsync(Guid userId, Guid categoryId);
 
+        Task<ServiceResult> UpdateCategoryAsync(Guid userId, Guid categoryId, UpdateCategoryDto updateCategoryDto);
+
     }
 }
