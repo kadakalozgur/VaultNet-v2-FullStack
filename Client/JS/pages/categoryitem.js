@@ -26,3 +26,38 @@ async function loadCategoryIdDetails(categoryId) {
         console.error(error.message);
     }
 }
+
+// Update Category Modal Kısmı
+
+const openUpdateCategoryModalButton = document.getElementById("open-update-category-modal-button");
+const updateCategoryNameInput = document.getElementById("update-name-input");
+const updateCategoryConfirmButton = document.getElementById("update-category-button");
+const updateCategoryCancelButton = document.getElementById("cancel-update-category-modal-button");
+const updateCategoryModalAlert = document.getElementById("update-category-alert");
+
+openUpdateCategoryModalButton.addEventListener('click' ,function(){
+    updateCategoryNameInput.value = document.getElementById("category-name").innerText;
+    $('#updateCategoryModal').modal('show');
+});
+
+updateCategoryCancelButton.addEventListener("click", function() {
+    $('#updateCategoryModal').modal('hide');
+    updateCategoryNameInput.value = "";
+    hideAlert(updateCategoryModalAlert);
+});
+
+// Delete Category Modal Kısmı
+
+const openDeleteCategoryModalButton = document.getElementById("open-delete-category-modal-button");
+const deleteCategoryConfirmButton = document.getElementById("confirm-delete-category-button");
+const deleteCategoryCancelButton = document.getElementById("cancel-delete-category-modal-button");
+const deleteCategoryModalAlert = document.getElementById("delete-category-modal-alert");
+
+openDeleteCategoryModalButton.addEventListener('click' ,function(){
+    $('#deleteCategoryModal').modal('show');
+});
+
+deleteCategoryCancelButton.addEventListener("click", function() {
+    $('#deleteCategoryModal').modal('hide');
+    hideAlert(deleteCategoryModalAlert);
+});
