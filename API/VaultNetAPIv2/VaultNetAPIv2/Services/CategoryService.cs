@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Net.WebSockets;
 using VaultNetAPIv2.Data;
 using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Models;
@@ -175,6 +176,45 @@ namespace VaultNetAPIv2.Services
                     TotalPages = totalPagesNormal,
                     CurrentPage = pageNumber
                 }
+            };
+
+        }
+
+        public async Task<ServiceResult> GetCategoryByIdAsync(Guid userId, Guid categoryId)
+        {
+
+            var category = await _context.Categories
+                .AsNoTracking()
+                .Where(category => category.Id == categoryId && category.UserId == userId)
+                .Select(category => new
+                {
+                    category.Id,
+                    category.EncryptedName
+                })
+                .FirstOrDefaultAsync();
+
+            if (category == null)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Category not found."
+                };
+            }
+
+            var decryptedCategory = new
+            {
+                Id = category.Id,
+                CategoryName = _encryptionService.Decrypt(category.EncryptedName)
+            };
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Category retrieved successfully.",
+                Data = decryptedCategory
             };
 
         }
