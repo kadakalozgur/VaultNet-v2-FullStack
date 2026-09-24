@@ -61,3 +61,29 @@ async function getCategories(pageNumber = 1,searchQuery = null) {
     }
 
 }
+
+async function getCategoryById(categoryId) {
+    
+    try{
+
+        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.GET_CATEGORY_BY_ID}/${categoryId}`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(getApiErrorMessage(result));
+        }
+
+        return result;
+
+    }catch(error){
+        throw error;
+    }
+
+}
