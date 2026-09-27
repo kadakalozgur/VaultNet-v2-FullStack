@@ -46,6 +46,55 @@ updateCategoryCancelButton.addEventListener("click", function() {
     hideAlert(updateCategoryModalAlert);
 });
 
+updateCategoryConfirmButton.addEventListener("click", async function(e) {
+
+    e.preventDefault();
+
+    hideAlert(updateCategoryModalAlert);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryId = urlParams.get('id');
+
+    const name = updateCategoryNameInput.value.trim();
+    const currentName = document.getElementById("category-name").innerText.trim();
+
+    if(!name){
+        showAlert(updateCategoryModalAlert, "Please fill in all required fields.", "warning");
+        return;
+    }
+
+    if(name.length > 100){
+        showAlert(updateCategoryModalAlert, "Name can be a maximum of 100 characters.", "warning");
+        return;
+    }
+
+    if(name==currentName){
+        showAlert(updateCategoryModalAlert, "No changes were made to update.", "warning");
+        return;
+    }
+    
+    updateCategoryConfirmButton.disabled = true;
+    updateCategoryCancelButton.disabled = true;
+    updateCategoryNameInput.disabled = true;
+
+    try{
+        
+        await updateCategory(categoryId,name);
+
+        $('#updateCategoryModal').modal('hide');
+
+        window.location.reload(); 
+
+    }catch(error){
+        showAlert(updateCategoryModalAlert, error.message, "danger");
+    }finally{
+        updateCategoryConfirmButton.disabled = false;
+        updateCategoryCancelButton.disabled = false;
+        updateCategoryNameInput.disabled = false;
+    }
+
+});
+
 // Delete Category Modal Kısmı
 
 const openDeleteCategoryModalButton = document.getElementById("open-delete-category-modal-button");
