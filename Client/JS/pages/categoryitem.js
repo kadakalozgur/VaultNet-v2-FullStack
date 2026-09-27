@@ -110,3 +110,30 @@ deleteCategoryCancelButton.addEventListener("click", function() {
     $('#deleteCategoryModal').modal('hide');
     hideAlert(deleteCategoryModalAlert);
 });
+
+deleteCategoryConfirmButton.addEventListener('click' ,async function(e){
+
+    e.preventDefault();
+
+    hideAlert(deleteCategoryModalAlert);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryId = urlParams.get('id');
+
+    deleteCategoryConfirmButton.disabled = true;
+    deleteCategoryCancelButton.disabled = true;
+
+    try{
+
+        await deleteCategory(categoryId);
+
+        window.location.href = "categories.html";
+
+    }catch(error){
+        showAlert(deleteCategoryModalAlert, error.message, "danger");
+    }finally{
+        deleteCategoryConfirmButton.disabled = false;
+        deleteCategoryCancelButton.disabled = false;
+    }
+
+});
