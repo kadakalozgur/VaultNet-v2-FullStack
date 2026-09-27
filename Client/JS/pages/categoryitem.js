@@ -1,7 +1,8 @@
-document.addEventListener("DOMContentLoaded", async function () {
+// URL'den idyi çektiğim kısım.
+const urlParams = new URLSearchParams(window.location.search);
+const categoryId = urlParams.get('id');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryId = urlParams.get('id');
+document.addEventListener("DOMContentLoaded", async function () {
 
     if (!categoryId) {
         window.location.href = "categories.html";
@@ -51,9 +52,6 @@ updateCategoryConfirmButton.addEventListener("click", async function(e) {
     e.preventDefault();
 
     hideAlert(updateCategoryModalAlert);
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryId = urlParams.get('id');
 
     const name = updateCategoryNameInput.value.trim();
     const currentName = document.getElementById("category-name").innerText.trim();
@@ -116,9 +114,6 @@ deleteCategoryConfirmButton.addEventListener('click' ,async function(e){
     e.preventDefault();
 
     hideAlert(deleteCategoryModalAlert);
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryId = urlParams.get('id');
 
     deleteCategoryConfirmButton.disabled = true;
     deleteCategoryCancelButton.disabled = true;
