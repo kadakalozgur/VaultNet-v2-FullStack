@@ -46,7 +46,7 @@ namespace VaultNetAPIv2.Services
 
         // Sıkı sıkıya bağımlı yaptım. Benim projemde bu değerde olmasını istiyorum.
         private const int pageSize = 6;
-        public async Task<ServiceResult> GetItemsAsync(Guid userId, int pageNumber, string? searchQuery = null, bool? isFavorite = null)
+        public async Task<ServiceResult> GetItemsAsync(Guid userId, int pageNumber, string? searchQuery = null, bool? isFavorite = null, Guid? categoryId = null)
         {
 
             if(pageNumber < 1)
@@ -61,6 +61,11 @@ namespace VaultNetAPIv2.Services
             if (isFavorite == true)
             {
                 query = query.Where(item => item.IsFavorite == true);
+            }
+
+            if(categoryId != null)
+            {
+                query = query.Where(item => item.CategoryId == categoryId);
             }
 
             // Bu if bloğu search işlemi esnasında çalışıyor.
