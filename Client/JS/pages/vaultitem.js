@@ -1,7 +1,8 @@
-document.addEventListener("DOMContentLoaded", async function () {
+// URL'den idyi çektiğim kısım.
+const urlParams = new URLSearchParams(window.location.search);
+const itemId = urlParams.get('id');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const itemId = urlParams.get('id');
+document.addEventListener("DOMContentLoaded", async function () {
 
     if (!itemId) {
         window.location.href = "myvault.html";
@@ -101,9 +102,6 @@ deleteItemConfirmButton.addEventListener('click' ,async function(e){
 
     hideAlert(deleteItemModalAlert);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const itemId = urlParams.get('id');
-
     if (!itemId) {
         return;
     }
@@ -181,9 +179,6 @@ updateItemButton.addEventListener('click', async function(e) {
 
     e.preventDefault();
     hideAlert(updateItemModalAlert);
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const itemId = urlParams.get('id');
 
     if (!itemId){
         return;
