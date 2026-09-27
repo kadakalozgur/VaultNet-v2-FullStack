@@ -31,7 +31,7 @@ async function addVaultItem(itemName,usernameOrEmail,password,website = null) {
 
 }
 
-async function getVaultItems(pageNumber = 1, searchQuery = null, isFavorite = false) {
+async function getVaultItems(pageNumber = 1, searchQuery = null, isFavorite = false, categoryId = null) {
     
     try{
 
@@ -43,6 +43,10 @@ async function getVaultItems(pageNumber = 1, searchQuery = null, isFavorite = fa
 
         if(isFavorite) {
             url += `&isFavorite=true`;
+        }
+
+        if (categoryId) {
+            url += `&categoryId=${categoryId}`;
         }
 
         const response = await fetch(url,{
