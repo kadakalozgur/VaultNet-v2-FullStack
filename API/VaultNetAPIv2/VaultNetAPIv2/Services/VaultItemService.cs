@@ -29,7 +29,8 @@ namespace VaultNetAPIv2.Services
                 EncryptedTitle = _encryptionService.Encrypt(addVaultItemDto.Title.Trim()),
                 EncryptedUsernameOrEmail = _encryptionService.Encrypt(addVaultItemDto.UsernameOrEmail.Trim()),
                 EncryptedPassword = _encryptionService.Encrypt(addVaultItemDto.Password),
-                EncryptedDomain = addVaultItemDto.Domain.Trim() != null ? _encryptionService.Encrypt(addVaultItemDto.Domain.Trim()) : null
+                EncryptedDomain = addVaultItemDto.Domain.Trim() != null ? _encryptionService.Encrypt(addVaultItemDto.Domain.Trim()) : null,
+                CategoryId = addVaultItemDto.CategoryId
             };
 
             _context.VaultItems.Add(newVaultItem);
@@ -287,6 +288,7 @@ namespace VaultNetAPIv2.Services
                 .SetProperty(item => item.EncryptedUsernameOrEmail, encryptedUsernameOrEmail)
                 .SetProperty(item => item.EncryptedPassword, encryptedPassword)
                 .SetProperty(item => item.EncryptedDomain, encryptedDomain)
+                .SetProperty(item => item.CategoryId, updateVaultItemDto.CategoryId)
                 .SetProperty(item => item.UpdatedAt, DateTime.UtcNow));
 
             if (affectedRows == 0)
