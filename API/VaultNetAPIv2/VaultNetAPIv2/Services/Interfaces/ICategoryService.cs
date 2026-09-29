@@ -16,5 +16,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> UpdateCategoryAsync(Guid userId, Guid categoryId, UpdateCategoryDto updateCategoryDto);
 
+        Task<ServiceResult> GetAllCategoriesAsync(Guid userId);
+
     }
 }

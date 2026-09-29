@@ -294,5 +294,37 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> GetAllCategoriesAsync(Guid userId)
+        {
+
+            var encryptedCategories = await _context.Categories
+                .AsNoTracking()
+                .Where(item => item.UserId == userId)
+                .Select(item => new
+                {
+                    item.Id,
+                    item.EncryptedName
+                })
+                .ToListAsync();
+
+            var decryptedCategories = encryptedCategories
+                .Select(item => new
+                {
+                    Id = item.Id,
+                    CategoryName = _encryptionService.Decrypt(item.EncryptedName)
+                })
+                .OrderBy(item => item.CategoryName) 
+                .ToList();
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Categories retrieved successfully.",
+                Data = decryptedCategories
+            };
+
+        }
     }
 }
