@@ -5,7 +5,7 @@ const itemId = urlParams.get('id');
 document.addEventListener("DOMContentLoaded", async function () {
 
     if (!itemId) {
-        window.location.href = "myvault.html";
+        //window.location.href = "myvault.html";
         return;
     }
 
