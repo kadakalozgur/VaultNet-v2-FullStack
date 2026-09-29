@@ -105,5 +105,22 @@ namespace VaultNetAPIv2.Controllers
             return StatusCode(result.StatusCode, result);
 
         }
+
+        [HttpGet("get-user-all-categories")]
+        public async Task<IActionResult> GetAllCategories()
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _categoryService.GetAllCategoriesAsync(userId);
+
+            return StatusCode(result.StatusCode, result);
+
+        }
     }
 }
