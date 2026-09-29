@@ -79,6 +79,7 @@ namespace VaultNetAPIv2.Services
                     .Select(item => new 
                     { item.Id, 
                       item.EncryptedTitle,
+                      item.EncryptedDomain,
                       item.UpdatedAt,
                       item.CreatedAt,
                       item.IsFavorite
@@ -90,6 +91,7 @@ namespace VaultNetAPIv2.Services
                     {
                         item.Id,
                         Title = _encryptionService.Decrypt(item.EncryptedTitle),
+                        Domain = item.EncryptedDomain != null ? _encryptionService.Decrypt(item.EncryptedDomain) : null,
                         item.UpdatedAt,
                         item.CreatedAt,
                         item.IsFavorite
