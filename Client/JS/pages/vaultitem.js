@@ -5,11 +5,14 @@ const itemId = urlParams.get('id');
 document.addEventListener("DOMContentLoaded", async function () {
 
     if (!itemId) {
-        //window.location.href = "myvault.html";
+        window.location.href = "myvault.html";
         return;
     }
 
     await loadVaultItemDetails(itemId);
+
+    // Kategorileri selectbox'a dolduran fonksiyon.
+    await loadCategoriesForSelectBox();
 
 });
 
@@ -243,4 +246,30 @@ updateItemButton.addEventListener('click', async function(e) {
     }
 
 });
+
+async function loadCategoriesForSelectBox() {
+    
+    try{
+
+        const selectBox = document.getElementById("update-category-select");
+
+        const result = await getAllCategories();
+
+        if (result.isSuccess && result.data) {
+
+            let optionsHtml = `<option value="">No Category (Uncategorized)</option>`;
+            
+            result.data.forEach(category => {
+                optionsHtml += `<option value="${category.id}">${category.categoryName}</option>`;
+            });
+
+            selectBox.innerHTML = optionsHtml;
+
+        }
+
+    }catch(error){
+        console.error(error.message);
+    }
+
+}
 
