@@ -206,13 +206,14 @@ updateItemButton.addEventListener('click', async function(e) {
     const usernameOrEmail = updateUsernameInput.value.trim();
     const password = updatePasswordInput.value;
     const domain = updateDomainInput.value.trim();
+    const categoryId = categorySelect.value;
 
     const currentTitle = document.getElementById("title-label").innerText;
     const currentUsername = document.getElementById("detail-username").value;
     const currentPassword = document.getElementById("detail-password").value;
     const currentDomain = document.getElementById("detail-domain").value;
 
-    if (title === currentTitle && usernameOrEmail === currentUsername && password === currentPassword && domain === currentDomain) {
+    if (title === currentTitle && usernameOrEmail === currentUsername && password === currentPassword && domain === currentDomain && categoryId === currentItemCategoryId) {
         showAlert(updateItemModalAlert, "No changes were made to update.", "warning");
         return;
     }
@@ -247,7 +248,7 @@ updateItemButton.addEventListener('click', async function(e) {
 
     try {
 
-        await updateVaultItem(itemId, title, usernameOrEmail, password, domain);
+        await updateVaultItem(itemId, title, usernameOrEmail, password, domain,categoryId);
         
         $('#updateItemModal').modal('hide');
 
