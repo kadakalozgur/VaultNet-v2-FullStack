@@ -1,4 +1,4 @@
-async function addVaultItem(itemName,usernameOrEmail,password,website = null) {
+async function addVaultItem(itemName,usernameOrEmail,password,website = null,categoryId = null) {
     
     try{
 
@@ -13,7 +13,8 @@ async function addVaultItem(itemName,usernameOrEmail,password,website = null) {
                 Title: itemName,
                 UsernameOrEmail: usernameOrEmail,
                 Password: password,
-                Domain: website
+                Domain: website,
+                CategoryId: categoryId
             })
         });
 
@@ -126,7 +127,7 @@ async function deleteVaultItem(itemId) {
 
 }
 
-async function updateVaultItem(itemId,title,usernameOrEmail,password,domain) {
+async function updateVaultItem(itemId,title,usernameOrEmail,password,domain,categoryId) {
     
     try{
 
@@ -141,7 +142,8 @@ async function updateVaultItem(itemId,title,usernameOrEmail,password,domain) {
                 Title: title,
                 UsernameOrEmail: usernameOrEmail,
                 Password: password,
-                Domain: domain
+                Domain: domain,
+                CategoryId: categoryId
             })
         });
 
