@@ -205,14 +205,15 @@ namespace VaultNetAPIv2.Services
             var item = await _context.VaultItems
                 .AsNoTracking()
                 .Where(item => item.Id == itemId && item.UserId == userId)
-                .Select(v => new
+                .Select(item => new
                 {
-                    v.EncryptedTitle,
-                    v.EncryptedUsernameOrEmail,
-                    v.EncryptedPassword,
-                    v.EncryptedDomain,
-                    v.CreatedAt,
-                    v.UpdatedAt
+                    item.EncryptedTitle,
+                    item.EncryptedUsernameOrEmail,
+                    item.EncryptedPassword,
+                    item.EncryptedDomain,
+                    item.CategoryId,
+                    item.CreatedAt,
+                    item.UpdatedAt
                 })
                 .FirstOrDefaultAsync();
 
@@ -233,6 +234,7 @@ namespace VaultNetAPIv2.Services
                 UsernameOrEmail = _encryptionService.Decrypt(item.EncryptedUsernameOrEmail),
                 Password = _encryptionService.Decrypt(item.EncryptedPassword),
                 Domain = item.EncryptedDomain != null ? _encryptionService.Decrypt(item.EncryptedDomain) : null,
+                CategoryId = item.CategoryId,
                 item.CreatedAt,
                 item.UpdatedAt
             };
