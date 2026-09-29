@@ -20,5 +20,7 @@ namespace VaultNetAPIv2.DTOs
         [MaxLength(150, ErrorMessage = "The domain name can be a maximum of 150 characters long.")]
         public string Domain { get; set; }
 
+        public Guid? CategoryId { get; set; }
+
     }
 }
