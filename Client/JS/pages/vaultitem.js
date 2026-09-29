@@ -206,7 +206,7 @@ updateItemButton.addEventListener('click', async function(e) {
     const usernameOrEmail = updateUsernameInput.value.trim();
     const password = updatePasswordInput.value;
     const domain = updateDomainInput.value.trim();
-    const categoryId = categorySelect.value;
+    const categoryId = categorySelect.value || null;
 
     const currentTitle = document.getElementById("title-label").innerText;
     const currentUsername = document.getElementById("detail-username").value;
