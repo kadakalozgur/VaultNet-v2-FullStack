@@ -16,6 +16,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 });
 
+// Itemin mevcut kategorisini tutmak için
+let currentItemCategoryId = null;
+
 async function loadVaultItemDetails(itemId) {
    
     try{
@@ -25,6 +28,8 @@ async function loadVaultItemDetails(itemId) {
         if(result.isSuccess){
 
             const item = result.data;
+
+            currentItemCategoryId = item.categoryId
 
             document.getElementById("title-label").textContent = item.title;
             document.getElementById("detail-username").value = item.usernameOrEmail;
@@ -138,6 +143,7 @@ const updateTitleInput = document.getElementById("update-title-input");
 const updateUsernameInput = document.getElementById("update-username-input");
 const updatePasswordInput = document.getElementById("update-password-input");
 const updateDomainInput = document.getElementById("update-domain-input");
+const categorySelect = document.getElementById("update-category-select");
 
 openUpdateItemModalButton.addEventListener('click' ,function(){
 
@@ -145,6 +151,14 @@ openUpdateItemModalButton.addEventListener('click' ,function(){
     updateUsernameInput.value = document.getElementById("detail-username").value;
     updatePasswordInput.value = document.getElementById("detail-password").value;
     updateDomainInput.value = document.getElementById("detail-domain").value;
+
+    if (currentItemCategoryId) {
+        categorySelect.value = currentItemCategoryId;
+    } 
+
+    else {
+        categorySelect.value = "";
+    }
 
     $('#updateItemModal').modal('show');
 });
@@ -155,6 +169,7 @@ cancelUpdateItemModalButton.addEventListener("click", function() {
     updateUsernameInput.value = "";
     updatePasswordInput.value = "";
     updateDomainInput.value = "";
+    categorySelect.value = "";
 
     updatePasswordInput.type = 'password';
     toggleUpdatePasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
