@@ -95,7 +95,7 @@ function showCardVaultItems() {
         });
 
         const cardHtml = `
-            <div class="col-12 col-md-6 custom-vault-grid mb-4 animate__animated animate__fadeIn">
+            <div class="col-12 col-md-6 col-lg-4 col-xl-4 custom-vault-grid mb-4 animate__animated animate__fadeIn">
                 <div class="card h-100 border-0 shadow-sm vault-card p-2" style="border-radius: 16px; transition: transform 0.2s; background-color: #ffffff;">
                     <div class="card-body p-3 d-flex flex-column">
                         
