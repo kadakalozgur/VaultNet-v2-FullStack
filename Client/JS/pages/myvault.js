@@ -215,6 +215,7 @@ function loadPageNumberButtons() {
 
 document.addEventListener("DOMContentLoaded", async function() {
     loadVaultItemPage(1);
+    await loadCategoriesForSelectBox();
 });
 
 // Arama input kısmı enter dinleyicisi kısmı
@@ -249,6 +250,7 @@ const addTitleInput = document.getElementById("add-title-input");
 const addUsernameInput = document.getElementById("add-username-input");
 const addPasswordInput = document.getElementById("add-password-input");
 const addDomainInput = document.getElementById("add-domain-input");
+const addCategorySelect = document.getElementById("add-category-select");
 
 openAddItemModalButton.addEventListener('click' ,function(){
     $('#addItemModal').modal('show');
@@ -260,6 +262,7 @@ cancelAddItemModalButton.addEventListener("click", function() {
     addUsernameInput.value = "";
     addPasswordInput.value = "";
     addDomainInput.value = "";
+    addCategorySelect.value = "";
 
     addPasswordInput.type = 'password';
     toggleAddPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
@@ -293,6 +296,7 @@ saveItemButton.addEventListener('click', async function(e) {
     const usernameOrEmail = addUsernameInput.value.trim();
     const password = addPasswordInput.value;
     const website = addDomainInput.value.trim();
+    const categoryId = addCategorySelect.value || null;
 
     if(!title || !usernameOrEmail || !password || !password.trim()){
         showAlert(addItemModalAlert, "Please fill in all the required fields..", "warning");
@@ -324,10 +328,11 @@ saveItemButton.addEventListener('click', async function(e) {
     addPasswordInput.disabled = true;
     addDomainInput.disabled = true;
     saveItemButton.disabled = true;
+    addCategorySelect.disabled = true;
 
     try{
 
-        await addVaultItem(title,usernameOrEmail,password,website);
+        await addVaultItem(title,usernameOrEmail,password,website,categoryId);
 
         $('#addItemModal').modal('hide'); 
         
@@ -336,6 +341,7 @@ saveItemButton.addEventListener('click', async function(e) {
         addPasswordInput.value = "";
         addDomainInput.value = "";
         searchInput.value = "";
+        addCategorySelect.value = "";
 
         addPasswordInput.type = 'password';
         toggleAddPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
@@ -350,9 +356,40 @@ saveItemButton.addEventListener('click', async function(e) {
         addPasswordInput.disabled = false;
         addDomainInput.disabled = false;
         saveItemButton.disabled = false;
+        addCategorySelect.disabled = false;
     }
 
 });
+
+}
+
+async function loadCategoriesForSelectBox() {
+    
+    try{
+
+        const selectBox = document.getElementById("add-category-select");
+
+        if(!selectBox){
+            return;
+        }
+
+        const result = await getAllCategories();
+
+        if (result.isSuccess && result.data) {
+
+            let optionsHtml = `<option value="">No Category (Uncategorized)</option>`;
+            
+            result.data.forEach(category => {
+                optionsHtml += `<option value="${category.id}">${category.categoryName}</option>`;
+            });
+
+            selectBox.innerHTML = optionsHtml;
+
+        }
+
+    }catch(error){
+        console.error(error.message);
+    }
 
 }
 

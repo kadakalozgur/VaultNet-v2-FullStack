@@ -320,7 +320,7 @@
               </div>
             </div>
 
-            <div class="form-group mb-0">
+            <div class="form-group">
               <label style="font-weight: bold; font-size: 14px; color: #334155"
                 >Website (Optional)</label
               >
@@ -331,6 +331,24 @@
                 placeholder="https://example.com"
                 style="border-radius: 7px; color: #334155"
               />
+            </div>
+
+            <div class="form-group mb-0">
+              <label style="font-weight: bold; font-size: 14px; color: #334155"
+                >Category (Optional)</label
+              >
+              <select
+                id="add-category-select"
+                class="form-control"
+                style="
+                  border-radius: 7px;
+                  color: #334155;
+                  cursor: pointer;
+                "
+              >
+                <option value="">No Category (Uncategorized)</option>
+                <!-- js ile dolacak -->
+              </select>
             </div>
           </div>
 
@@ -376,6 +394,7 @@
     <script src="JS/config.js"></script>
     <script src="JS/services/authService.js"></script>
     <script src="JS/services/vaultItemService.js"></script>
+    <script src="JS/services/categoryService.js"></script>
     <script src="JS/navbar.js"></script>
     <script src="JS/pages/myvault.js"></script>
   </body>
