@@ -1,0 +1,15 @@
+.global-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f8fafc;
+    z-index: 9999;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.global-loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
