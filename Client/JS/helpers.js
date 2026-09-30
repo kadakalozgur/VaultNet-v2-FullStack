@@ -162,3 +162,14 @@ async function copyToClipboard(elementId, isInput = true,clickedButton = null){
     }
 
 }
+
+// Sayfalar açıldığında gösterilen loading ekranını kapatmak için genel fonksiyon.
+function hideGlobalLoader(){
+
+    const globalLoader = document.getElementById("global-loader");
+
+    if (globalLoader) {
+        globalLoader.classList.add("hidden");
+    }
+    
+}
