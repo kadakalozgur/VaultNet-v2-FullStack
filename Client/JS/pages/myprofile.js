@@ -401,3 +401,8 @@ confirmDeleteButton.addEventListener('click', async function(e){
     }
 
 });
+
+// Sayfa yüklenince loading ekranını gizlemek için.
+document.addEventListener("DOMContentLoaded", function() {
+    hideGlobalLoader();
+});

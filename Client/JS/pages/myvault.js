@@ -216,6 +216,8 @@ function loadPageNumberButtons() {
 document.addEventListener("DOMContentLoaded", async function() {
     loadVaultItemPage(1);
     await loadCategoriesForSelectBox();
+
+    hideGlobalLoader();
 });
 
 // Arama input kısmı enter dinleyicisi kısmı

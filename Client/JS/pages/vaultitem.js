@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Kategorileri selectbox'a dolduran fonksiyon.
     await loadCategoriesForSelectBox();
 
+    hideGlobalLoader();
+
 });
 
 // Itemin mevcut kategorisini tutmak için

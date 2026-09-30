@@ -154,6 +154,8 @@ function loadPageNumberButtons() {
 
 document.addEventListener("DOMContentLoaded", async function() {
     loadCategoryPage(1);
+    
+    hideGlobalLoader();
 });
 
 // Arama input kısmı enter dinleyicisi kısmı

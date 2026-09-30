@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     await loadCategoryIdDetails(categoryId);
     await loadCategoryItemPage(1);
 
+    hideGlobalLoader();
+
 });
 
 async function loadCategoryIdDetails(categoryId) {

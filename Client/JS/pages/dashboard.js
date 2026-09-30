@@ -89,6 +89,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         favoriteCountLabel.textContent = "-";
     } 
 
+  }finally{
+    hideGlobalLoader();
   }
 
 });
