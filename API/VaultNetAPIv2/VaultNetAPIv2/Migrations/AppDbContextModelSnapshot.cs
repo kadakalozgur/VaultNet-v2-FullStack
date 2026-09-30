@@ -145,7 +145,7 @@ namespace VaultNetAPIv2.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "CategoryId");
 
                     b.ToTable("VaultItems");
                 });

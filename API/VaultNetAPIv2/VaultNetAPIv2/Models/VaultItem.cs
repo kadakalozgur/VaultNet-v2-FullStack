@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace VaultNetAPIv2.Models
 {
 
-    [Index(nameof(UserId))]
+    [Index(nameof(UserId), nameof(CategoryId))]
     public class VaultItem
     {
 
