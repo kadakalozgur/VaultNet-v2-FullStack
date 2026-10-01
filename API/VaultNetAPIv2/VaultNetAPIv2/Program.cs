@@ -21,6 +21,7 @@ builder.Services.AddSingleton<ITokenService, JwtTokenService>();
 builder.Services.AddScoped<IStorageService, SupabaseStorageService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddSingleton<IEncryptionService, DataProtectionEncryptionService>();
+builder.Services.AddSingleton<IPasswordHashService, BCryptPasswordHashService>();
 builder.Services.AddScoped<IVaultItemService, VaultItemService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
