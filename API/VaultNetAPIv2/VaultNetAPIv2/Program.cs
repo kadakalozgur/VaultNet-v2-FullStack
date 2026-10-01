@@ -17,10 +17,10 @@ builder.Services.AddDataProtection()
     .SetApplicationName("VaultNetAPI");
 
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ITokenService, JwtTokenService>();
+builder.Services.AddSingleton<ITokenService, JwtTokenService>();
 builder.Services.AddScoped<IStorageService, SupabaseStorageService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
-builder.Services.AddScoped<IEncryptionService, DataProtectionEncryptionService>();
+builder.Services.AddSingleton<IEncryptionService, DataProtectionEncryptionService>();
 builder.Services.AddScoped<IVaultItemService, VaultItemService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
