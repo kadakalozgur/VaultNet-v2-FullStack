@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Services.Interfaces;
 
@@ -21,6 +22,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPost("register")]
+        [EnableRateLimiting("AuthLimit")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
 
@@ -31,6 +33,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPost("login")]
+        [EnableRateLimiting("AuthLimit")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
 
