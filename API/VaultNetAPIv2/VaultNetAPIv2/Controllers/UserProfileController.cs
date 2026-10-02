@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Security.Claims;
 using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Services.Interfaces;
@@ -39,6 +40,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPut("update-profile-picture")]
+        [EnableRateLimiting("UserLimit")]
         public async Task<IActionResult> UpdateProfilePicture([FromForm] UpdateProfilePictureDto updateProfilePictureDto)
         {
 
@@ -56,6 +58,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPut("update-email-address")]
+        [EnableRateLimiting("UserLimit")]
         public async Task<IActionResult> UpdateEmail([FromBody] UpdateEmailDto updateEmailDto)
         {
 
@@ -73,6 +76,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPut("change-password")]
+        [EnableRateLimiting("UserLimit")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
 
@@ -90,6 +94,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpDelete("delete-account")]
+        [EnableRateLimiting("UserLimit")]
         public async Task<IActionResult> DeleteAccount([FromBody] DeleteAccountDto deleteAccountDto)
         {
 
@@ -112,6 +117,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpDelete("remove-profile-picture")]
+        [EnableRateLimiting("UserLimit")]
         public async Task<IActionResult> RemoveProfilePicture()
         {
 
