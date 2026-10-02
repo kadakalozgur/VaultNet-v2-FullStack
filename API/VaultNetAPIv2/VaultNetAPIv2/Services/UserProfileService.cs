@@ -11,11 +11,13 @@ namespace VaultNetAPIv2.Services
 
         private readonly AppDbContext _context;
         private readonly IStorageService _storageService;
+        private readonly IPasswordHashService _passwordHashService;
 
-        public UserProfileService(AppDbContext context, IStorageService storageService)
+        public UserProfileService(AppDbContext context, IStorageService storageService, IPasswordHashService passwordHashService)
         {
             _context = context;
             _storageService = storageService;
+            _passwordHashService = passwordHashService;
         }
 
         public async Task<ServiceResult> GetUserProfileAsync(Guid userId)
@@ -188,7 +190,7 @@ namespace VaultNetAPIv2.Services
                 };
             }
 
-            bool isCurrentPasswordVerify = BCrypt.Net.BCrypt.Verify(changePasswordDto.CurrentPassword, userPasswordHash);
+            bool isCurrentPasswordVerify = _passwordHashService.VerifyPassword(changePasswordDto.CurrentPassword, userPasswordHash);
 
             if (!isCurrentPasswordVerify)
             {
@@ -200,7 +202,7 @@ namespace VaultNetAPIv2.Services
                 };
             }
 
-            var newPasswordHash = BCrypt.Net.BCrypt.HashPassword(changePasswordDto.NewPassword);
+            var newPasswordHash = _passwordHashService.HashPassword(changePasswordDto.NewPassword);
 
             await _context.Users
                 .Where(user => user.Id == userId && user.IsActive)
@@ -238,7 +240,7 @@ namespace VaultNetAPIv2.Services
                 };
             }
 
-            bool isCurrentPasswordVerify = BCrypt.Net.BCrypt.Verify(deleteAccountDto.CurrentPassword, user.PasswordHash);
+            bool isCurrentPasswordVerify = _passwordHashService.VerifyPassword(deleteAccountDto.CurrentPassword, user.PasswordHash);
 
             if (!isCurrentPasswordVerify)
             {
