@@ -24,6 +24,8 @@ async function addVaultItem(itemName,usernameOrEmail,password,website = null,cat
             throw new Error(getApiErrorMessage(result));
         }
 
+        sessionStorage.removeItem("dashboard_stats_cache");
+
         return result;
 
     }catch(error){
@@ -119,6 +121,8 @@ async function deleteVaultItem(itemId) {
             throw new Error(getApiErrorMessage(result));
         }
 
+        sessionStorage.removeItem("dashboard_stats_cache");
+
         return result;
 
     }catch(error){
@@ -179,6 +183,8 @@ async function toggleFavoriteItemAsync(itemId) {
         if (!response.ok) {
             throw new Error(getApiErrorMessage(result));
         }
+
+        sessionStorage.removeItem("dashboard_stats_cache");
 
         return result;
 

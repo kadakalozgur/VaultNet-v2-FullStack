@@ -4,6 +4,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   const favoriteCountLabel = document.getElementById("total-favorite-item-count");
   const recentItemsContainer = document.getElementById("recent-items-container");
 
+  const cachedStats = sessionStorage.getItem("dashboard_stats_cache");
+  if(cachedStats){
+
+    const stats = JSON.parse(cachedStats);
+
+    if (totalCountLabel) {
+      totalCountLabel.textContent = stats.totalCount;
+    }
+
+    if (favoriteCountLabel) {
+      favoriteCountLabel.textContent = stats.favoriteCount;
+    }
+    
+  }
+
   try {
     
     const result = await getDashboardStats();
@@ -15,6 +30,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (favoriteCountLabel) {
       favoriteCountLabel.textContent = result.data.favoriteCount;
     }
+
+    const statsToCache = {
+            totalCount: result.data.totalCount,
+            favoriteCount: result.data.favoriteCount
+        };
+    sessionStorage.setItem("dashboard_stats_cache", JSON.stringify(statsToCache));
 
     if (recentItemsContainer) {
       
