@@ -64,10 +64,11 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Veritabanýnda ayný anda iþlenecek iþlem sayýsýný sýnýrladým. (100 adet, kuyruk limiti 50 adet)
+// Rate Limiter
 builder.Services.AddRateLimiter(options =>
 {
 
+    // Veritabanýnda ayný anda iþlenecek iþlem sayýsýný sýnýrladým. (100 adet, kuyruk limiti 50 adet)
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
@@ -79,6 +80,25 @@ builder.Services.AddRateLimiter(options =>
                 QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
                 QueueLimit = 50    
             }));
+
+    // Login-Register için limit. IP adresi üzerinden bakýlýyor.
+    options.AddPolicy("AuthLimit", httpContext =>
+    {
+
+        var clientIp = httpContext.Connection.RemoteIpAddress?.ToString() ?? httpContext.TraceIdentifier;
+
+        return RateLimitPartition.GetSlidingWindowLimiter(
+            partitionKey: clientIp,
+            factory: partition => new SlidingWindowRateLimiterOptions
+            {
+                PermitLimit = 20,
+                Window = TimeSpan.FromMinutes(1),
+                SegmentsPerWindow = 2,
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 0
+            });
+
+    });
 
 });
 
