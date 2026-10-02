@@ -23,6 +23,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpGet("profile")]
+        [EnableRateLimiting("StandartLimit")]
         public async Task<IActionResult> GetProfile()
         {
 
