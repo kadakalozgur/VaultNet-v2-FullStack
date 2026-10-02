@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Security.Claims;
 using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Services.Interfaces;
@@ -10,6 +11,7 @@ namespace VaultNetAPIv2.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [EnableRateLimiting("StandartLimit")]
     public class VaultController : ControllerBase
     {
 
