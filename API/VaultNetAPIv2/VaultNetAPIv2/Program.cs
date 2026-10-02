@@ -72,6 +72,23 @@ builder.Services.AddRateLimiter(options =>
     // Veritabanýnda ayný anda iþlenecek iþlem sayýsýný sýnýrladým. (100 adet, kuyruk limiti 50 adet)
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
+    // Return þeklinin kendi yazdýðým ServiceResult þeklinde dönmesi için kýsým
+    options.OnRejected = async (context, token) =>
+    {
+        context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+        context.HttpContext.Response.ContentType = "application/json";
+
+        var rateLimitError = new
+        {
+            isSuccess = false,
+            statusCode = 429,
+            message = "Too many requests. Please wait a moment and try again."
+        };
+
+        await context.HttpContext.Response.WriteAsJsonAsync(rateLimitError, cancellationToken: token);
+
+    };
+
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
         RateLimitPartition.GetConcurrencyLimiter(
             partitionKey: "global",
