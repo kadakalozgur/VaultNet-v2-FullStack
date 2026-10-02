@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.DataProtection;
 using System.Text;
+using System.Threading.RateLimiting;
 using VaultNetAPIv2.Data;
 using VaultNetAPIv2.Services;
 using VaultNetAPIv2.Services.Interfaces;
@@ -63,6 +64,24 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Veritabanýnda ayný anda iþlenecek iþlem sayýsýný sýnýrladým. (100 adet, kuyruk limiti 50 adet)
+builder.Services.AddRateLimiter(options =>
+{
+
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+        RateLimitPartition.GetConcurrencyLimiter(
+            partitionKey: "global",
+            factory: partition => new ConcurrencyLimiterOptions
+            {
+                PermitLimit = 100, 
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 50    
+            }));
+
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -95,6 +114,9 @@ app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
+
+app.UseRateLimiter();
+
 app.UseAuthorization();
 
 app.MapControllers();
