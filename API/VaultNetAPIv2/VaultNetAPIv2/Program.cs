@@ -122,6 +122,26 @@ builder.Services.AddRateLimiter(options =>
 
     });
 
+    options.AddPolicy("StandartLimit", httpContext =>
+    {
+
+        var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                     ?? httpContext.Connection.RemoteIpAddress?.ToString()
+                     ?? "anonymous";
+
+        return RateLimitPartition.GetSlidingWindowLimiter(
+            partitionKey: userId,
+            factory: partition => new SlidingWindowRateLimiterOptions
+            {
+                PermitLimit = 60,             
+                Window = TimeSpan.FromMinutes(1),
+                SegmentsPerWindow = 4,         
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 0
+            });
+
+    });
+
 });
 
 builder.Services.AddControllers();
