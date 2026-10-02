@@ -12,11 +12,13 @@ namespace VaultNetAPIv2.Services
 
         private readonly AppDbContext _context;
         private readonly ITokenService _tokenService;
+        private readonly IPasswordHashService _passwordHashService;
 
-        public AuthService(AppDbContext context, ITokenService tokenService)
+        public AuthService(AppDbContext context, ITokenService tokenService, IPasswordHashService passwordHashService)
         {
             _context = context;
             _tokenService = tokenService;
+            _passwordHashService = passwordHashService;
         }
 
         public async Task<ServiceResult> RegisterAsync(RegisterDto registerDto)
@@ -39,7 +41,7 @@ namespace VaultNetAPIv2.Services
             var newUser = new User
             {
                 Email = email,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
+                PasswordHash = _passwordHashService.HashPassword(registerDto.Password)
             };
 
             await _context.Users.AddAsync(newUser);
@@ -71,7 +73,7 @@ namespace VaultNetAPIv2.Services
                 };
             }
 
-            bool isPasswordCorret = BCrypt.Net.BCrypt.Verify(loginDto.Password,user.PasswordHash);
+            bool isPasswordCorret = _passwordHashService.VerifyPassword(loginDto.Password,user.PasswordHash);
 
             if (!isPasswordCorret)
             {
