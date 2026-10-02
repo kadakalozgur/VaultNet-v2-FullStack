@@ -14,6 +14,8 @@ logoutButton.addEventListener('click',async function(e){
         console.error("Error:", error.message);
     }finally{
         sessionStorage.removeItem("user_profile");
+        sessionStorage.removeItem("dashboard_stats_cache");   
+
         window.location.href = "index.html";
     }
 
