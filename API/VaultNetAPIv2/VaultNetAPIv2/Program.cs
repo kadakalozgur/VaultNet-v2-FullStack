@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.RateLimiting;
 using VaultNetAPIv2.Data;
@@ -96,6 +97,27 @@ builder.Services.AddRateLimiter(options =>
                 SegmentsPerWindow = 3,
                 QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
                 QueueLimit = 0
+            });
+
+    });
+
+    // Profil iþlemleri için limit. UserId üzerinden bakýlýyor.
+    options.AddPolicy("UserLimit", httpContext =>
+    {
+
+        var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                     ?? httpContext.Connection.RemoteIpAddress?.ToString()
+                     ?? "anonymous";
+
+        return RateLimitPartition.GetSlidingWindowLimiter(
+            partitionKey: userId, 
+            factory: partition => new SlidingWindowRateLimiterOptions
+            {
+                PermitLimit = 5,               
+                Window = TimeSpan.FromMinutes(1),
+                SegmentsPerWindow = 4,         
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 0                 
             });
 
     });
