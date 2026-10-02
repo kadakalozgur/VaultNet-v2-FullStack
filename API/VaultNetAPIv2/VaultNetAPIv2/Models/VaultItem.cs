@@ -6,6 +6,7 @@ namespace VaultNetAPIv2.Models
 {
 
     [Index(nameof(UserId), nameof(CategoryId))]
+    [Index(nameof(UserId), nameof(CreatedAt))]
     public class VaultItem
     {
 
