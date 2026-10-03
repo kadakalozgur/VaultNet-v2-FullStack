@@ -173,3 +173,65 @@ function hideGlobalLoader(){
     }
     
 }
+
+// Refresh Token için gerekli kısım.
+
+let isRefreshing = false;
+let refreshPromise = null;
+
+async function fetchWithAuth(endpoint, options = {}) {
+
+    const url = CONFIG.API_BASE_URL + endpoint;
+
+    options.credentials = "include";
+    
+    if (!options.headers) {
+        options.headers = {};
+    }
+
+    let response = await fetch(url, options);
+
+    if (response.status === 401) {
+
+        try {
+
+            if (!isRefreshing) {
+
+                isRefreshing = true;
+
+                refreshPromise = fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.REFRESH, {
+                    method: "POST",
+                    credentials: "include"
+                }).finally(() => {
+                    isRefreshing = false;
+                });
+
+            }
+
+            const refreshResponse = await refreshPromise;
+               
+            if (refreshResponse.ok) {
+                response = await fetch(url, options);
+            } 
+            
+            else {
+                forceLogout();
+            }
+
+        } catch (error) {
+            forceLogout();
+            throw error;
+        }
+
+    }
+
+    return response;
+
+}
+
+function forceLogout() {
+    localStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem("user_profile");
+    sessionStorage.removeItem("dashboard_stats_cache");   
+    window.location.href = "index.html"; 
+}
