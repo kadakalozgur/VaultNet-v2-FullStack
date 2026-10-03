@@ -42,19 +42,30 @@ namespace VaultNetAPIv2.Controllers
             if (result.IsSuccess)
             {
 
-                var tokenValue = result.Data.GetType().GetProperty("Token").GetValue(result.Data, null).ToString();
+                var accessToken = result.Data.GetType().GetProperty("AccessToken")?.GetValue(result.Data, null)?.ToString();
+                var refreshToken = result.Data.GetType().GetProperty("RefreshToken")?.GetValue(result.Data, null)?.ToString();
 
-                var cookieOptions = new CookieOptions
+                var accessCookieOptions = new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = true, 
-                    SameSite = SameSiteMode.Strict, 
-                    Expires = DateTime.UtcNow.AddMinutes(15) // You must make this the same as your JWT's expiration date.
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.UtcNow.AddMinutes(15)
                 };
 
-                Response.Cookies.Append("jwt_token", tokenValue, cookieOptions);
+                Response.Cookies.Append("accessToken", accessToken!, accessCookieOptions);
 
-                result.Data = null; // Tokenı dışarıya yollamamak için.
+                var refreshCookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.UtcNow.AddDays(7)
+                };
+
+                Response.Cookies.Append("refreshToken", refreshToken!, refreshCookieOptions);
+
+                result.Data = null;
 
             }
 
@@ -64,14 +75,17 @@ namespace VaultNetAPIv2.Controllers
 
         [HttpPost("logout")]
         [Authorize]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
 
-            var result = _authService.Logout();
+            var refreshToken = Request.Cookies["refreshToken"];
+
+            var result = await _authService.LogoutAsync(refreshToken);
 
             if (result.IsSuccess)
             {
-                Response.Cookies.Delete("jwt_token");
+                Response.Cookies.Delete("accessToken");
+                Response.Cookies.Delete("refreshToken");
             }
 
             return StatusCode(result.StatusCode, result);

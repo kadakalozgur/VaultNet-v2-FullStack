@@ -56,9 +56,9 @@ builder.Services.AddAuthentication(options =>
     {
         OnMessageReceived = context =>
         {
-            if (context.Request.Cookies.ContainsKey("jwt_token"))
+            if (context.Request.Cookies.ContainsKey("accessToken"))
             {
-                context.Token = context.Request.Cookies["jwt_token"];
+                context.Token = context.Request.Cookies["accessToken"];
             }
             return Task.CompletedTask;
         }
