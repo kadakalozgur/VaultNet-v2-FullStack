@@ -178,7 +178,7 @@ namespace VaultNetAPIv2.Services
                 .Include(token => token.User)
                 .FirstOrDefaultAsync(token => token.TokenHash == tokenHash);
 
-            if (storedToken == null || storedToken.RevokedAt != null)
+            if (storedToken == null)
             {
                 return new ServiceResult
                 {
@@ -186,6 +186,33 @@ namespace VaultNetAPIv2.Services
                     StatusCode = 401,
                     Message = "Invalid or previously cancelled session"
                 };
+            }
+
+            // Kullanılmış token gelirse bütün tokenları geçersiz yaptım.
+            if (storedToken.RevokedAt != null)
+            {
+
+                var activeTokens = await _context.RefreshTokens
+                    .Where(t => t.UserId == storedToken.UserId && t.RevokedAt == null)
+                    .ToListAsync();
+
+                if (activeTokens.Any())
+                {
+                    foreach (var activeToken in activeTokens)
+                    {
+                        activeToken.RevokedAt = DateTime.UtcNow; 
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 401,
+                    Message = "Security alert: Token reuse detected. All active sessions have been terminated."
+                };
+
             }
 
             if (storedToken.ExpiresAt <= DateTime.UtcNow)
