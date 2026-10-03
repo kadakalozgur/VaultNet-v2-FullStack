@@ -179,7 +179,7 @@ function hideGlobalLoader(){
 let isRefreshing = false;
 let refreshPromise = null;
 
-async function fetchWithAuth(endpoint, options = {}) {
+async function fetchWithAuth(url, options = {}) {
 
     const url = CONFIG.API_BASE_URL + endpoint;
 
