@@ -1,9 +1,10 @@
-﻿using VaultNetAPIv2.Models;
-using VaultNetAPIv2.Services.Interfaces;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using VaultNetAPIv2.Models;
+using VaultNetAPIv2.Services.Interfaces;
 
 namespace VaultNetAPIv2.Services
 {
@@ -42,6 +43,22 @@ namespace VaultNetAPIv2.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        // Refresh Token kısmı. Hazır alındı.
+        public string GenerateRefreshToken()
+        {
+            var randomBytes = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomBytes);
+            return Convert.ToBase64String(randomBytes);
+        }
+
+        public string HashRefreshToken(string token)
+        {
+            using var sha256 = SHA256.Create();
+            var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(token));
+            return Convert.ToBase64String(bytes);
         }
     }
 }
