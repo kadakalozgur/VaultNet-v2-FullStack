@@ -2,7 +2,7 @@ async function createCategory (categoryName) {
     
     try{
 
-        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.CREATE_CATEGORY,{
+        const response = await fetchWithAuth(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.CREATE_CATEGORY,{
 
             method: "POST",
             credentials: "include",
@@ -38,7 +38,7 @@ async function getCategories(pageNumber = 1,searchQuery = null) {
             url += `&searchQuery=${encodeURIComponent(searchQuery.trim())}`;
         }
 
-        const response = await fetch(url,{
+        const response = await fetchWithAuth(url,{
 
             method: "GET",
             credentials: "include",
@@ -66,7 +66,7 @@ async function getCategoryById(categoryId) {
     
     try{
 
-        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.GET_CATEGORY_BY_ID}/${categoryId}`, {
+        const response = await fetchWithAuth(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.GET_CATEGORY_BY_ID}/${categoryId}`, {
             method: "GET",
             credentials: "include",
             headers: {
@@ -92,7 +92,7 @@ async function updateCategory(categoryId,categoryName) {
     
     try{
         
-        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.UPDATE_CATEGORY}/${categoryId}`, {
+        const response = await fetchWithAuth(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.UPDATE_CATEGORY}/${categoryId}`, {
             method: "PUT",
             credentials: "include",
             headers: {
@@ -121,7 +121,7 @@ async function deleteCategory(categoryId) {
     
     try{
 
-        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.DELETE_CATEGORY}/${categoryId}`, {
+        const response = await fetchWithAuth(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.DELETE_CATEGORY}/${categoryId}`, {
             method: "DELETE",
             credentials: "include",
             headers: {
@@ -147,7 +147,7 @@ async function getAllCategories() {
     
     try{
 
-        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.GET_ALL_CATEGORIES, {
+        const response = await fetchWithAuth(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.GET_ALL_CATEGORIES, {
             method: "GET",
             credentials: "include",
             headers: {

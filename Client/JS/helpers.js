@@ -52,7 +52,7 @@ async function getProfileWithCache() {
 
     try{
 
-        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.GET_USER_PROFILE, {
+        const response = await fetchWithAuth(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.GET_USER_PROFILE, {
             method: "GET",
             credentials: "include"
         });
@@ -180,11 +180,7 @@ let isRefreshing = false;
 let refreshPromise = null;
 
 async function fetchWithAuth(url, options = {}) {
-
-    const url = CONFIG.API_BASE_URL + endpoint;
-
-    options.credentials = "include";
-    
+  
     if (!options.headers) {
         options.headers = {};
     }

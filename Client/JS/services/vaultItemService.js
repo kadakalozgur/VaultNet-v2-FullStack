@@ -2,7 +2,7 @@ async function addVaultItem(itemName,usernameOrEmail,password,website = null,cat
     
     try{
 
-        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.ADD_VAULT_ITEM,{
+        const response = await fetchWithAuth(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.ADD_VAULT_ITEM,{
 
             method: "POST",
             credentials: "include",
@@ -52,7 +52,7 @@ async function getVaultItems(pageNumber = 1, searchQuery = null, isFavorite = fa
             url += `&categoryId=${categoryId}`;
         }
 
-        const response = await fetch(url,{
+        const response = await fetchWithAuth(url,{
 
             method: "GET",
             credentials: "include",
@@ -79,7 +79,7 @@ async function getVaultItemById(itemId) {
     
     try{
 
-        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.GET_VAULT_ITEM_BY_ID}/${itemId}`,{
+        const response = await fetchWithAuth(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.GET_VAULT_ITEM_BY_ID}/${itemId}`,{
 
             method: "GET",
             credentials: "include",
@@ -106,7 +106,7 @@ async function deleteVaultItem(itemId) {
     
     try{
 
-        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.DELETE_VAULT_ITEM}/${itemId}`,{
+        const response = await fetchWithAuth(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.DELETE_VAULT_ITEM}/${itemId}`,{
 
             method: "DELETE",
             credentials: "include",
@@ -135,7 +135,7 @@ async function updateVaultItem(itemId,title,usernameOrEmail,password,domain,cate
     
     try{
 
-        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.UPDATE_VAULT_ITEM}/${itemId}`,{
+        const response = await fetchWithAuth(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.UPDATE_VAULT_ITEM}/${itemId}`,{
 
             method: "PUT",
             credentials: "include",
@@ -169,7 +169,7 @@ async function toggleFavoriteItemAsync(itemId) {
     
     try{
 
-        const response = await fetch(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.TOGGLE_FAVORITE_VAULT_ITEM}/${itemId}`,{
+        const response = await fetchWithAuth(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.TOGGLE_FAVORITE_VAULT_ITEM}/${itemId}`,{
 
             method: "PATCH",
             credentials: "include",
@@ -198,7 +198,7 @@ async function getDashboardStats() {
     
     try{
 
-        const response = await fetch(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.GET_DASHBOARD_STATS,{
+        const response = await fetchWithAuth(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.GET_DASHBOARD_STATS,{
 
             method: "GET",
             credentials: "include",
