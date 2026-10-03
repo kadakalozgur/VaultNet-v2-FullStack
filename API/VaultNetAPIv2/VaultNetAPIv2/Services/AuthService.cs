@@ -158,5 +158,85 @@ namespace VaultNetAPIv2.Services
             };
 
         }
+
+        public async Task<ServiceResult> RefreshTokenAsync(string? refreshToken)
+        {
+
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 401,
+                    Message = "Session not found or expired."
+                };
+            }
+
+            var tokenHash = _tokenService.HashRefreshToken(refreshToken);
+
+            var storedToken = await _context.RefreshTokens
+                .Include(token => token.User)
+                .FirstOrDefaultAsync(token => token.TokenHash == tokenHash);
+
+            if (storedToken == null || storedToken.RevokedAt != null)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 401,
+                    Message = "Invalid or previously cancelled session"
+                };
+            }
+
+            if (storedToken.ExpiresAt <= DateTime.UtcNow)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 401,
+                    Message = "Your session has expired. Please log in again."
+                };
+            }
+
+            if (!storedToken.User.IsActive)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 403,
+                    Message = "Your account has been disabled."
+                };
+            }
+
+            storedToken.RevokedAt = DateTime.UtcNow;
+
+            var newAccessToken = _tokenService.GenerateToken(storedToken.User);
+            var newRefreshToken = _tokenService.GenerateRefreshToken();
+            var newRefreshTokenHash = _tokenService.HashRefreshToken(newRefreshToken);
+
+            var newRefreshTokenDbItem = new RefreshToken
+            {
+                UserId = storedToken.UserId,
+                TokenHash = newRefreshTokenHash,
+                ExpiresAt = DateTime.UtcNow.AddDays(7),
+                RevokedAt = null
+            };
+
+            _context.RefreshTokens.Add(newRefreshTokenDbItem);
+            await _context.SaveChangesAsync();
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Data = new
+                {
+                    AccessToken = newAccessToken,
+                    RefreshToken = newRefreshToken
+                },
+                Message = "The session has been successfully renewed."
+            };
+
+        }
     }
 }

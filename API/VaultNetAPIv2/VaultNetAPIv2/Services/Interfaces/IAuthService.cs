@@ -12,5 +12,7 @@ namespace VaultNetAPIv2.Services.Interfaces
 
         Task<ServiceResult> LogoutAsync(string? refreshToken);
 
+        Task<ServiceResult> RefreshTokenAsync(string? refreshToken);
+
     }
 }

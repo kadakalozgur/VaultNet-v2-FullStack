@@ -91,5 +91,54 @@ namespace VaultNetAPIv2.Controllers
             return StatusCode(result.StatusCode, result);
 
         }
+
+        [HttpPost("refresh")]
+        [EnableRateLimiting("AuthLimit")]
+        public async Task<IActionResult> RefreshToken()
+        {
+
+            var refreshToken = Request.Cookies["refreshToken"];
+
+            var result = await _authService.RefreshTokenAsync(refreshToken);
+
+            if (result.IsSuccess && result.Data != null)
+            {
+
+                var newAccessToken = result.Data.GetType().GetProperty("AccessToken")?.GetValue(result.Data, null)?.ToString();
+                var newRefreshToken = result.Data.GetType().GetProperty("RefreshToken")?.GetValue(result.Data, null)?.ToString();
+
+                var accessCookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.UtcNow.AddMinutes(15)
+                };
+
+                Response.Cookies.Append("accessToken", newAccessToken!, accessCookieOptions);
+
+                var refreshCookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTime.UtcNow.AddDays(7)
+                };
+
+                Response.Cookies.Append("refreshToken", newRefreshToken!, refreshCookieOptions);
+
+                result.Data = null;
+
+            }
+
+            else
+            {
+                Response.Cookies.Delete("accessToken");
+                Response.Cookies.Delete("refreshToken");
+            }
+
+            return StatusCode(result.StatusCode, result);
+
+        }
     }
 }
