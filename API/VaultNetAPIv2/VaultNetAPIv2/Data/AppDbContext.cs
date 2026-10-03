@@ -18,6 +18,8 @@ namespace VaultNetAPIv2.Data
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
         public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
 
     }

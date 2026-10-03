@@ -68,6 +68,39 @@ namespace VaultNetAPIv2.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("VaultNetAPIv2.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TokenHash")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("VaultNetAPIv2.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -153,6 +186,17 @@ namespace VaultNetAPIv2.Migrations
                 });
 
             modelBuilder.Entity("VaultNetAPIv2.Models.Category", b =>
+                {
+                    b.HasOne("VaultNetAPIv2.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("VaultNetAPIv2.Models.RefreshToken", b =>
                 {
                     b.HasOne("VaultNetAPIv2.Models.User", "User")
                         .WithMany()
