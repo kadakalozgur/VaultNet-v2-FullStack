@@ -1,3 +1,8 @@
+// Sayfa açılıcna eğer arka planda oturumumuz varsa doğrudan kullanıcıyı içeriye alıyorum.
+if (localStorage.getItem("isLoggedIn") === "true") {
+    window.location.replace("dashboard.html");
+}
+
 const emailInput = document.getElementById("email-input");
 const passwordInput = document.getElementById("password-input");
 const confirmPasswordInput = document.getElementById("confirm-password-input");
