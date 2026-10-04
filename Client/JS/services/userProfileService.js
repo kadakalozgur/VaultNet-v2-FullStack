@@ -6,7 +6,7 @@ async function updateProfilePicture(photoFile) {
         formData.append("photo", photoFile);
 
         const response = await fetchWithAuth(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.UPDATE_PROFILE_PICTURE,{
-            method: "PUT",
+            method: "PATCH",
             credentials: "include",
             body: formData
         }); 
@@ -31,7 +31,7 @@ async function updateEmail(newEmailAddress) {
 
         const response = await fetchWithAuth(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.UPDATE_EMAIL_ADDRESS,{
 
-            method: "PUT",
+            method: "PATCH",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json"
@@ -60,7 +60,7 @@ async function changePassword(currentPassword,newPassword){
 
         const response = await fetchWithAuth(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.CHANGE_PASSWORD,{
 
-            method: "PUT",
+            method: "PATCH",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json"

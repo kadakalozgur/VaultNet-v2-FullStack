@@ -40,7 +40,7 @@ namespace VaultNetAPIv2.Controllers
 
         }
 
-        [HttpPut("update-profile-picture")]
+        [HttpPatch("update-profile-picture")]
         [EnableRateLimiting("UserLimit")]
         public async Task<IActionResult> UpdateProfilePicture([FromForm] UpdateProfilePictureDto updateProfilePictureDto)
         {
@@ -58,7 +58,7 @@ namespace VaultNetAPIv2.Controllers
 
         }
 
-        [HttpPut("update-email-address")]
+        [HttpPatch("update-email-address")]
         [EnableRateLimiting("UserLimit")]
         public async Task<IActionResult> UpdateEmail([FromBody] UpdateEmailDto updateEmailDto)
         {
@@ -76,7 +76,7 @@ namespace VaultNetAPIv2.Controllers
 
         }
 
-        [HttpPut("change-password")]
+        [HttpPatch("change-password")]
         [EnableRateLimiting("UserLimit")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
