@@ -110,7 +110,8 @@ namespace VaultNetAPIv2.Controllers
 
             if (result.IsSuccess)
             {
-                Response.Cookies.Delete("jwt_token");
+                Response.Cookies.Delete("accessToken");
+                Response.Cookies.Delete("refreshToken");
             }
 
             return StatusCode(result.StatusCode, result);
