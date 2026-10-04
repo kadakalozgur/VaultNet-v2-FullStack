@@ -103,7 +103,7 @@ namespace VaultNetAPIv2.Services
             {
                 UserId = user.Id,
                 TokenHash = refreshTokenHash,
-                ExpiresAt = DateTime.UtcNow.AddDays(7),
+                ExpiresAt = DateTime.UtcNow.AddMinutes(30),
                 RevokedAt = null
             };
 
@@ -245,7 +245,7 @@ namespace VaultNetAPIv2.Services
             {
                 UserId = storedToken.UserId,
                 TokenHash = newRefreshTokenHash,
-                ExpiresAt = DateTime.UtcNow.AddDays(7),
+                ExpiresAt = DateTime.UtcNow.AddMinutes(30),
                 RevokedAt = null
             };
 

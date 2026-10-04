@@ -50,7 +50,7 @@ namespace VaultNetAPIv2.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
-                    Expires = DateTime.UtcNow.AddMinutes(15)
+                    Expires = DateTime.UtcNow.AddMinutes(5)
                 };
 
                 Response.Cookies.Append("accessToken", accessToken!, accessCookieOptions);
@@ -60,7 +60,7 @@ namespace VaultNetAPIv2.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
-                    Expires = DateTime.UtcNow.AddDays(7)
+                    Expires = DateTime.UtcNow.AddMinutes(30)
                 };
 
                 Response.Cookies.Append("refreshToken", refreshToken!, refreshCookieOptions);
@@ -112,7 +112,7 @@ namespace VaultNetAPIv2.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
-                    Expires = DateTime.UtcNow.AddMinutes(15)
+                    Expires = DateTime.UtcNow.AddMinutes(5)
                 };
 
                 Response.Cookies.Append("accessToken", newAccessToken!, accessCookieOptions);
@@ -122,7 +122,7 @@ namespace VaultNetAPIv2.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
-                    Expires = DateTime.UtcNow.AddDays(7)
+                    Expires = DateTime.UtcNow.AddMinutes(30)
                 };
 
                 Response.Cookies.Append("refreshToken", newRefreshToken!, refreshCookieOptions);
