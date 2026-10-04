@@ -7,6 +7,7 @@ const emailInput = document.getElementById("email-input");
 const passwordInput = document.getElementById("password-input");
 const togglePasswordButton = document.getElementById("toggle-password");
 const loginButton = document.getElementById("login-button");
+const openRegisterPageButton = document.getElementById("open-register-page");
 const alertBox = document.getElementById("login-alert");
 
 togglePasswordButton.addEventListener('click',function(){
@@ -46,6 +47,7 @@ loginButton.addEventListener('click',async function(e){
     }
 
     loginButton.disabled = true;
+    openRegisterPageButton.disabled = true;
 
     try{
 
@@ -58,6 +60,7 @@ loginButton.addEventListener('click',async function(e){
     }catch(error){
         showAlert(alertBox,error.message,"danger");
         loginButton.disabled = false;
+        openRegisterPageButton.disabled = false;
     }
     
 });

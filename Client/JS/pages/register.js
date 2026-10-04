@@ -9,6 +9,7 @@ const confirmPasswordInput = document.getElementById("confirm-password-input");
 const togglePasswordButton1 = document.getElementById("toggle-password");
 const togglePasswordButton2 = document.getElementById("toggle-password-2");
 const registerButton = document.getElementById("register-button");
+const openLoginPageButton = document.getElementById("open-login-page");
 const alertBox = document.getElementById("register-alert");
 
 togglePasswordButton1.addEventListener('click',function(){
@@ -92,6 +93,7 @@ registerButton.addEventListener('click',async function(e){
     }  
 
     registerButton.disabled = true;
+    openLoginPageButton.disabled = true;
 
     try{
 
@@ -102,6 +104,7 @@ registerButton.addEventListener('click',async function(e){
     }catch(error){
         showAlert(alertBox,error.message,"danger");
         registerButton.disabled = false;
+        openLoginPageButton.disabled = false;
     }
     
 });
