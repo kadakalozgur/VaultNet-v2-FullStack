@@ -215,6 +215,7 @@ saveCreateCategoryModalButton.addEventListener('click' ,async function(e){
 
     categoryNameInput.disabled = true;
     saveCreateCategoryModalButton.disabled = true;
+    cancelCreateCategoryModalButton.disabled = true;
 
     try{
 
@@ -233,6 +234,7 @@ saveCreateCategoryModalButton.addEventListener('click' ,async function(e){
     }finally{
         categoryNameInput.disabled = false;
         saveCreateCategoryModalButton.disabled = false;
+        cancelCreateCategoryModalButton.disabled = false;
     }
 
 });

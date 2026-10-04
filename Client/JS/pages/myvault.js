@@ -330,8 +330,9 @@ saveItemButton.addEventListener('click', async function(e) {
     addPasswordInput.disabled = true;
     addDomainInput.disabled = true;
     saveItemButton.disabled = true;
+    cancelAddItemModalButton.disabled = true;
     addCategorySelect.disabled = true;
-
+    
     try{
 
         await addVaultItem(title,usernameOrEmail,password,website,categoryId);
@@ -358,6 +359,7 @@ saveItemButton.addEventListener('click', async function(e) {
         addPasswordInput.disabled = false;
         addDomainInput.disabled = false;
         saveItemButton.disabled = false;
+        cancelAddItemModalButton.disabled = false;
         addCategorySelect.disabled = false;
     }
 

@@ -59,6 +59,7 @@ savePhotoModalButton.addEventListener('click', async function(e) {
     savePhotoModalButton.disabled = true;
     fileInput.disabled = true;
     removePhotoButton.disabled = true;
+    cancelPhotoModalButton.disabled = true;
 
     try{
 
@@ -76,6 +77,7 @@ savePhotoModalButton.addEventListener('click', async function(e) {
         savePhotoModalButton.disabled = false;
         fileInput.disabled = false;    
         removePhotoButton.disabled = false;
+        cancelPhotoModalButton.disabled = false;
     }
 
 });
@@ -89,6 +91,7 @@ removePhotoButton.addEventListener("click", async function (e) {
     removePhotoButton.disabled = true;
     savePhotoModalButton.disabled = true;
     cancelPhotoModalButton.disabled = true;
+    fileInput.disabled = true;
 
     try {
 
@@ -106,6 +109,7 @@ removePhotoButton.addEventListener("click", async function (e) {
         removePhotoButton.disabled = false;
         savePhotoModalButton.disabled = false;
         cancelPhotoModalButton.disabled = false;
+        fileInput.disabled = false;
     }
 });
 
@@ -142,6 +146,7 @@ saveEmailModalButton.addEventListener('click', async function(e) {
 
     saveEmailModalButton.disabled = true;
     newEmailInput.disabled = true;
+    cancelEmailModalButton.disabled = true;
 
     try{
 
@@ -158,6 +163,7 @@ saveEmailModalButton.addEventListener('click', async function(e) {
     }finally{
         saveEmailModalButton.disabled = false;
         newEmailInput.disabled = false;
+        cancelEmailModalButton.disabled = false;
     }
 
 });
@@ -296,6 +302,7 @@ savePasswordModalButton.addEventListener('click', async function(e) {
     currentPasswordInput.disabled = true;
     newPasswordInput.disabled = true;
     confirmPasswordInput.disabled = true;
+    cancelPasswordModalButton.disabled = true;
 
     try{
 
@@ -322,6 +329,7 @@ savePasswordModalButton.addEventListener('click', async function(e) {
         currentPasswordInput.disabled = false;
         newPasswordInput.disabled = false;
         confirmPasswordInput.disabled = false;
+        cancelPasswordModalButton.disabled = false;
     }
 
 });
@@ -382,6 +390,7 @@ confirmDeleteButton.addEventListener('click', async function(e){
 
     confirmDeleteButton.disabled = true;
     deletePasswordInput.disabled = true;
+    cancelDeleteModalButton.disabled = true;
 
     try{
 
@@ -398,6 +407,7 @@ confirmDeleteButton.addEventListener('click', async function(e){
     }finally{
         confirmDeleteButton.disabled = false;
         deletePasswordInput.disabled = false;
+        cancelDeleteModalButton.disabled = false;
     }
 
 });

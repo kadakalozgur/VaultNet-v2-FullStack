@@ -247,6 +247,11 @@ updateItemButton.addEventListener('click', async function(e) {
 
     updateItemButton.disabled = true;
     cancelUpdateItemModalButton.disabled = true;
+    updateTitleInput.disabled = true;
+    updateUsernameInput.disabled = true;
+    updatePasswordInput.disabled = true;
+    updateDomainInput.disabled = true;
+    categorySelect.disabled = true;
 
     try {
 
@@ -261,6 +266,11 @@ updateItemButton.addEventListener('click', async function(e) {
     } finally {
         updateItemButton.disabled = false;
         cancelUpdateItemModalButton.disabled = false;
+        updateTitleInput.disabled = false;
+        updateUsernameInput.disabled = false;
+        updatePasswordInput.disabled = false;
+        updateDomainInput.disabled = false;
+        categorySelect.disabled = false;
     }
 
 });
