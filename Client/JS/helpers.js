@@ -19,12 +19,12 @@ const currentPath = window.location.pathname.toLowerCase();
 if (!currentPath.includes("index.html") && !currentPath.includes("register.html") && currentPath !== "/" && currentPath !== "") {
     
     if (localStorage.getItem("isLoggedIn") !== "true") {
-       // window.location.replace("index.html");
+        window.location.replace("index.html");
     }
 
     window.addEventListener('pageshow', function (event) {
         if (localStorage.getItem("isLoggedIn") !== "true") {
-          //  window.location.replace("index.html");
+            window.location.replace("index.html");
         }
     });
 
