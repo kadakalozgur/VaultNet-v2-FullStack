@@ -29,6 +29,14 @@
     background-color: #e2e8ff;
 }
 
+.nav-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #8c94a3;
+    letter-spacing: 0.5px;
+    display: block;
+}
+
 .profile-avatar-img {
     width: 42px;
     height: 42px;
