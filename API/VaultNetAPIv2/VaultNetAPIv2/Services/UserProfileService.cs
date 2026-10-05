@@ -139,9 +139,11 @@ namespace VaultNetAPIv2.Services
 
             var affectedRows = await _context.Users
                 .Where(user => user.Id == userId && user.IsActive)
-                .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.Email, newEmail));
+                .ExecuteUpdateAsync(setter => setter
+                    .SetProperty(user => user.Email, newEmail)
+                    .SetProperty(user => user.SecurityStamp, Guid.NewGuid()));
 
-            if(affectedRows == 0)
+            if (affectedRows == 0)
             {
                 return new ServiceResult
                 {
@@ -206,7 +208,9 @@ namespace VaultNetAPIv2.Services
 
             await _context.Users
                 .Where(user => user.Id == userId && user.IsActive)
-                .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.PasswordHash, newPasswordHash));
+                .ExecuteUpdateAsync(setter => setter
+                    .SetProperty(user => user.PasswordHash, newPasswordHash)
+                    .SetProperty(user => user.SecurityStamp, Guid.NewGuid()));
 
             return new ServiceResult
             {
