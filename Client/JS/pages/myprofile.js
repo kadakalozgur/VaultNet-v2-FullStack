@@ -306,21 +306,13 @@ savePasswordModalButton.addEventListener('click', async function(e) {
 
     try{
 
-        await changePassword(currentPassword,newPassword)
+        await changePassword(currentPassword,newPassword);
+
+        sessionStorage.removeItem("user_profile");
 
         $('#changePasswordModal').modal('hide'); 
         
-        currentPasswordInput.value = "";
-        newPasswordInput.value = "";
-        confirmPasswordInput.value = "";
-
-        // Göz İconları ve input tipleri
-        currentPasswordInput.type = 'password';
-        toggleCurrentPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
-        newPasswordInput.type = 'password';
-        toggleNewPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
-        confirmPasswordInput.type = 'password';
-        toggleConfirmPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
+        location.reload();
 
     }catch(error){
         showAlert(passwordModalAlert,error.message,"danger");
