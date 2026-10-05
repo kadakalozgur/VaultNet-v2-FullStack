@@ -27,5 +27,7 @@ namespace VaultNetAPIv2.Models
         [MaxLength(2048, ErrorMessage = "Profile url can be a maximum of 2048 characters long.")]
         public string? ProfilePictureUrl { get; set; }
 
+        public Guid SecurityStamp { get; set; } = Guid.NewGuid();
+
     }
 }
