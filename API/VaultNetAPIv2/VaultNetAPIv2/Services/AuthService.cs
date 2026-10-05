@@ -95,6 +95,11 @@ namespace VaultNetAPIv2.Services
                 };
             }
 
+            var twoDayAgo = DateTime.UtcNow.AddDays(-2);
+            await _context.RefreshTokens
+                .Where(token => token.UserId == user.Id && (token.ExpiresAt < twoDayAgo || token.RevokedAt < twoDayAgo))
+                .ExecuteDeleteAsync();
+
             var accessToken = _tokenService.GenerateToken(user);
             var refreshToken = _tokenService.GenerateRefreshToken();
             var refreshTokenHash = _tokenService.HashRefreshToken(refreshToken);
@@ -236,6 +241,11 @@ namespace VaultNetAPIv2.Services
             }
 
             storedToken.RevokedAt = DateTime.UtcNow;
+
+            var twoDayAgo = DateTime.UtcNow.AddDays(-2);
+            await _context.RefreshTokens
+                .Where(token => token.UserId == storedToken.UserId && (token.ExpiresAt < twoDayAgo || token.RevokedAt < twoDayAgo))
+                .ExecuteDeleteAsync();
 
             var newAccessToken = _tokenService.GenerateToken(storedToken.User);
             var newRefreshToken = _tokenService.GenerateRefreshToken();
