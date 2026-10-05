@@ -153,6 +153,10 @@ namespace VaultNetAPIv2.Services
                 };
             }
 
+            await _context.RefreshTokens
+                .Where(token => token.UserId == userId && token.RevokedAt == null)
+                .ExecuteUpdateAsync(setter => setter.SetProperty(token => token.RevokedAt, DateTime.UtcNow));
+
             return new ServiceResult
             {
                 IsSuccess = true,
@@ -211,6 +215,10 @@ namespace VaultNetAPIv2.Services
                 .ExecuteUpdateAsync(setter => setter
                     .SetProperty(user => user.PasswordHash, newPasswordHash)
                     .SetProperty(user => user.SecurityStamp, Guid.NewGuid()));
+
+            await _context.RefreshTokens
+                .Where(token => token.UserId == userId && token.RevokedAt == null)
+                .ExecuteUpdateAsync(setter => setter.SetProperty(token => token.RevokedAt, DateTime.UtcNow));
 
             return new ServiceResult
             {

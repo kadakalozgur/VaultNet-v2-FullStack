@@ -72,6 +72,12 @@ namespace VaultNetAPIv2.Controllers
 
             var result = await _userProfileService.UpdateEmailAsync(userId, updateEmailDto);
 
+            if (result.IsSuccess)
+            {
+                Response.Cookies.Delete("accessToken");
+                Response.Cookies.Delete("refreshToken");
+            }
+
             return StatusCode(result.StatusCode, result);
 
         }
@@ -89,6 +95,12 @@ namespace VaultNetAPIv2.Controllers
             }
 
             var result = await _userProfileService.ChangePasswordAsync(userId,changePasswordDto);
+
+            if (result.IsSuccess)
+            {
+                Response.Cookies.Delete("accessToken");
+                Response.Cookies.Delete("refreshToken");
+            }
 
             return StatusCode(result.StatusCode, result);
 
