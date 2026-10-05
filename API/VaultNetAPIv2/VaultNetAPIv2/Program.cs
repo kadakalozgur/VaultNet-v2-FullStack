@@ -54,14 +54,32 @@ builder.Services.AddAuthentication(options =>
 
     options.Events = new JwtBearerEvents
     {
-        OnMessageReceived = context =>
+
+        OnTokenValidated = async context =>
         {
-            if (context.Request.Cookies.ContainsKey("accessToken"))
+
+            var dbContext = context.HttpContext.RequestServices.GetRequiredService<AppDbContext>();
+
+            var userIdClaim = context.Principal?.FindFirst(ClaimTypes.NameIdentifier);
+            var securityStampClaim = context.Principal?.FindFirst("SecurityStamp");
+
+            if (userIdClaim == null || securityStampClaim == null)
             {
-                context.Token = context.Request.Cookies["accessToken"];
+                context.Fail("Unauthorized: Security claims are missing.");
+                return;
             }
-            return Task.CompletedTask;
+
+            if (Guid.TryParse(userIdClaim.Value, out Guid userId))
+            {
+                var user = await dbContext.Users.FindAsync(userId);
+
+                if (user == null || user.SecurityStamp.ToString() != securityStampClaim.Value)
+                {
+                    context.Fail("Unauthorized: Security stamp mismatch. Token revoked.");
+                }
+            }
         }
+
     };
 });
 
