@@ -342,6 +342,33 @@ cancelLogoutAllModalButton.addEventListener("click", function() {
     hideAlert(logoutAllModalAlert);
 });
 
+confirmLogoutAllButton.addEventListener('click', async function(e) {
+    
+    e.preventDefault();
+
+    hideAlert(logoutAllModalAlert);
+
+    confirmLogoutAllButton.disabled = true;
+    cancelLogoutAllModalButton.disabled = true;
+
+    try {
+        
+        await logoutAllDevices();
+
+        sessionStorage.clear();
+
+        $('#logoutAllDevicesModal').modal('hide');
+
+        window.location.href = "index.html";
+
+    } catch (error) {
+        showAlert(logoutAllModalAlert, error.message, "danger");
+    } finally {
+        confirmLogoutAllButton.disabled = false;
+        cancelLogoutAllModalButton.disabled = false;
+    }
+});
+
 // Hesabı silme modal kısmı
 
 const openDeleteModalButton = document.getElementById("open-delete-modal-button");
