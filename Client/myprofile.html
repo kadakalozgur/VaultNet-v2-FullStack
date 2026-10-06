@@ -422,10 +422,7 @@
                 >
                   <img
                     src="Media/Icons/logout-icon.png"
-                    style="
-                      width: 23px;
-                      height: 23px;
-                    "
+                    style="width: 23px; height: 23px"
                     alt="Logout Icon"
                   />
                 </div>
@@ -834,6 +831,57 @@
               style="border-radius: 8px"
             >
               Delete Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bütün heryerden çıkış yap Modal Kısmı -->
+
+    <div class="modal fade" id="logoutAllDevicesModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content border-0 shadow-lg"
+          style="border-radius: 16px"
+        >
+          <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+            <h5 class="modal-title font-weight-bold text-danger">
+              Log Out All Devices
+            </h5>
+          </div>
+
+          <div class="modal-body px-4 py-3">
+            <p class="text-muted mb-4" style="font-size: 14px">
+              Are you sure you want to log out from all devices? You will be
+              signed out everywhere, including this current session.
+            </p>
+
+            <div
+              id="logout-all-modal-alert"
+              class="alert d-none animate__animated animate__fadeIn"
+              role="alert"
+            ></div>
+          </div>
+
+          <div class="modal-footer border-top-0 pt-3 pb-4 px-4">
+            <button
+              type="button"
+              class="btn btn-outline-secondary font-weight-bold px-4 close-modal-btn"
+              data-dismiss="modal"
+              style="border-radius: 8px"
+              id="cancel-logout-all-modal-button"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              id="confirm-logout-all-button"
+              class="btn btn-danger font-weight-bold px-4"
+              style="border-radius: 8px"
+            >
+              Log Out All
             </button>
           </div>
         </div>
