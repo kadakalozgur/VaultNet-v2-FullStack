@@ -6,6 +6,7 @@ const CONFIG = {
         REGISTER: "/Auth/register",
         LOGIN: "/Auth/login",
         LOGOUT: "/Auth/logout",
+        LOGOUT_ALL_DEVICES: "/Auth/logout-all",
         REFRESH: "/Auth/refresh",
         UPDATE_PROFILE_PICTURE: "/UserProfile/update-profile-picture",
         REMOVE_PROFILE_PICTURE: "/UserProfile/remove-profile-picture",
