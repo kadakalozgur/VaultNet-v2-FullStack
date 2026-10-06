@@ -326,6 +326,22 @@ savePasswordModalButton.addEventListener('click', async function(e) {
 
 });
 
+// Tüm cihazlardan çıkış yapma modal kısmı
+
+const openLogoutAllModalButton = document.getElementById("open-logout-all-modal-button");
+const cancelLogoutAllModalButton = document.getElementById("cancel-logout-all-modal-button");
+const confirmLogoutAllButton = document.getElementById("confirm-logout-all-button");
+const logoutAllModalAlert = document.getElementById("logout-all-modal-alert");
+
+openLogoutAllModalButton.addEventListener('click', function() {
+    $('#logoutAllDevicesModal').modal('show');
+});
+
+cancelLogoutAllModalButton.addEventListener("click", function() {
+    $('#logoutAllDevicesModal').modal('hide');
+    hideAlert(logoutAllModalAlert);
+});
+
 // Hesabı silme modal kısmı
 
 const openDeleteModalButton = document.getElementById("open-delete-modal-button");
