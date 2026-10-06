@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using System.Security.Claims;
 using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Services.Interfaces;
 
@@ -89,6 +90,23 @@ namespace VaultNetAPIv2.Controllers
             }
 
             return StatusCode(result.StatusCode, result);
+
+        }
+
+        [HttpPost("logout-all")]
+        [Authorize]
+        [EnableRateLimiting("AuthLimit")]
+        public async Task<IActionResult> LogoutAllDevices()
+        {
+
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var userId))
+            {
+                return Unauthorized(new { Message = "Invalid or missing user identity." });
+            }
+
+            var result = await _authService.LogoutAllDevicesAsync(userId);
 
         }
 
