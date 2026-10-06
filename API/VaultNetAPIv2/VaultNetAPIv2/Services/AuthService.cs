@@ -164,6 +164,40 @@ namespace VaultNetAPIv2.Services
 
         }
 
+        public async Task<ServiceResult> LogoutAllDevicesAsync(Guid userId)
+        {
+
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+
+                await _context.RefreshTokens
+                    .Where(token => token.UserId == userId && token.RevokedAt == null)
+                    .ExecuteUpdateAsync(setter => setter.SetProperty(token => token.RevokedAt, DateTime.UtcNow));
+
+                await _context.Users
+                    .Where(user => user.Id == userId)
+                    .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.SecurityStamp, Guid.NewGuid()));
+
+                await transaction.CommitAsync();
+
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+
+            return new ServiceResult
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "You have successfully logged out from all devices."
+            };
+
+        }
+
         public async Task<ServiceResult> RefreshTokenAsync(string? refreshToken)
         {
 
