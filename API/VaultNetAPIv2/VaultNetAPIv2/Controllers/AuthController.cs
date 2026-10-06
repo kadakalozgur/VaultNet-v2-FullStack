@@ -108,6 +108,14 @@ namespace VaultNetAPIv2.Controllers
 
             var result = await _authService.LogoutAllDevicesAsync(userId);
 
+            if (result.IsSuccess)
+            {
+                Response.Cookies.Delete("accessToken");
+                Response.Cookies.Delete("refreshToken");
+            }
+
+            return StatusCode(result.StatusCode, result);
+
         }
 
         [HttpPost("refresh")]
