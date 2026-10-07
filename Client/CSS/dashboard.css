@@ -4,3 +4,85 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.about-project-card {
+    border-radius: 20px;
+    background: linear-gradient(180deg, #ffffff 50%, #f0f4ff 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.about-title {
+    color: #4965fa;
+    font-size: 14px;
+}
+
+.about-main-title {
+    color: #1e293b;
+    font-size: 22px;
+    line-height: 1.3;
+}
+
+.about-desc {
+    font-size: 14.5px;
+    line-height: 1.6;
+}
+
+.about-divider {
+    border-top: 1px solid #e2e8f0;
+    margin: 24px 0;
+}
+
+.github-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+}
+
+.github-heading {
+    font-size: 15px;
+}
+
+.github-subtext {
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.github-btn {
+    background-color: #ffffff;
+    color: #4965fa;
+    border: 1px solid #c7d2fe;
+    border-radius: 12px;
+    padding: 11px 0;
+    font-size: 14.5px;
+    box-shadow: 0 2px 4px rgba(73, 101, 250, 0.05);
+    transition: all 0.2s ease;
+}
+
+.github-btn:hover {
+    background-color: #f8fafc;
+    color: #4965fa;
+    text-decoration: none;
+}
+
+.github-btn-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.footer-icon {
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+}
+
+.footer-text {
+    font-size: 12.5px;
+    line-height: 1.5;
+}
