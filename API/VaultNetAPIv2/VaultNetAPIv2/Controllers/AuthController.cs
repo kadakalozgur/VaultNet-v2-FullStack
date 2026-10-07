@@ -75,7 +75,6 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPost("logout")]
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
 

@@ -355,17 +355,15 @@ confirmLogoutAllButton.addEventListener('click', async function(e) {
         
         await logoutAllDevices();
 
-        sessionStorage.clear();
-
         $('#logoutAllDevicesModal').modal('hide');
-
-        window.location.href = "index.html";
 
     } catch (error) {
         showAlert(logoutAllModalAlert, error.message, "danger");
     } finally {
         confirmLogoutAllButton.disabled = false;
         cancelLogoutAllModalButton.disabled = false;
+
+        forceLogout();
     }
 });
 
@@ -431,11 +429,7 @@ confirmDeleteButton.addEventListener('click', async function(e){
 
         await deleteAccount(currentPassword);
 
-        sessionStorage.clear();
-
         $('#deleteAccountModal').modal('hide');
-
-        window.location.href = "index.html";
 
     }catch(error){
         showAlert(deleteModalAlert, error.message, "danger");
@@ -443,6 +437,8 @@ confirmDeleteButton.addEventListener('click', async function(e){
         confirmDeleteButton.disabled = false;
         deletePasswordInput.disabled = false;
         cancelDeleteModalButton.disabled = false;
+
+        forceLogout();
     }
 
 });
