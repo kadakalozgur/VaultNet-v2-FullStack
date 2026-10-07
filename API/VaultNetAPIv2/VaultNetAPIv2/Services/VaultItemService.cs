@@ -23,6 +23,11 @@ namespace VaultNetAPIv2.Services
         public async Task<ServiceResult> AddItemAsync(Guid userId, AddVaultItemDto addVaultItemDto)
         {
 
+            if (addVaultItemDto.CategoryId != null && !await _context.Categories.AnyAsync(category => category.Id == addVaultItemDto.CategoryId && category.UserId == userId))
+            {
+                return new ServiceResult { IsSuccess = false, StatusCode = 400, Message = "Invalid category." };
+            }
+
             var newVaultItem = new VaultItem
             {
                 UserId = userId,
@@ -280,11 +285,16 @@ namespace VaultNetAPIv2.Services
         public async Task<ServiceResult> UpdateItemAsync(Guid userId, Guid itemId, UpdateVaultItemDto updateVaultItemDto)
         {
 
+            if (updateVaultItemDto.CategoryId != null && !await _context.Categories.AnyAsync(category => category.Id == updateVaultItemDto.CategoryId && category.UserId == userId))
+            {
+                return new ServiceResult { IsSuccess = false, StatusCode = 400, Message = "Invalid category." };
+            }
+
             var encryptedTitle = _encryptionService.Encrypt(updateVaultItemDto.Title.Trim());
             var encryptedUsernameOrEmail = _encryptionService.Encrypt(updateVaultItemDto.UsernameOrEmail.Trim());
             var encryptedPassword = _encryptionService.Encrypt(updateVaultItemDto.Password);
             var encryptedDomain = updateVaultItemDto.Domain.Trim() != null ? _encryptionService.Encrypt(updateVaultItemDto.Domain.Trim()) : null;
-
+        
             var affectedRows = await _context.VaultItems
                 .Where(item => item.Id == itemId && item.UserId == userId)
                 .ExecuteUpdateAsync(setters => setters
