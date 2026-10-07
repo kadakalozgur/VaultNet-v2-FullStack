@@ -153,7 +153,7 @@ function loadPageNumberButtons() {
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
-    loadCategoryPage(1);
+    await loadCategoryPage(1);
     
     hideGlobalLoader();
 });

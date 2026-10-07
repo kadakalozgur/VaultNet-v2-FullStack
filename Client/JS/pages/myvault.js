@@ -214,7 +214,7 @@ function loadPageNumberButtons() {
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
-    loadVaultItemPage(1);
+    await loadVaultItemPage(1);
     await loadCategoriesForSelectBox();
 
     hideGlobalLoader();
