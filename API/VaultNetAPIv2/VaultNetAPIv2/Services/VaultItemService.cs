@@ -345,13 +345,16 @@ namespace VaultNetAPIv2.Services
         public async Task<ServiceResult> GetDashboardStatsAsync(Guid userId)
         {
 
-            var totalItemCount = await _context.VaultItems
+            var counts = await _context.VaultItems
                 .AsNoTracking()
-                .CountAsync(item => item.UserId == userId);
-
-            var favoriteItemCount = await _context.VaultItems
-                .AsNoTracking()
-                .CountAsync(item => item.UserId == userId && item.IsFavorite);
+                .Where(item => item.UserId == userId)
+                .GroupBy(item => 1)
+                .Select(userItems => new
+                {
+                    Total = userItems.Count(),
+                    Favorites = userItems.Count(item => item.IsFavorite)
+                })
+                .FirstOrDefaultAsync();
 
             var recentEncryptedItems = await _context.VaultItems
                 .AsNoTracking()
@@ -383,8 +386,8 @@ namespace VaultNetAPIv2.Services
                 Message = "Dashboard statistics retrieved successfully.",
                 Data = new
                 {
-                    TotalCount = totalItemCount,
-                    FavoriteCount = favoriteItemCount,
+                    TotalCount = counts?.Total ?? 0,
+                    FavoriteCount = counts?.Favorites ?? 0,
                     RecentItems = recentDecryptedItems
                 }
             };
