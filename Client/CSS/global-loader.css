@@ -1,24 +1,37 @@
-@keyframes pulse {
-    0% { background-color: #e2e8f0; }
-    50% { background-color: #cbd5e1; }
-    100% { background-color: #e2e8f0; }
+.page-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f8fafc; 
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.skeleton {
-    animation: pulse 1.5s infinite ease-in-out;
-    color: transparent !important;
-    background-color: #e2e8f0;
-    border-radius: 6px;
-    user-select: none;
+.page-loader-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
 }
 
-.skeleton-img {
-    animation: pulse 1.5s infinite ease-in-out;
-    background-color: #e2e8f0;
+#top-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: transparent;
+    overflow: hidden;
 }
 
-.blur-load {
-    filter: blur(10px);
-    transition: filter 0.3s ease-in-out;
+#top-progress-bar .bar-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #4965fa;
+    transition: width 0.3s ease-in-out;
 }

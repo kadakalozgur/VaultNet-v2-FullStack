@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             else{
 
                 document.querySelectorAll('.profile-avatar-img').forEach(img => {
-                    img.src = img.src = "Media/Icons/avatar-icon.png";
+                    img.src = "Media/Icons/avatar-icon.png";
                 });
 
             }
@@ -163,14 +163,22 @@ async function copyToClipboard(elementId, isInput = true,clickedButton = null){
 
 }
 
-// Sayfalar açıldığında gösterilen loading ekranını kapatmak için genel fonksiyon.
+// Sayfalar açıldığında gösterilen beyaz ve mavi barlı loading ekranını kapatmak için genel fonksiyon.
 function hideGlobalLoader(){
 
-    const globalLoader = document.getElementById("global-loader");
+    const loaderOverlay = document.getElementById("page-loader-overlay");
+    const barFill = document.querySelector('#top-progress-bar .bar-fill');
 
-    if (globalLoader) {
-        globalLoader.classList.add("hidden");
+    if (barFill) {
+        barFill.style.width = "100%"; 
     }
+
+    // Barın fullenmesini kullanıcılar görsün diye bilinçli delay ekledim olayı bu.
+    setTimeout(() => {
+        if (loaderOverlay) {
+            loaderOverlay.classList.add("hidden");
+        }
+    }, 300);
     
 }
 
