@@ -164,7 +164,34 @@ async function copyToClipboard(elementId, isInput = true,clickedButton = null){
 }
 
 // Sayfalar açıldığında gösterilen beyaz ve mavi barlı loading ekranını kapatmak için genel fonksiyon.
-function hideGlobalLoader(){
+async function hideGlobalLoader(){
+
+    // Bu id'li element sadece dashboard sayfasında var. Dashboard sayfasında olup olmadığımızı böyle kontrol ediyorum.
+    const isDashboardPage = document.getElementById("total-item-count") !== null;
+
+    // Sayfa yükleninince fotoğraflar geç gelmemesi için kullanıcıya ilizyon yaptım.
+    if (isDashboardPage) {
+
+        try {
+            const response = await getProfileWithCache();
+            
+            if (response && response.data) {
+
+                const imgUrl = response.data.profilePictureUrl ? response.data.profilePictureUrl : "Media/Icons/avatar-icon.png";
+                
+                await new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = resolve;
+                    img.onerror = resolve; 
+                    img.src = imgUrl;
+                });
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
 
     const loaderOverlay = document.getElementById("page-loader-overlay");
     const barFill = document.querySelector('#top-progress-bar .bar-fill');
