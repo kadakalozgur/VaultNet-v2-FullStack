@@ -1,15 +1,24 @@
-.global-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #f8fafc;
-    z-index: 9999;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
+@keyframes pulse {
+    0% { background-color: #e2e8f0; }
+    50% { background-color: #cbd5e1; }
+    100% { background-color: #e2e8f0; }
 }
 
-.global-loader.hidden {
-    opacity: 0;
-    visibility: hidden;
+.skeleton {
+    animation: pulse 1.5s infinite ease-in-out;
+    color: transparent !important;
+    background-color: #e2e8f0;
+    border-radius: 6px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.skeleton-img {
+    animation: pulse 1.5s infinite ease-in-out;
+    background-color: #e2e8f0;
+}
+
+.blur-load {
+    filter: blur(10px);
+    transition: filter 0.3s ease-in-out;
 }
