@@ -50,9 +50,12 @@ function showCardVaultItems() {
 
     vaultItems.forEach(item => {
 
-        const iconUrl = item.domain 
-            ? `https://www.google.com/s2/favicons?domain=${item.domain}&sz=64` 
-            : `Media/Icons/items-default-icon.png`; 
+        const safeTitle = escapeHTML(item.title);
+        const safeDomain = escapeHTML(item.domain);
+
+        const iconUrl = safeDomain 
+            ? `https://www.google.com/s2/favicons?domain=${safeDomain}&sz=64` 
+            : `Media/Icons/items-default-icon.png`;
 
         const updatedDate = new Date(item.updatedAt).toLocaleDateString('en-US', { 
             year: 'numeric', 
@@ -85,7 +88,7 @@ function showCardVaultItems() {
                             
                             <div style="flex: 1; min-width: 0;">
                                 <h5 class="card-title mb-0 font-weight-bold text-truncate" style="color: #111827; font-size: 16px;">
-                                    ${item.title}
+                                    ${safeTitle}
                                 </h5>
                             </div>
                         </div>
@@ -177,7 +180,7 @@ function loadPageNumberButtons() {
     let html = "";
 
     html += `
-        <button class="page-btn" onclick="loadVaultItemPage(${currentPage - 1}, '${currentSearchQuery}')" ${currentPage === 1 ? 'disabled' : ''}>
+        <button class="page-btn" onclick="loadVaultItemPage(${currentPage - 1}, currentSearchQuery)" ${currentPage === 1 ? 'disabled' : ''}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
@@ -202,7 +205,7 @@ function loadPageNumberButtons() {
     }
 
     html += `
-        <button class="page-btn" onclick="loadVaultItemPage(${currentPage + 1}, '${currentSearchQuery}')" ${currentPage === totalPages ? 'disabled' : ''}>
+        <button class="page-btn" onclick="loadVaultItemPage(${currentPage + 1}, currentSearchQuery)" ${currentPage === totalPages ? 'disabled' : ''}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
@@ -210,6 +213,37 @@ function loadPageNumberButtons() {
     `;
 
     container.innerHTML = html;
+
+}
+
+async function loadCategoriesForSelectBox() {
+    
+    try{
+
+        const selectBox = document.getElementById("add-category-select");
+
+        if(!selectBox){
+            return;
+        }
+
+        const result = await getAllCategories();
+
+        if (result.isSuccess && result.data) {
+
+            let optionsHtml = `<option value="">No Category (Uncategorized)</option>`;
+            
+            result.data.forEach(category => {
+                const safeCategoryName = escapeHTML(category.categoryName);
+                optionsHtml += `<option value="${category.id}">${safeCategoryName}</option>`;
+            });
+
+            selectBox.innerHTML = optionsHtml;
+
+        }
+
+    }catch(error){
+        console.error(error.message);
+    }
 
 }
 
@@ -366,37 +400,3 @@ saveItemButton.addEventListener('click', async function(e) {
 });
 
 }
-
-async function loadCategoriesForSelectBox() {
-    
-    try{
-
-        const selectBox = document.getElementById("add-category-select");
-
-        if(!selectBox){
-            return;
-        }
-
-        const result = await getAllCategories();
-
-        if (result.isSuccess && result.data) {
-
-            let optionsHtml = `<option value="">No Category (Uncategorized)</option>`;
-            
-            result.data.forEach(category => {
-                optionsHtml += `<option value="${category.id}">${category.categoryName}</option>`;
-            });
-
-            selectBox.innerHTML = optionsHtml;
-
-        }
-
-    }catch(error){
-        console.error(error.message);
-    }
-
-}
-
-
-
-
