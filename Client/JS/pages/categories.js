@@ -59,6 +59,8 @@ function showCardCategories() {
             day: 'numeric' 
         });
 
+        const safeCategoryName = escapeHTML(category.categoryName);
+
         const cardHtml = `
             <div class="col-12 col-md-6 custom-category-grid mb-4 animate__animated animate__fadeIn">
                 <div class="card h-100 border-0 shadow-sm vault-card p-2" style="border-radius: 16px; transition: transform 0.2s; background-color: #ffffff; position: relative;">
@@ -71,7 +73,7 @@ function showCardCategories() {
                             
                             <div style="flex: 1; min-width: 0;">
                                 <h5 class="card-title mb-0 font-weight-bold text-truncate" style="color: #111827; font-size: 16px;">
-                                    ${category.categoryName}
+                                    ${safeCategoryName}
                                 </h5>
                             </div>
                         </div>
@@ -116,7 +118,7 @@ function loadPageNumberButtons() {
     let html = "";
 
     html += `
-        <button class="page-btn" onclick="loadCategoryPage(${currentPage - 1}, '${currentSearchQuery}')" ${currentPage === 1 ? 'disabled' : ''}>
+        <button class="page-btn" onclick="loadCategoryPage(${currentPage - 1}, currentSearchQuery)" ${currentPage === 1 ? 'disabled' : ''}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
@@ -137,11 +139,11 @@ function loadPageNumberButtons() {
 
     for(let i = startPage; i <= endPage; i++){
         const activeClass = i == currentPage ? "active" : "";
-        html += `<button class="page-btn ${activeClass}" onclick="loadCategoryPage(${i}, '${currentSearchQuery}')">${i}</button>`;
+        html += `<button class="page-btn ${activeClass}" onclick="loadCategoryPage(${i}, currentSearchQuery)">${i}</button>`;
     }
 
     html += `
-        <button class="page-btn" onclick="loadCategoryPage(${currentPage + 1}, '${currentSearchQuery}')" ${currentPage === totalPages ? 'disabled' : ''}>
+        <button class="page-btn" onclick="loadCategoryPage(${currentPage + 1}, currentSearchQuery)" ${currentPage === totalPages ? 'disabled' : ''}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
