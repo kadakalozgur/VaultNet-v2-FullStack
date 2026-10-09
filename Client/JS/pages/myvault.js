@@ -201,7 +201,7 @@ function loadPageNumberButtons() {
 
     for(let i = startPage; i <= endPage; i++){
         const activeClass = i == currentPage ? "active" : "";
-        html += `<button class="page-btn ${activeClass}" onclick="loadVaultItemPage(${i}, '${currentSearchQuery}')">${i}</button>`;
+        html += `<button class="page-btn ${activeClass}" onclick="loadVaultItemPage(${i}, currentSearchQuery)">${i}</button>`;
     }
 
     html += `
