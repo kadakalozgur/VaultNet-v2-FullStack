@@ -431,14 +431,14 @@ confirmDeleteButton.addEventListener('click', async function(e){
 
         $('#deleteAccountModal').modal('hide');
 
+        forceLogout();
+
     }catch(error){
         showAlert(deleteModalAlert, error.message, "danger");
     }finally{
         confirmDeleteButton.disabled = false;
         deletePasswordInput.disabled = false;
         cancelDeleteModalButton.disabled = false;
-
-        forceLogout();
     }
 
 });
