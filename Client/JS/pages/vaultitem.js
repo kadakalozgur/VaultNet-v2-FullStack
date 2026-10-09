@@ -65,6 +65,33 @@ async function loadVaultItemDetails(itemId) {
 
 }
 
+async function loadCategoriesForSelectBox() {
+    
+    try{
+
+        const selectBox = document.getElementById("update-category-select");
+
+        const result = await getAllCategories();
+
+        if (result.isSuccess && result.data) {
+
+            let optionsHtml = `<option value="">No Category (Uncategorized)</option>`;
+            
+            result.data.forEach(category => {
+                const safeCategoryName = escapeHTML(category.categoryName);
+                optionsHtml += `<option value="${category.id}">${safeCategoryName}</option>`;
+            });
+
+            selectBox.innerHTML = optionsHtml;
+
+        }
+
+    }catch(error){
+        console.error(error.message);
+    }
+
+}
+
 // Şifreyi gösterme-gizleme kısmı
 
 const togglePasswordButton = document.getElementById("toggle-password-button");
@@ -274,30 +301,3 @@ updateItemButton.addEventListener('click', async function(e) {
     }
 
 });
-
-async function loadCategoriesForSelectBox() {
-    
-    try{
-
-        const selectBox = document.getElementById("update-category-select");
-
-        const result = await getAllCategories();
-
-        if (result.isSuccess && result.data) {
-
-            let optionsHtml = `<option value="">No Category (Uncategorized)</option>`;
-            
-            result.data.forEach(category => {
-                optionsHtml += `<option value="${category.id}">${category.categoryName}</option>`;
-            });
-
-            selectBox.innerHTML = optionsHtml;
-
-        }
-
-    }catch(error){
-        console.error(error.message);
-    }
-
-}
-
