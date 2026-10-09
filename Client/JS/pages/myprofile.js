@@ -357,13 +357,13 @@ confirmLogoutAllButton.addEventListener('click', async function(e) {
 
         $('#logoutAllDevicesModal').modal('hide');
 
+        forceLogout();
+
     } catch (error) {
         showAlert(logoutAllModalAlert, error.message, "danger");
     } finally {
         confirmLogoutAllButton.disabled = false;
-        cancelLogoutAllModalButton.disabled = false;
-
-        forceLogout();
+        cancelLogoutAllModalButton.disabled = false;       
     }
 });
 
