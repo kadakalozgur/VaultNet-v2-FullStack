@@ -42,8 +42,16 @@ generateButton.addEventListener('click', function(){
 
     let password = "";
 
+    // Math Random fonksiyonu güvenli değerler üretmediği için (sözde rastgele)
+    // o yüzden bu şekilde rastgelelik kullandım.
+    const randomBuffer = new Uint32Array(1);
+
     for(let i=0;i<length;i++){
-        const randomIndex = Math.floor(Math.random() * allowedChars.length);
+
+        window.crypto.getRandomValues(randomBuffer);
+    
+        const randomIndex = randomBuffer[0] % allowedChars.length;
+        
         password += allowedChars[randomIndex];
     }
 
