@@ -58,8 +58,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         const borderClass = isLastItem ? "" : "border-bottom";
         const borderStyle = isLastItem ? "" : "style='border-color: #f1f5f9 !important'";
 
-        const iconSrc = item.domain 
-          ? `https://www.google.com/s2/favicons?domain=${item.domain}&sz=64`
+        const safeTitle = escapeHTML(item.title);
+        const safeDomain = escapeHTML(item.domain);
+
+        const iconSrc = safeDomain 
+          ? `https://www.google.com/s2/favicons?domain=${safeDomain}&sz=64`
           : `Media/Icons/items-default-icon.png`;
 
         const createdDate = new Date(item.createdAt).toLocaleDateString('en-US', { 
@@ -76,7 +79,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-white" style="width: 42px; height: 42px; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden;">
                 <img src="${iconSrc}" alt="Icon" style="width: 20px; height: 20px; object-fit: contain;" />
               </div>
-              <span class="ml-3 font-weight-bold text-dark text-truncate" style="font-size: 15px" title="${item.title}">${item.title}</span>
+              <span class="ml-3 font-weight-bold text-dark text-truncate" style="font-size: 15px" title="${safeTitle}">${safeTitle}</span>
             </div>
 
             <div class="text-muted text-center" style="width: 30%; font-size: 13px">
