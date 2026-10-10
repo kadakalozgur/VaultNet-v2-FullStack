@@ -12,7 +12,6 @@ namespace VaultNetAPIv2.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    [EnableRateLimiting("StandartLimit")]
     public class CategoryController : ControllerBase
     {
 
@@ -24,6 +23,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPost("create-category")]
+        [EnableRateLimiting("WriteLimit")]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto createCategoryDto)
         {
 
@@ -41,6 +41,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpGet("get-category-items")]
+        [EnableRateLimiting("ReadLimit")]
         public async Task<IActionResult> GetCategories([FromQuery] int pageNumber = 1, [FromQuery] string? searchQuery = null)
         {
 
@@ -58,6 +59,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpGet("{id}")]
+        [EnableRateLimiting("ReadLimit")]
         public async Task<IActionResult> GetCategoryById(Guid id)
         {
 
@@ -75,6 +77,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpDelete("{id}")]
+        [EnableRateLimiting("WriteLimit")]
         public async Task<IActionResult> DeleteCategory(Guid id)
         {
 
@@ -92,6 +95,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPut("{id}")]
+        [EnableRateLimiting("WriteLimit")]
         public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] UpdateCategoryDto updateCategoryDto)
         {
 
@@ -109,6 +113,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpGet("get-user-all-categories")]
+        [EnableRateLimiting("ReadLimit")]
         public async Task<IActionResult> GetAllCategories()
         {
 
