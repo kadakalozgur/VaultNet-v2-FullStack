@@ -75,6 +75,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPost("logout")]
+        [EnableRateLimiting("AuthLimit")]
         public async Task<IActionResult> Logout()
         {
 
@@ -94,7 +95,8 @@ namespace VaultNetAPIv2.Controllers
 
         [HttpPost("logout-all")]
         [Authorize]
-        [EnableRateLimiting("AuthLimit")]
+        // Kritik bir işlem olduğu için limiter'i biraz fazla verdim.
+        [EnableRateLimiting("UserLimit")]
         public async Task<IActionResult> LogoutAllDevices()
         {
 
