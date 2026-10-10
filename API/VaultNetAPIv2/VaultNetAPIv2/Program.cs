@@ -166,7 +166,7 @@ builder.Services.AddRateLimiter(options =>
 
     });
 
-    options.AddPolicy("StandartLimit", httpContext =>
+    options.AddPolicy("ReadLimit", httpContext =>
     {
 
         var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)
@@ -181,6 +181,24 @@ builder.Services.AddRateLimiter(options =>
                 Window = TimeSpan.FromMinutes(1),
                 SegmentsPerWindow = 4,         
                 QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 0
+            });
+
+    });
+
+    options.AddPolicy("WriteLimit", httpContext =>
+    {
+        var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                     ?? httpContext.Connection.RemoteIpAddress?.ToString()
+                     ?? "anonymous";
+
+        return RateLimitPartition.GetSlidingWindowLimiter(
+            partitionKey: userId,
+            factory: partition => new SlidingWindowRateLimiterOptions
+            {
+                PermitLimit = 20,
+                Window = TimeSpan.FromMinutes(1),
+                SegmentsPerWindow = 4,
                 QueueLimit = 0
             });
 
