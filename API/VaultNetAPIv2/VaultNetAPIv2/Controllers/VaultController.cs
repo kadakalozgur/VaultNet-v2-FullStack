@@ -11,7 +11,6 @@ namespace VaultNetAPIv2.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    [EnableRateLimiting("StandartLimit")]
     public class VaultController : ControllerBase
     {
 
@@ -23,6 +22,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPost("add-vault-item")]
+        [EnableRateLimiting("WriteLimit")]
         public async Task<IActionResult> AddItem([FromBody] AddVaultItemDto addVaultItemDto)
         {
 
@@ -40,6 +40,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpGet("get-vault-items")]
+        [EnableRateLimiting("ReadLimit")]
         public async Task<IActionResult> GetVaultItems([FromQuery] int pageNumber = 1, [FromQuery] string? searchQuery = null, [FromQuery] bool? isFavorite = null, [FromQuery] Guid? categoryId = null)
         {
 
@@ -57,6 +58,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpGet("{id}")]
+        [EnableRateLimiting("ReadLimit")]
         public async Task<IActionResult> GetItemById(Guid id)
         {
 
@@ -74,6 +76,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpDelete("{id}")]
+        [EnableRateLimiting("WriteLimit")]
         public async Task<IActionResult> DeleteItem(Guid id)
         {
 
@@ -91,6 +94,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPut("{id}")]
+        [EnableRateLimiting("WriteLimit")]
         public async Task<IActionResult> UpdateItem(Guid id, [FromBody] UpdateVaultItemDto updateVaultItemDto)
         {
 
@@ -108,6 +112,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpPatch("toggle-item-favorite/{id}")]
+        [EnableRateLimiting("WriteLimit")]
         public async Task<IActionResult> ToggleFavoriteItem(Guid id)
         {
 
@@ -125,6 +130,7 @@ namespace VaultNetAPIv2.Controllers
         }
 
         [HttpGet("dashboard-stats")]
+        [EnableRateLimiting("ReadLimit")]
         public async Task<IActionResult> GetDashboardStats()
         {
 
