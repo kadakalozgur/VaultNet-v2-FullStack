@@ -25,6 +25,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 let currentItemCategoryId = null;
 
 async function loadVaultItemDetails(itemId) {
+
+    // Kullanıcı eğer hata alırsa edit ve delete modalını açmasını engellemek için.
+    const editBtn = document.getElementById("open-update-item-modal-button");
+    const deleteBtn = document.getElementById("open-delete-item-modal-button");
+
+    editBtn.disabled = false;
+    deleteBtn.disabled = false;
    
     try{
 
@@ -66,6 +73,10 @@ async function loadVaultItemDetails(itemId) {
 
     }catch(error){
         console.error(error.message);
+
+        editBtn.disabled = true;
+        deleteBtn.disabled = true;
+
         showAlert(vaultItemAlert, error.message, "danger");
     }
 
