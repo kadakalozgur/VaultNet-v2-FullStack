@@ -1,3 +1,6 @@
+// Error kutusu.
+const categoriesAlert = document.getElementById("categories-alert");
+
 // Sayfadaki category kartlarının yönetildiği kısım
 
 // Alttaki fonksiyon için gerekli olan global değişkenler.
@@ -14,6 +17,8 @@ async function loadCategoryPage(pageNumber = 1, searchQuery = "") {
 
         const result = await getCategories(pageNumber, currentSearchQuery);
 
+        hideAlert(categoriesAlert);
+
         if (result.isSuccess) {
             categories = result.data.items;
             currentPage = result.data.currentPage;
@@ -25,6 +30,7 @@ async function loadCategoryPage(pageNumber = 1, searchQuery = "") {
 
     } catch (error) {
         console.error(error.message);
+        showAlert(categoriesAlert, error.message, "danger");
     }
 }
 
