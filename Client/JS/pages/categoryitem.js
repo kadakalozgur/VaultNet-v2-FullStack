@@ -2,6 +2,9 @@
 const urlParams = new URLSearchParams(window.location.search);
 const categoryId = urlParams.get('id');
 
+// Error kutusu.
+const pageAlert = document.getElementById("category-item-page-alert");
+
 document.addEventListener("DOMContentLoaded", async function () {
 
     if (!categoryId) {
@@ -22,12 +25,16 @@ async function loadCategoryIdDetails(categoryId) {
 
         const result = await getCategoryById(categoryId);
 
+        hideAlert(pageAlert);
+
         if(result.isSuccess){
             document.getElementById("category-name").textContent = result.data.categoryName;
         }
 
     }catch(error){
         console.error(error.message);
+
+        showAlert(pageAlert, error.message, "danger");
     }
 }
 
@@ -45,6 +52,8 @@ async function loadCategoryItemPage(pageNumber = 1, searchQuery = "") {
         
         const result = await getVaultItems(pageNumber, currentSearchQuery, false, categoryId);
 
+        hideAlert(pageAlert);
+
         if (result.isSuccess) {
 
             categoryVaultItems = result.data.items;
@@ -58,6 +67,8 @@ async function loadCategoryItemPage(pageNumber = 1, searchQuery = "") {
 
     } catch (error) {
         console.error(error.message);
+
+        showAlert(pageAlert, error.message, "danger");
     }
 
 }
