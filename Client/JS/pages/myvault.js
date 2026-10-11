@@ -1,3 +1,6 @@
+// Error kutusu.
+const vaultAlert = document.getElementById("vault-alert");
+
 // Sayfadaki item kartlarının yönetildiği kısım
 
 // Alttaki fonksiyon için gerekli olan global değişkenler.
@@ -17,6 +20,8 @@ async function loadVaultItemPage(pageNumber = 1, searchQuery = "") {
 
         const result = await getVaultItems(pageNumber,currentSearchQuery,isFavoritePage);
 
+        hideAlert(vaultAlert);
+
         if(result.isSuccess){
             vaultItems = result.data.items;
             currentPage = result.data.currentPage;
@@ -28,6 +33,7 @@ async function loadVaultItemPage(pageNumber = 1, searchQuery = "") {
 
     }catch(error){
         console.error(error.message);
+        showAlert(vaultAlert, error.message, "danger");
     }
     
 }
@@ -143,6 +149,8 @@ async function toggleFavoriteItem(itemId,button) {
 
         await toggleFavoriteItemAsync(itemId);
 
+        hideAlert(vaultAlert);
+
         const targetItem = vaultItems.find(item => item.id === itemId);
 
         if (targetItem) {
@@ -160,6 +168,7 @@ async function toggleFavoriteItem(itemId,button) {
     }catch(error){
         starSpan.style.color = previousColor;
         console.error(error.message);
+        showAlert(vaultAlert, error.message, "danger");
     }finally{
         if (document.body.contains(button)) {
             button.disabled = false;
@@ -228,6 +237,8 @@ async function loadCategoriesForSelectBox() {
 
         const result = await getAllCategories();
 
+        hideAlert(vaultAlert);
+
         if (result.isSuccess && result.data) {
 
             let optionsHtml = `<option value="">No Category (Uncategorized)</option>`;
@@ -243,6 +254,7 @@ async function loadCategoriesForSelectBox() {
 
     }catch(error){
         console.error(error.message);
+        showAlert(vaultAlert, error.message, "danger");
     }
 
 }
@@ -267,8 +279,9 @@ searchInput.addEventListener("keydown", async function(e) {
         const query = searchInput.value.trim();
 
         await loadVaultItemPage(1, query); 
-        
+             
     }
+
 });
 
 // Add item modal kısmı
