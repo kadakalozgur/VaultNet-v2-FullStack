@@ -2,6 +2,9 @@
 const urlParams = new URLSearchParams(window.location.search);
 const itemId = urlParams.get('id');
 
+// Error kutusu.
+const vaultItemAlert = document.getElementById("vault-item-alert");
+
 document.addEventListener("DOMContentLoaded", async function () {
 
     if (!itemId) {
@@ -26,6 +29,8 @@ async function loadVaultItemDetails(itemId) {
     try{
 
         const result = await getVaultItemById(itemId);
+
+        hideAlert(vaultItemAlert);
 
         if(result.isSuccess){
 
@@ -61,6 +66,7 @@ async function loadVaultItemDetails(itemId) {
 
     }catch(error){
         console.error(error.message);
+        showAlert(vaultItemAlert, error.message, "danger");
     }
 
 }
@@ -72,6 +78,8 @@ async function loadCategoriesForSelectBox() {
         const selectBox = document.getElementById("update-category-select");
 
         const result = await getAllCategories();
+
+        hideAlert(vaultItemAlert);
 
         if (result.isSuccess && result.data) {
 
@@ -88,6 +96,7 @@ async function loadCategoriesForSelectBox() {
 
     }catch(error){
         console.error(error.message);
+        showAlert(vaultItemAlert, error.message, "danger");
     }
 
 }
