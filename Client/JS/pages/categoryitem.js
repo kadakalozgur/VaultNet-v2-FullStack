@@ -21,6 +21,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 async function loadCategoryIdDetails(categoryId) {
     
+    // Kullanıcı eğer hata alırsa edit ve delete modalını açmasını engellemek için.
+    const editBtn = document.getElementById("open-update-category-modal-button");
+    const deleteBtn = document.getElementById("open-delete-category-modal-button");
+
+    editBtn.disabled = false;
+    deleteBtn.disabled = false;
+
     try{ 
 
         const result = await getCategoryById(categoryId);
@@ -33,6 +40,9 @@ async function loadCategoryIdDetails(categoryId) {
 
     }catch(error){
         console.error(error.message);
+
+        editBtn.disabled = true;
+        deleteBtn.disabled = true;
 
         showAlert(pageAlert, error.message, "danger");
     }
