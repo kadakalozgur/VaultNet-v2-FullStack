@@ -41,6 +41,8 @@ async function loadCategoryIdDetails(categoryId) {
     }catch(error){
         console.error(error.message);
 
+        document.getElementById("category-name").textContent = "-";
+
         editBtn.disabled = true;
         deleteBtn.disabled = true;
 
