@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const totalCountLabel = document.getElementById("total-item-count");
   const favoriteCountLabel = document.getElementById("total-favorite-item-count");
   const recentItemsContainer = document.getElementById("recent-items-container");
+  const alertBox = document.getElementById("dashboard-alert");
 
   const cachedStats = sessionStorage.getItem("dashboard_stats_cache");
   if(cachedStats){
@@ -22,6 +23,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     
     const result = await getDashboardStats();
+
+    hideAlert(alertBox);
 
     if (totalCountLabel) {
       totalCountLabel.textContent = result.data.totalCount;
@@ -111,7 +114,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (favoriteCountLabel){
         favoriteCountLabel.textContent = "-";
-    } 
+    }
+    
+    showAlert(alertBox, error.message, "danger");
 
   }finally{
     hideGlobalLoader();
