@@ -74,6 +74,14 @@ async function loadVaultItemDetails(itemId) {
     }catch(error){
         console.error(error.message);
 
+        document.getElementById("title-label").textContent = "Item Not Found";
+        document.getElementById("detail-username").value = "-";
+        document.getElementById("detail-password").value = "-";
+        document.getElementById("detail-domain").value = "-";
+        document.getElementById("detail-created-date").textContent = "-";
+        document.getElementById("detail-updated-date").textContent = "-";
+        document.getElementById("item-icon").src = "Media/Icons/items-default-icon.png";
+        
         editBtn.disabled = true;
         deleteBtn.disabled = true;
 
