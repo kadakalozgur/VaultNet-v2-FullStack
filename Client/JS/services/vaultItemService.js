@@ -190,11 +190,11 @@ async function toggleFavoriteItemAsync(itemId) {
 
 }
 
-async function getDashboardStats() {
+async function getDashboardStats(isCachedCounts = false) {
     
     try{
 
-        const response = await fetchWithAuth(CONFIG.API_BASE_URL + CONFIG.ENDPOINTS.GET_DASHBOARD_STATS,{
+        const response = await fetchWithAuth(`${CONFIG.API_BASE_URL}${CONFIG.ENDPOINTS.GET_DASHBOARD_STATS}?isCachedCounts=${isCachedCounts}`,{
 
             method: "GET",
             credentials: "include",

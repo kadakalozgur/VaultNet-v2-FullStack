@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const recentItemsContainer = document.getElementById("recent-items-container");
   const alertBox = document.getElementById("dashboard-alert");
 
+  let isCachedCounts = false;
+
   const cachedStats = sessionStorage.getItem("dashboard_stats_cache");
   if(cachedStats){
 
@@ -17,28 +19,35 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (favoriteCountLabel) {
       favoriteCountLabel.textContent = stats.favoriteCount;
     }
+
+    isCachedCounts = true ;
     
   }
 
   try {
     
-    const result = await getDashboardStats();
+    const result = await getDashboardStats(isCachedCounts);
 
     hideAlert(alertBox);
 
-    if (totalCountLabel) {
-      totalCountLabel.textContent = result.data.totalCount;
-    }
+    if (!isCachedCounts) {
 
-    if (favoriteCountLabel) {
-      favoriteCountLabel.textContent = result.data.favoriteCount;
-    }
+      if (totalCountLabel) {
+        totalCountLabel.textContent = result.data.totalCount;
+      }
 
-    const statsToCache = {
-            totalCount: result.data.totalCount,
-            favoriteCount: result.data.favoriteCount
-        };
-    sessionStorage.setItem("dashboard_stats_cache", JSON.stringify(statsToCache));
+      if (favoriteCountLabel) {
+        favoriteCountLabel.textContent = result.data.favoriteCount;
+      }
+
+      const statsToCache = {
+        totalCount: result.data.totalCount,
+        favoriteCount: result.data.favoriteCount
+      };
+
+      sessionStorage.setItem("dashboard_stats_cache", JSON.stringify(statsToCache));
+      
+    }
 
     if (recentItemsContainer) {
       
