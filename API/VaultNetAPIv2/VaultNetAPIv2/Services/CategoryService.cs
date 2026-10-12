@@ -23,6 +23,18 @@ namespace VaultNetAPIv2.Services
         public async Task<ServiceResult> CreateCategoryAsync(Guid userId, CreateCategoryDto createCategoryDto)
         {
 
+            var currentCategoryCount = await _context.Categories.CountAsync(item => item.UserId == userId);
+
+            if (currentCategoryCount >= 15)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Message = "You have reached the maximum limit of 15 category."
+                };
+            }
+
             var newCategory = new Category
             {
                 UserId = userId,
