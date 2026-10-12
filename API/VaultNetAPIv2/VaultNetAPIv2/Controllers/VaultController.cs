@@ -131,7 +131,7 @@ namespace VaultNetAPIv2.Controllers
 
         [HttpGet("dashboard-stats")]
         [EnableRateLimiting("ReadLimit")]
-        public async Task<IActionResult> GetDashboardStats()
+        public async Task<IActionResult> GetDashboardStats([FromQuery] bool isCachedCounts = false)
         {
 
             var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -141,7 +141,7 @@ namespace VaultNetAPIv2.Controllers
                 return Unauthorized(new { Message = "Invalid or missing user identity." });
             }
 
-            var result = await _vaultItemService.GetDashboardStatsAsync(userId);
+            var result = await _vaultItemService.GetDashboardStatsAsync(userId, isCachedCounts);
 
             return StatusCode(result.StatusCode, result);
 

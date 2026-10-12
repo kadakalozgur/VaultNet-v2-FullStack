@@ -364,10 +364,17 @@ namespace VaultNetAPIv2.Services
 
         }
 
-        public async Task<ServiceResult> GetDashboardStatsAsync(Guid userId)
+        public async Task<ServiceResult> GetDashboardStatsAsync(Guid userId, bool isCachedCounts = false)
         {
 
-            var counts = await _context.VaultItems
+            int totalCount = 0;
+            int favoriteCount = 0;
+
+            // Eğer count değerleri UI'da cachlendiyse boşuna db'yi yormamak için.
+            if (!isCachedCounts)
+            {
+
+                var counts = await _context.VaultItems
                 .AsNoTracking()
                 .Where(item => item.UserId == userId)
                 .GroupBy(item => 1)
@@ -378,6 +385,11 @@ namespace VaultNetAPIv2.Services
                 })
                 .FirstOrDefaultAsync();
 
+                totalCount = counts?.Total ?? 0;
+                favoriteCount = counts?.Favorites ?? 0;
+
+            }
+            
             var recentEncryptedItems = await _context.VaultItems
                 .AsNoTracking()
                 .Where(item => item.UserId == userId)
@@ -408,8 +420,8 @@ namespace VaultNetAPIv2.Services
                 Message = "Dashboard statistics retrieved successfully.",
                 Data = new
                 {
-                    TotalCount = counts?.Total ?? 0,
-                    FavoriteCount = counts?.Favorites ?? 0,
+                    TotalCount = totalCount,
+                    FavoriteCount = favoriteCount,
                     RecentItems = recentDecryptedItems
                 }
             };
