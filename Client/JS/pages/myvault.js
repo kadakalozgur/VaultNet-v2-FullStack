@@ -149,6 +149,18 @@ async function toggleFavoriteItem(itemId,button) {
 
         await toggleFavoriteItemAsync(itemId);
 
+        const existingCache = sessionStorage.getItem("dashboard_stats_cache");
+
+        if(existingCache){
+
+            const stats = JSON.parse(existingCache);
+            
+            stats.favoriteCount += isCurrentlyFavorite ? -1 : 1;
+            
+            sessionStorage.setItem("dashboard_stats_cache", JSON.stringify(stats));
+            
+        }
+
         hideAlert(vaultAlert);
 
         const targetItem = vaultItems.find(item => item.id === itemId);
