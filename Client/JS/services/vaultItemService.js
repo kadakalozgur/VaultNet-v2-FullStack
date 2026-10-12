@@ -182,8 +182,6 @@ async function toggleFavoriteItemAsync(itemId) {
             throw new Error(getApiErrorMessage(result));
         }
 
-        sessionStorage.removeItem("dashboard_stats_cache");
-
         return result;
 
     }catch(error){
