@@ -341,6 +341,20 @@ saveItemButton.addEventListener('click', async function(e) {
 
     hideAlert(addItemModalAlert);
 
+    const cachedStats = sessionStorage.getItem("dashboard_stats_cache");
+
+    if(cachedStats){
+
+        const stats = JSON.parse(cachedStats);
+
+        if (stats.totalCount >= 50) {
+            showAlert(addItemModalAlert, "You have reached the maximum limit of 50 items.", "danger");
+
+            return;
+        }
+    
+    }
+
     const title = addTitleInput.value.trim();
     const usernameOrEmail = addUsernameInput.value.trim();
     const password = addPasswordInput.value;
