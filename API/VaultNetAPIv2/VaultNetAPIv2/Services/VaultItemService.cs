@@ -23,6 +23,18 @@ namespace VaultNetAPIv2.Services
         public async Task<ServiceResult> AddItemAsync(Guid userId, AddVaultItemDto addVaultItemDto)
         {
 
+            var currentItemCount = await _context.VaultItems.CountAsync(item => item.UserId == userId);
+
+            if (currentItemCount >= 5)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Message = "You have reached the maximum limit of 50 items."
+                };
+            }
+
             if (addVaultItemDto.CategoryId != null && !await _context.Categories.AnyAsync(category => category.Id == addVaultItemDto.CategoryId && category.UserId == userId))
             {
                 return new ServiceResult { IsSuccess = false, StatusCode = 400, Message = "Invalid category." };
