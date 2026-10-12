@@ -398,6 +398,18 @@ saveItemButton.addEventListener('click', async function(e) {
 
         await addVaultItem(title,usernameOrEmail,password,website,categoryId);
 
+        const existingCache = sessionStorage.getItem("dashboard_stats_cache");
+
+        if(existingCache){
+
+            const stats = JSON.parse(existingCache);
+
+            stats.totalCount++;
+
+            sessionStorage.setItem("dashboard_stats_cache", JSON.stringify(stats));
+
+        }
+
         $('#addItemModal').modal('hide'); 
         
         addTitleInput.value = "";
@@ -409,7 +421,7 @@ saveItemButton.addEventListener('click', async function(e) {
 
         addPasswordInput.type = 'password';
         toggleAddPasswordButton.style.backgroundImage = "url('../Media/Icons/open-eye-icon.png')";
-
+        
         await loadVaultItemPage(1);
 
     }catch(error){

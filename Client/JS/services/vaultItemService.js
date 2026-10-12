@@ -24,8 +24,6 @@ async function addVaultItem(itemName,usernameOrEmail,password,website = null,cat
             throw new Error(getApiErrorMessage(result));
         }
 
-        sessionStorage.removeItem("dashboard_stats_cache");
-
         return result;
 
     }catch(error){
