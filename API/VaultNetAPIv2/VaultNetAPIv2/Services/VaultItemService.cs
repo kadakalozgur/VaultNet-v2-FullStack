@@ -25,7 +25,7 @@ namespace VaultNetAPIv2.Services
 
             var currentItemCount = await _context.VaultItems.CountAsync(item => item.UserId == userId);
 
-            if (currentItemCount >= 5)
+            if (currentItemCount >= 50)
             {
                 return new ServiceResult
                 {
