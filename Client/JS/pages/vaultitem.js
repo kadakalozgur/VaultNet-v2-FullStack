@@ -178,6 +178,18 @@ deleteItemConfirmButton.addEventListener('click' ,async function(e){
 
         await deleteVaultItem(itemId);
 
+        const existingCache = sessionStorage.getItem("dashboard_stats_cache");
+
+        if(existingCache){
+
+            const stats = JSON.parse(existingCache);
+
+            stats.totalCount--;
+
+            sessionStorage.setItem("dashboard_stats_cache", JSON.stringify(stats));
+
+        }
+
         window.location.href = "myvault.html";
 
     }catch(error){
