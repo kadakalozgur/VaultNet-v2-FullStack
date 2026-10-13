@@ -8,8 +8,14 @@ using System.Threading.RateLimiting;
 using VaultNetAPIv2.Data;
 using VaultNetAPIv2.Services;
 using VaultNetAPIv2.Services.Interfaces;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext());
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -234,6 +240,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseSerilogRequestLogging(options =>
+{
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        // Id ve IP'yi otomatik loglara koydum.
+        diagnosticContext.Set("ClientIp", httpContext.Connection.RemoteIpAddress?.ToString());
+        diagnosticContext.Set("UserId", httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+    };
+});
 
 app.UseCors("AllowFrontend");
 
