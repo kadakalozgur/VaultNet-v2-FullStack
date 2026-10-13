@@ -245,10 +245,18 @@ app.UseSerilogRequestLogging(options =>
 {
     options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
     {
-        // Id ve IP'yi otomatik loglara koydum.
         diagnosticContext.Set("ClientIp", httpContext.Connection.RemoteIpAddress?.ToString());
         diagnosticContext.Set("UserId", httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
     };
+});
+
+app.Use(async (context, next) =>
+{
+    using (Serilog.Context.LogContext.PushProperty("ClientIp", context.Connection.RemoteIpAddress?.ToString()))
+    using (Serilog.Context.LogContext.PushProperty("TraceId", context.TraceIdentifier))
+    {
+        await next();
+    }
 });
 
 app.UseCors("AllowFrontend");
