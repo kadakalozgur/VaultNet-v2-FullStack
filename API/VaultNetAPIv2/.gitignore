@@ -26,3 +26,7 @@ _PublishLocalSettings/
 # Environment / Local settings
 appsettings.Development.json
 appsettings.Local.json
+
+# Serilog Logs
+[Ll]ogs/
+*.log
