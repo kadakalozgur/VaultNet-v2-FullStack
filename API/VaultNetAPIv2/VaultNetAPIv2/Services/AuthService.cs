@@ -3,6 +3,7 @@ using VaultNetAPIv2.Data;
 using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Models;
 using VaultNetAPIv2.Results;
+using VaultNetAPIv2.Helpers;
 using VaultNetAPIv2.Services.Interfaces;
 
 namespace VaultNetAPIv2.Services
@@ -33,7 +34,7 @@ namespace VaultNetAPIv2.Services
             if (isUserExist)
             {
 
-                _logger.LogWarning("Registration attempt failed. Email already exists: {Email}", email);
+                _logger.LogWarning("Registration attempt failed. Email already exists: {Email}", email.MaskEmail());
 
                 return new ServiceResult
                 {
@@ -52,7 +53,7 @@ namespace VaultNetAPIv2.Services
             await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
 
-            _logger.LogInformation("New user registered successfully. UserId: {UserId}, Email: {Email}", newUser.Id, email);
+            _logger.LogInformation("New user registered successfully. UserId: {UserId}, Email: {Email}", newUser.Id, email.MaskEmail());
 
             return new ServiceResult
             {
@@ -73,7 +74,7 @@ namespace VaultNetAPIv2.Services
             if(user == null)
             {
 
-                _logger.LogWarning("Failed login attempt. User not found for Email: {Email}", email);
+                _logger.LogWarning("Failed login attempt. User not found for Email: {Email}", email.MaskEmail());
 
                 return new ServiceResult
                 {
@@ -88,7 +89,7 @@ namespace VaultNetAPIv2.Services
             if (!isPasswordCorret)
             {
 
-                _logger.LogWarning("Failed login attempt. Incorrect password for UserId: {UserId}, Email: {Email}", user.Id, email);
+                _logger.LogWarning("Failed login attempt. Incorrect password for UserId: {UserId}, Email: {Email}", user.Id, email.MaskEmail());
 
                 return new ServiceResult
                 {
