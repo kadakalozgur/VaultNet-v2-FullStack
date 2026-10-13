@@ -13,12 +13,14 @@ namespace VaultNetAPIv2.Services
         private readonly AppDbContext _context;
         private readonly ITokenService _tokenService;
         private readonly IPasswordHashService _passwordHashService;
+        private readonly ILogger<AuthService> _logger;
 
-        public AuthService(AppDbContext context, ITokenService tokenService, IPasswordHashService passwordHashService)
+        public AuthService(AppDbContext context, ITokenService tokenService, IPasswordHashService passwordHashService, ILogger<AuthService> logger)
         {
             _context = context;
             _tokenService = tokenService;
             _passwordHashService = passwordHashService;
+            _logger = logger;
         }
 
         public async Task<ServiceResult> RegisterAsync(RegisterDto registerDto)
@@ -30,6 +32,9 @@ namespace VaultNetAPIv2.Services
 
             if (isUserExist)
             {
+
+                _logger.LogWarning("Registration attempt failed. Email already exists: {Email}", email);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -46,6 +51,8 @@ namespace VaultNetAPIv2.Services
 
             await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation("New user registered successfully. UserId: {UserId}, Email: {Email}", newUser.Id, email);
 
             return new ServiceResult
             {
@@ -65,6 +72,9 @@ namespace VaultNetAPIv2.Services
 
             if(user == null)
             {
+
+                _logger.LogWarning("Failed login attempt. User not found for Email: {Email}", email);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -77,6 +87,9 @@ namespace VaultNetAPIv2.Services
 
             if (!isPasswordCorret)
             {
+
+                _logger.LogWarning("Failed login attempt. Incorrect password for UserId: {UserId}, Email: {Email}", user.Id, email);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -87,6 +100,9 @@ namespace VaultNetAPIv2.Services
 
             if (!user.IsActive)
             {
+
+                _logger.LogWarning("Login blocked. Account is deactivated. UserId: {UserId}", user.Id);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -114,6 +130,8 @@ namespace VaultNetAPIv2.Services
 
             _context.RefreshTokens.Add(refreshTokenDbItem);
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Successful login for UserId: {UserId}", user.Id);
 
             return new ServiceResult
             {
@@ -153,6 +171,9 @@ namespace VaultNetAPIv2.Services
                 storedToken.RevokedAt = DateTime.UtcNow;
 
                 await _context.SaveChangesAsync();
+
+                _logger.LogInformation("User logged out successfully. UserId: {UserId}", storedToken.UserId);
+
             }
 
             return new ServiceResult
@@ -182,10 +203,15 @@ namespace VaultNetAPIv2.Services
 
                 await transaction.CommitAsync();
 
+                _logger.LogInformation("All devices logged out successfully for UserId: {UserId}", userId);
+
             }
-            catch
+            catch(Exception error)
             {
                 await transaction.RollbackAsync();
+
+                _logger.LogError(error, "Error occurred while logging out all devices for UserId: {UserId}", userId);
+
                 throw;
             }
 
@@ -219,6 +245,9 @@ namespace VaultNetAPIv2.Services
 
             if (storedToken == null)
             {
+
+                _logger.LogWarning("Refresh token attempt failed. Token not found in database.");
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -245,6 +274,8 @@ namespace VaultNetAPIv2.Services
                     await _context.SaveChangesAsync();
                 }
 
+                _logger.LogWarning("SECURITY ALERT: Token reuse detected for UserId: {UserId}. All active sessions terminated.", storedToken.UserId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -256,6 +287,9 @@ namespace VaultNetAPIv2.Services
 
             if (storedToken.ExpiresAt <= DateTime.UtcNow)
             {
+
+                _logger.LogInformation("Refresh token expired for UserId: {UserId}", storedToken.UserId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -266,6 +300,9 @@ namespace VaultNetAPIv2.Services
 
             if (!storedToken.User.IsActive)
             {
+
+                _logger.LogWarning("Refresh token attempt blocked. Account deactivated for UserId: {UserId}", storedToken.UserId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -295,6 +332,8 @@ namespace VaultNetAPIv2.Services
 
             _context.RefreshTokens.Add(newRefreshTokenDbItem);
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Token refreshed successfully for UserId: {UserId}", storedToken.UserId);
 
             return new ServiceResult
             {
