@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Net.WebSockets;
 using VaultNetAPIv2.Data;
 using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Models;
@@ -13,11 +12,13 @@ namespace VaultNetAPIv2.Services
 
         private readonly AppDbContext _context;
         private readonly IEncryptionService _encryptionService;
+        private readonly ILogger<CategoryService> _logger;
 
-        public CategoryService(AppDbContext context, IEncryptionService encryptionService)
+        public CategoryService(AppDbContext context, IEncryptionService encryptionService, ILogger<CategoryService> logger)
         {     
             _context = context;    
             _encryptionService = encryptionService;
+            _logger = logger;
         }
 
         public async Task<ServiceResult> CreateCategoryAsync(Guid userId, CreateCategoryDto createCategoryDto)
@@ -27,6 +28,9 @@ namespace VaultNetAPIv2.Services
 
             if (currentCategoryCount >= 15)
             {
+
+                _logger.LogWarning("Category creation failed. User reached maximum limit (15). UserId: {UserId}", userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -44,6 +48,8 @@ namespace VaultNetAPIv2.Services
 
             _context.Categories.Add(newCategory);
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Category created successfully. CategoryId: {CategoryId}, UserId: {UserId}", newCategory.Id, userId);
 
             return new ServiceResult
             {
@@ -251,15 +257,21 @@ namespace VaultNetAPIv2.Services
 
                 if (affectedRows == 0)
                 {
+
+                    _logger.LogWarning("Category deletion failed. Category not found or unauthorized. CategoryId: {CategoryId}, UserId: {UserId}", categoryId, userId);
+
                     return new ServiceResult
                     {
                         IsSuccess = false,
                         StatusCode = 404,
                         Message = "Category not found."
                     };
+
                 }
 
                 await transaction.CommitAsync();
+
+                _logger.LogInformation("Category deleted and vault items detached successfully. CategoryId: {CategoryId}, UserId: {UserId}", categoryId, userId);
 
                 return new ServiceResult
                 {
@@ -269,9 +281,10 @@ namespace VaultNetAPIv2.Services
                 };
 
             }
-            catch (Exception)
+            catch (Exception error)
             {
                 await transaction.RollbackAsync();
+                _logger.LogError(error, "Transaction failed while deleting category. CategoryId: {CategoryId}, UserId: {UserId}", categoryId, userId);
                 throw;
             }
            
@@ -290,6 +303,9 @@ namespace VaultNetAPIv2.Services
 
             if (affectedRows == 0)
             {
+
+                _logger.LogWarning("Category update failed. Category not found or unauthorized. CategoryId: {CategoryId}, UserId: {UserId}", categoryId, userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -297,6 +313,8 @@ namespace VaultNetAPIv2.Services
                     Message = "Category not found."
                 };
             }
+
+            _logger.LogInformation("Category updated successfully. CategoryId: {CategoryId}, UserId: {UserId}", categoryId, userId);
 
             return new ServiceResult
             {
