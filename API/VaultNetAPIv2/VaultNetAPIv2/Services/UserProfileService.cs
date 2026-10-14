@@ -2,6 +2,7 @@
 using VaultNetAPIv2.Data;
 using VaultNetAPIv2.DTOs;
 using VaultNetAPIv2.Results;
+using VaultNetAPIv2.Helpers;
 using VaultNetAPIv2.Services.Interfaces;
 
 namespace VaultNetAPIv2.Services
@@ -12,12 +13,14 @@ namespace VaultNetAPIv2.Services
         private readonly AppDbContext _context;
         private readonly IStorageService _storageService;
         private readonly IPasswordHashService _passwordHashService;
+        private readonly ILogger<UserProfileService> _logger;
 
-        public UserProfileService(AppDbContext context, IStorageService storageService, IPasswordHashService passwordHashService)
+        public UserProfileService(AppDbContext context, IStorageService storageService, IPasswordHashService passwordHashService, ILogger<UserProfileService> logger)
         {
             _context = context;
             _storageService = storageService;
             _passwordHashService = passwordHashService;
+            _logger = logger;
         }
 
         public async Task<ServiceResult> GetUserProfileAsync(Guid userId)
@@ -76,6 +79,9 @@ namespace VaultNetAPIv2.Services
 
             if (user == null)
             {
+
+                _logger.LogWarning("Profile picture update failed. User not found. UserId: {UserId}", userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -88,6 +94,9 @@ namespace VaultNetAPIv2.Services
 
             if (string.IsNullOrEmpty(imageUrl))
             {
+
+                _logger.LogError("Profile picture upload to storage service failed. UserId: {UserId}", userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -104,6 +113,8 @@ namespace VaultNetAPIv2.Services
             {
                 await _storageService.DeleteFileAsync(user.ProfilePictureUrl);
             }
+
+            _logger.LogInformation("Profile picture updated successfully for UserId: {UserId}", userId);
 
             return new ServiceResult
             {
@@ -128,6 +139,8 @@ namespace VaultNetAPIv2.Services
             if (isEmailExist)
             {
 
+                _logger.LogWarning("Email update rejected. Email already exists: {Email}, UserId: {UserId}", newEmail.MaskEmail(), userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -145,17 +158,23 @@ namespace VaultNetAPIv2.Services
 
             if (affectedRows == 0)
             {
+
+                _logger.LogWarning("Email update failed. User not found. UserId: {UserId}", userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
                     StatusCode = 404,
                     Message = "No such user was found."
                 };
+
             }
 
             await _context.RefreshTokens
                 .Where(token => token.UserId == userId && token.RevokedAt == null)
                 .ExecuteUpdateAsync(setter => setter.SetProperty(token => token.RevokedAt, DateTime.UtcNow));
+
+            _logger.LogInformation("Email updated and sessions terminated. NewEmail: {Email}, UserId: {UserId}", newEmail.MaskEmail(), userId);
 
             return new ServiceResult
             {
@@ -188,6 +207,9 @@ namespace VaultNetAPIv2.Services
 
             if(userPasswordHash == null)
             {
+
+                _logger.LogWarning("Password change failed. User not found. UserId: {UserId}", userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -200,6 +222,9 @@ namespace VaultNetAPIv2.Services
 
             if (!isCurrentPasswordVerify)
             {
+
+                _logger.LogWarning("SECURITY ALERT: Password change failed due to incorrect current password. Potential account takeover attempt. UserId: {UserId}", userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -219,6 +244,8 @@ namespace VaultNetAPIv2.Services
             await _context.RefreshTokens
                 .Where(token => token.UserId == userId && token.RevokedAt == null)
                 .ExecuteUpdateAsync(setter => setter.SetProperty(token => token.RevokedAt, DateTime.UtcNow));
+
+            _logger.LogInformation("Password changed successfully and all active sessions revoked. UserId: {UserId}", userId);
 
             return new ServiceResult
             {
@@ -244,24 +271,32 @@ namespace VaultNetAPIv2.Services
 
             if (user == null)
             {
+
+                _logger.LogWarning("Account deletion failed. User not found. UserId: {UserId}", userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
                     StatusCode = 404,
                     Message = "No such user was found."
                 };
+
             }
 
             bool isCurrentPasswordVerify = _passwordHashService.VerifyPassword(deleteAccountDto.CurrentPassword, user.PasswordHash);
 
             if (!isCurrentPasswordVerify)
             {
+
+                _logger.LogWarning("SECURITY ALERT: Account deletion failed due to incorrect password. UserId: {UserId}", userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
                     StatusCode = 400,
                     Message = "The current password you entered is incorrect."
                 };
+
             }
 
             if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
@@ -272,6 +307,8 @@ namespace VaultNetAPIv2.Services
             await _context.Users
                 .Where(user => user.Id == userId)
                 .ExecuteDeleteAsync();
+
+            _logger.LogWarning("User account permanently deleted. UserId: {UserId}", userId);
 
             return new ServiceResult
             {
@@ -316,6 +353,8 @@ namespace VaultNetAPIv2.Services
                 .ExecuteUpdateAsync(setter => setter.SetProperty(user => user.ProfilePictureUrl, (string?)null));
 
             await _storageService.DeleteFileAsync(user.ProfilePictureUrl);
+
+            _logger.LogInformation("Profile picture removed successfully. UserId: {UserId}", userId);
 
             return new ServiceResult
             {
