@@ -13,11 +13,13 @@ namespace VaultNetAPIv2.Services
 
         private readonly AppDbContext _context;
         private readonly IEncryptionService _encryptionService;
+        private readonly ILogger<VaultItemService> _logger;
 
-        public VaultItemService(AppDbContext context, IEncryptionService encryptionService)
+        public VaultItemService(AppDbContext context, IEncryptionService encryptionService, ILogger<VaultItemService> logger)
         {
             _context = context;
             _encryptionService = encryptionService;
+            _logger = logger;
         }
 
         public async Task<ServiceResult> AddItemAsync(Guid userId, AddVaultItemDto addVaultItemDto)
@@ -27,16 +29,22 @@ namespace VaultNetAPIv2.Services
 
             if (currentItemCount >= 50)
             {
+
+                _logger.LogWarning("Vault item creation failed. User reached maximum storage limit (50). UserId: {UserId}", userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
                     StatusCode = 400,
                     Message = "You have reached the maximum limit of 50 items."
                 };
+
             }
 
             if (addVaultItemDto.CategoryId != null && !await _context.Categories.AnyAsync(category => category.Id == addVaultItemDto.CategoryId && category.UserId == userId))
             {
+                _logger.LogWarning("Vault item creation rejected. Invalid or unauthorized category. CategoryId: {CategoryId}, UserId: {UserId}", addVaultItemDto.CategoryId, userId);
+
                 return new ServiceResult { IsSuccess = false, StatusCode = 400, Message = "Invalid category." };
             }
 
@@ -52,6 +60,8 @@ namespace VaultNetAPIv2.Services
 
             _context.VaultItems.Add(newVaultItem);
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Vault item added successfully. ItemId: {ItemId}, UserId: {UserId}", newVaultItem.Id, userId);
 
             return new ServiceResult
             {
@@ -238,6 +248,9 @@ namespace VaultNetAPIv2.Services
 
             if(item == null)
             {
+
+                _logger.LogWarning("Vault item retrieval failed. Item not found or unauthorized. ItemId: {ItemId}, UserId: {UserId}", itemId, userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -277,6 +290,9 @@ namespace VaultNetAPIv2.Services
 
             if(affectedRows == 0)
             {
+
+                _logger.LogWarning("Vault item deletion failed. Item not found or unauthorized. ItemId: {ItemId}, UserId: {UserId}", itemId, userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -284,6 +300,8 @@ namespace VaultNetAPIv2.Services
                     Message = "Vault item not found."
                 };
             }
+
+            _logger.LogInformation("Vault item deleted successfully. ItemId: {ItemId}, UserId: {UserId}", itemId, userId);
 
             return new ServiceResult
             {
@@ -299,6 +317,8 @@ namespace VaultNetAPIv2.Services
 
             if (updateVaultItemDto.CategoryId != null && !await _context.Categories.AnyAsync(category => category.Id == updateVaultItemDto.CategoryId && category.UserId == userId))
             {
+                _logger.LogWarning("Vault item update rejected. Invalid or unauthorized category. CategoryId: {CategoryId}, UserId: {UserId}", updateVaultItemDto.CategoryId, userId);
+
                 return new ServiceResult { IsSuccess = false, StatusCode = 400, Message = "Invalid category." };
             }
 
@@ -319,6 +339,9 @@ namespace VaultNetAPIv2.Services
 
             if (affectedRows == 0)
             {
+
+                _logger.LogWarning("Vault item update failed. Item not found or unauthorized. ItemId: {ItemId}, UserId: {UserId}", itemId, userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -326,6 +349,8 @@ namespace VaultNetAPIv2.Services
                     Message = "Vault item not found."
                 };
             }
+
+            _logger.LogInformation("Vault item updated successfully. ItemId: {ItemId}, UserId: {UserId}", itemId, userId);
 
             return new ServiceResult
             {
@@ -347,6 +372,9 @@ namespace VaultNetAPIv2.Services
 
             if (affectedRows == 0)
             {
+
+                _logger.LogWarning("Toggle favorite status failed. Item not found or unauthorized. ItemId: {ItemId}, UserId: {UserId}", itemId, userId);
+
                 return new ServiceResult
                 {
                     IsSuccess = false,
@@ -354,6 +382,8 @@ namespace VaultNetAPIv2.Services
                     Message = "Vault item not found."
                 };
             }
+
+            _logger.LogInformation("Vault item favorite status toggled successfully. ItemId: {ItemId}, UserId: {UserId}", itemId, userId);
 
             return new ServiceResult
             {
