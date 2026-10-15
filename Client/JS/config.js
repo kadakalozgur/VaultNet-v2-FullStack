@@ -1,6 +1,6 @@
 const CONFIG = {
 
-    API_BASE_URL: "https://vaultnet-v2-api-a4hyamhdh4cqb3b2.southeastasia-01.azurewebsites.net/api", 
+    API_BASE_URL: "/api", 
 
     ENDPOINTS: {
         REGISTER: "/Auth/register",

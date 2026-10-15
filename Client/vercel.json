@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://vaultnet-v2-api-a4hyamhdh4cqb3b2.southeastasia-01.azurewebsites.net/api/:path*"
+    }
+  ]
+}
