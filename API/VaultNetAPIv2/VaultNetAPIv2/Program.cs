@@ -239,6 +239,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Canlýda Hsts kullanmak için.
+else
+{
+    app.UseHsts();
+}
+
 app.UseHttpsRedirection();
 
 app.UseSerilogRequestLogging(options =>
