@@ -271,6 +271,11 @@ Open the frontend folder in **Visual Studio Code**, locate `config.js`, and upda
 
 ---
 
+# 📄 License
+This project is licensed. - See the [LICENSE](LICENSE) file for details.
+
+---
+
 # 📬 Contact
 For feedback, questions, or suggestions:
 
@@ -552,6 +557,11 @@ Frontend klasörünü **Visual Studio Code** ile açın, `config.js` dosyasında
 # 📚 Ek Notlar
 - Bu proje; güvenli full-stack mimari tasarımı, kriptografik veri koruma, SOLID prensipleri ve ileri seviye oturum yönetimi pratiği amacıyla **Özgür Kadakal** tarafından sıfırdan geliştirilmiştir.
 - Geliştirme sürecinde yapay zekâ destekli araçlardan yararlanılmıştır.
+
+---
+
+# 📄 Lisans
+Bu proje lisanslanmıştır. - Ayrıntılar için [LICENSE](LICENSE) dosyasına göz atabilirsiniz.
 
 ---
 
