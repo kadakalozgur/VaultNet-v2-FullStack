@@ -7,6 +7,9 @@
 
 > **⚠️ Important:** This project uses **PostgreSQL (Supabase)**, **Supabase Storage**, and **ASP.NET Core Data Protection**. Before running locally, you must configure your database connection, JWT settings, and Supabase credentials in `appsettings.json`.
 
+> ⚠️ **DISCLAIMER & SECURITY NOTICE:**  
+> **VaultNet v2 is an open-source educational portfolio and proof-of-concept project.** It is **not** an officially certified commercial password vault. The author assumes no legal liability for data breaches, data loss, or compromised accounts resulting from the use of this software.
+
 ---
 
 # 🖼️ Previews & Application Showcase
@@ -287,6 +290,9 @@ For feedback, questions, or suggestions:
 > *(Not: Backend, Güneydoğu Asya bölgesindeki ücretsiz Azure App Service F1 planında barındırılmaktadır. Sunucu 20 dakika boyunca istek almazsa uyku moduna geçtiği için ilk isteğinizde 10–15 saniyelik bir uyanma gecikmesi yaşanabilir.)*
 
 > **⚠️ Önemli:** Bu proje **PostgreSQL (Supabase)**, **Supabase Storage** ve **ASP.NET Core Data Protection** kullanır. Projeyi yerel ortamda çalıştırmadan önce `appsettings.json` dosyasındaki veritabanı, JWT ve Supabase ayarlarını yapılandırmanız gerekmektedir.
+
+> ⚠️ **YASAL UYARI VE GÜVENLİK BİLGİLENDİRMESİ:**  
+> **VaultNet v2, kişisel portföy ve konsept kanıtlama amacıyla geliştirilmiş açık kaynaklı bir eğitim projesidir.** Ticari veya sertifikalı bir şifre yöneticisi değildir. Uygulamanın kullanımından doğabilecek olası veri kayıplarından, güvenlik açıklarından veya hesap ihlallerinden geliştirici sorumlu tutulamaz.
 
 ---
 
